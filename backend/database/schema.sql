@@ -8,6 +8,7 @@ CREATE TABLE "user" (
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL CHECK (role IN ('ESTUDIANTE', 'PROFESOR', 'ADMIN')),
+	status VARCHAR(20) DEFAULT 'ACTIVO',
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -90,16 +91,6 @@ CREATE TABLE payment (
     payment_method VARCHAR(50), -- YAPE, STRIPE, MERCADO_PAGO, etc.
     CONSTRAINT fk_payment_student FOREIGN KEY (student_id) REFERENCES "user"(user_id),
     CONSTRAINT fk_payment_course FOREIGN KEY (course_id) REFERENCES course(course_id)
-);
-
--- Tabla de archivos de comprobante de pago Yape (opcional)
-CREATE TABLE yape_receipt (
-    yape_receipt_id SERIAL PRIMARY KEY,
-    payment_id INT NOT NULL,
-    file_path TEXT NOT NULL,
-    operation_code VARCHAR(50),
-    upload_date TIMESTAMPTZ DEFAULT NOW(),
-    CONSTRAINT fk_yape_receipt_payment FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
 );
 
 COMMIT;
