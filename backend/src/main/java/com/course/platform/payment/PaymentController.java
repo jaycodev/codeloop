@@ -1,16 +1,14 @@
-package com.course.platform.lesson.controller;
+package com.course.platform.payment;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.course.platform.lesson.service.LessonService;
-
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/lessons")
+@RequestMapping("/payments")
 @RequiredArgsConstructor
-public class LessonController {
+public class PaymentController {
 
-    private final LessonService lessonService;
+    private final PaymentService paymentService;
 }

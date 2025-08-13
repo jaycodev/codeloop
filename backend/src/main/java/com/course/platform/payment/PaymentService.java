@@ -1,8 +1,6 @@
-package com.course.platform.payment.service;
+package com.course.platform.payment;
 
 import org.springframework.stereotype.Service;
-
-import com.course.platform.payment.repository.PaymentRepository;
 
 import lombok.RequiredArgsConstructor;
 
