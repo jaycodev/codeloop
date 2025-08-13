@@ -1,4 +1,4 @@
-package com.course.platform.lesson.model;
+package com.course.platform.lesson;
 
 import jakarta.persistence.*;
 import lombok.*;

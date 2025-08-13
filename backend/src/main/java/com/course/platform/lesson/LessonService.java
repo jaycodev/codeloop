@@ -1,8 +1,6 @@
-package com.course.platform.lesson.service;
+package com.course.platform.lesson;
 
 import org.springframework.stereotype.Service;
-
-import com.course.platform.lesson.repository.LessonRepository;
 
 import lombok.RequiredArgsConstructor;
 

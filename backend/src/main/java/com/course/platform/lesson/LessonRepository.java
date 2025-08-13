@@ -1,8 +1,6 @@
-package com.course.platform.lesson.repository;
+package com.course.platform.lesson;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.course.platform.lesson.model.Lesson;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 }
