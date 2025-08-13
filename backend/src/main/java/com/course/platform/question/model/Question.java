@@ -29,9 +29,16 @@ public class Question {
     @Column(nullable = false)
     private String statement;
     
+    @Column(name = "option_a")
 	private String optionA;
+    
+    @Column(name = "option_b")
 	private String optionB;
+    
+    @Column(name = "option_c")
 	private String optionC;
+    
+    @Column(name = "option_d")
 	private String optionD;
 	
     @Column(name = "correct_answer", length = 1)

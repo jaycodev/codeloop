@@ -16,24 +16,29 @@ import lombok.RequiredArgsConstructor;
 public class QuestionService {
 
 	private final QuestionRepository questionRepo;
+//	private final ExamRepository examRepo;
 	
 	public List<Question> list() {
 		return questionRepo.findAll();
 	}
 	
 	public Question create(Question q) { 
+//		if (examRepo.existsById(q.getExamId())) {
+//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exam not found: " + q.getExamId());
+//		}
+		
 		return questionRepo.save(q); 
 	}
 
     public Question update(Integer id, Question question){
         Question q = findById(id);
         
-        q.setStatement(q.getStatement());
-        q.setOptionA(q.getOptionA());
-        q.setOptionB(q.getOptionB());
-        q.setOptionC(q.getOptionC());
-        q.setOptionD(q.getOptionD());
-        q.setCorrectAnswer(q.getCorrectAnswer());
+        q.setStatement(question.getStatement());
+        q.setOptionA(question.getOptionA());
+        q.setOptionB(question.getOptionB());
+        q.setOptionC(question.getOptionC());
+        q.setOptionD(question.getOptionD());
+        q.setCorrectAnswer(question.getCorrectAnswer());
         
         return questionRepo.save(q);
     }

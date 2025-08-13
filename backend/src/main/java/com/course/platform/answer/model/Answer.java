@@ -29,7 +29,7 @@ public class Answer {
 	@Column(name = "student_id", nullable = false)
 	private Integer studentId;
     
-	@Column(length = 1)
+	@Column(name = "answer", length = 1)
 	private String answer;
 	
 	@Column(name = "is_correct")

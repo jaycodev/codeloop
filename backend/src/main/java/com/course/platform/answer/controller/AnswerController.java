@@ -32,7 +32,7 @@ public class AnswerController {
 	}
 	
 //	@GetMapping("/exam/{examId}/student/{studentId}")
-//	public List<Answer> byExamAndStudent(@PathVariable("studentId") Integer examId, @PathVariable Integer studentId){
+//	public List<Answer> byExamAndStudent(@PathVariable("examId") Integer examId, @PathVariable("studentId") Integer studentId){
 //		return answerService.findByExamAndStudent(examId, studentId);
 //	}
 }
