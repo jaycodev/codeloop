@@ -65,7 +65,7 @@ CREATE TABLE question (
     option_b VARCHAR(255),
     option_c VARCHAR(255),
     option_d VARCHAR(255),
-    correct_answer CHAR(1) CHECK (correct_answer IN ('A', 'B', 'C', 'D')),
+    correct_answer VARCHAR(1) CHECK (correct_answer IN ('A', 'B', 'C', 'D')),
     CONSTRAINT fk_question_exam FOREIGN KEY (exam_id) REFERENCES exam(exam_id)
 );
 
@@ -74,7 +74,7 @@ CREATE TABLE answer (
     answer_id SERIAL PRIMARY KEY,
     question_id INT NOT NULL,
     student_id INT NOT NULL,
-    answer CHAR(1),
+    answer VARCHAR(1),
     is_correct BOOLEAN,
     CONSTRAINT fk_answer_question FOREIGN KEY (question_id) REFERENCES question(question_id),
     CONSTRAINT fk_answer_student FOREIGN KEY (student_id) REFERENCES "user"(user_id)
