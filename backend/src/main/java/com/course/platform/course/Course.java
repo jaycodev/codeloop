@@ -1,5 +1,6 @@
 package com.course.platform.course;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import com.course.platform.user.User;
@@ -24,28 +25,26 @@ import lombok.NoArgsConstructor;
 @Table(name = "course")
 @Builder
 public class Course {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
-	private Integer courseid;
-	
-	@Column(name = "title")
-	private String title;
-	
-	@Column(name = "description")
-	private String description;
-	
-	@ManyToOne
-	@JoinColumn(name = "teacher_id", nullable = false)
-	private User teacher;
-	
-	@Column(name = "price")
-	private Double price;
-	
-	@Column(name = "created_at")
-	@Builder.Default
-	private OffsetDateTime createdAt = OffsetDateTime.now();
+    private Integer courseid;
 
+    @Column(name = "title")
+    private String title;
 
+    @Column(name = "description")
+    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private User teacher;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "created_at")
+    @Builder.Default
+    private OffsetDateTime createdAt = OffsetDateTime.now();
 }

@@ -15,25 +15,24 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Table(name = "user")
 @Data
 @NoArgsConstructor
 public class User {
-		@Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    @Column(name="user_id")
-	    private int userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Integer userId;
 
-	    private String name;
-	    private String email;
+    private String name;
+    private String email;
 
-	    @Enumerated(EnumType.STRING)
-	    private EnumRole role;
+    @Enumerated(EnumType.STRING)
+    private EnumRole role;
 
-	    private String status;
+    private String status;
 
-	    @Column(name="created_at", insertable = false, updatable = false)
-	    private LocalDateTime createdAt;
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
 }
