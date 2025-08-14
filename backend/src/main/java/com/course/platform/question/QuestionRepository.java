@@ -1,10 +1,8 @@
-package com.course.platform.question.repository;
+package com.course.platform.question;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.course.platform.question.model.Question;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer>{
 	List<Question> findQuestionByExamId(Integer examId);

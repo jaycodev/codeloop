@@ -32,6 +32,6 @@ public class ExamService {
 	}
 	
 	public List<Exam> listExamByCourse(Integer id){
-		return examRepository.findByCourseCourseid(id);
+		return examRepository.findByCourseCourseId(id);
 	}
 }

@@ -15,21 +15,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ExamController {
 
-	@Autowired
-	private final ExamService examServices;
-	
-	@GetMapping("/list")
-	public List<Exam> list(){
-		return examServices.listExam();
-	}
-	
-	@GetMapping("/{id}")
-	public Exam search(@PathVariable("id") Integer id) {
-		return examServices.search(id);
-	}
-	
-	@GetMapping("/find/exams/{id}")
-	public List<Exam> listExamByCourse(@PathVariable("courseid") Integer courseid) {
-		return examServices.listExamByCourse(courseid);
-	}
+    @Autowired
+    private final ExamService examServices;
+
+    @GetMapping("/list")
+    public List<Exam> list() {
+        return examServices.listExam();
+    }
+
+    @GetMapping("/{id}")
+    public Exam search(@PathVariable("id") Integer id) {
+        return examServices.search(id);
+    }
+
+    @GetMapping("/find/exams/{id}")
+    public List<Exam> listExamByCourse(@PathVariable("courseid") Integer courseid) {
+        return examServices.listExamByCourse(courseid);
+    }
 }

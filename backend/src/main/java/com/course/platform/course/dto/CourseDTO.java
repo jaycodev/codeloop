@@ -1,4 +1,4 @@
-package com.course.platform.course;
+package com.course.platform.course.dto;
 
 import java.time.OffsetDateTime;
 

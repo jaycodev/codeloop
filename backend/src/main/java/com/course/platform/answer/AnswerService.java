@@ -1,14 +1,12 @@
-package com.course.platform.answer.service;
+package com.course.platform.answer;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.course.platform.answer.model.Answer;
-import com.course.platform.answer.repository.AnswerRepository;
-import com.course.platform.question.model.Question;
-import com.course.platform.question.repository.QuestionRepository;
+import com.course.platform.question.Question;
+import com.course.platform.question.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -29,6 +29,5 @@ public class Lesson {
     private Integer courseId;
 
     @Builder.Default
-    @Column(name = "order_num")
     private Integer orderNum = 0;
 }

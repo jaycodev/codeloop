@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
 
-	List<Exam> findByCourseCourseid(Integer courseId);
+	List<Exam> findByCourseCourseId(Integer courseId);
 
 }

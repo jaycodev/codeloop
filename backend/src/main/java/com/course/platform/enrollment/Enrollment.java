@@ -25,7 +25,6 @@ public class Enrollment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enrollment_id")
     private Integer enrollmentId;
 
     @ManyToOne
@@ -36,7 +35,6 @@ public class Enrollment {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Column(name = "enrollment_date")
     private LocalDateTime enrollmentDate;
 
     @Column(precision = 5, scale = 2)

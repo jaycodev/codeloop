@@ -1,4 +1,4 @@
-package com.course.platform.question.controller;
+package com.course.platform.question;
 
 import java.util.List;
 
@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.course.platform.question.model.Question;
-import com.course.platform.question.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
 

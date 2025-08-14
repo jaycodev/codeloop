@@ -1,4 +1,4 @@
-package com.course.platform.answer.controller;
+package com.course.platform.answer;
 
 import java.util.List;
 
@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.course.platform.answer.model.Answer;
-import com.course.platform.answer.service.AnswerService;
 
 import lombok.RequiredArgsConstructor;
 

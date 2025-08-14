@@ -4,7 +4,6 @@ import java.time.OffsetDateTime;
 
 import com.course.platform.course.Course;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,20 +24,16 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Exam {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "exam_id")
-	private Integer examid;
-	
-	@ManyToOne
-	@JoinColumn(name = "course_id", nullable = false)
-	private Course course;
-	
-	@Column(name = "title")
-	private String title;
-	
-	@Column(name = "created_at")
-	@Builder.Default
-	private OffsetDateTime createdAt = OffsetDateTime.now();
+    private Integer examId;
 
+    @ManyToOne
+	@JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    private String title;
+
+    @Builder.Default
+    private OffsetDateTime createdAt = OffsetDateTime.now();
 }
