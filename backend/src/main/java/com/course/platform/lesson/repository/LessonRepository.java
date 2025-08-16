@@ -1,0 +1,26 @@
+package com.course.platform.lesson.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.course.platform.lesson.dto.LessonListDto;
+import com.course.platform.lesson.model.Lesson;
+
+public interface LessonRepository extends JpaRepository<Lesson, Integer> {
+    @Query("""
+        SELECT new com.course.platform.lesson.dto.LessonListDto(
+            l.lessonId,
+            l.title,
+            l.content,
+            l.videoUrl,
+            c.title,
+            l.orderNum
+        )
+        FROM Lesson l
+        JOIN l.course c
+        ORDER BY l.lessonId DESC
+    """)
+    List<LessonListDto> findList();
+}
