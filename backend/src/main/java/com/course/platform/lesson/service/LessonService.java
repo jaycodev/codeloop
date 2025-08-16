@@ -1,4 +1,4 @@
-package com.course.platform.lesson;
+package com.course.platform.lesson.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +13,8 @@ import com.course.platform.lesson.dto.LessonDetailDto;
 import com.course.platform.lesson.dto.LessonListDto;
 import com.course.platform.lesson.dto.LessonSummaryDto;
 import com.course.platform.lesson.dto.UpdateLessonDto;
+import com.course.platform.lesson.model.Lesson;
+import com.course.platform.lesson.repository.LessonRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -59,7 +61,7 @@ public class LessonService {
         lesson.setContent(dto.getContent());
         lesson.setVideoUrl(dto.getVideoUrl());
         lesson.setCourse(course);
-        lesson.setOrderNum(dto.getOrderNum() != null ? dto.getOrderNum() : 0);
+        lesson.setOrderNum(dto.getOrderNum());
 
         Lesson saved = lessonRepository.save(lesson);
 
@@ -78,7 +80,7 @@ public class LessonService {
         lesson.setContent(dto.getContent());
         lesson.setVideoUrl(dto.getVideoUrl());
         lesson.setCourse(course);
-        lesson.setOrderNum(dto.getOrderNum() != null ? dto.getOrderNum() : lesson.getOrderNum());
+        lesson.setOrderNum(dto.getOrderNum());
 
         Lesson saved = lessonRepository.save(lesson);
 
@@ -95,11 +97,11 @@ public class LessonService {
 
     private LessonListDto toListDto(Lesson lesson) {
         return new LessonListDto(
+                lesson.getLessonId(),
                 lesson.getTitle(),
                 lesson.getContent(),
                 lesson.getVideoUrl(),
                 lesson.getCourse().getTitle(),
-                lesson.getOrderNum(),
-                lesson.getLessonId());
+                lesson.getOrderNum());
     }
 }

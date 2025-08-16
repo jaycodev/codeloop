@@ -1,7 +1,6 @@
 BEGIN;
 SET search_path TO public;
 
--- Tabla base de usuarios
 CREATE TABLE "user" (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -12,7 +11,6 @@ CREATE TABLE "user" (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Tabla de cursos
 CREATE TABLE course (
     course_id SERIAL PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
@@ -23,7 +21,6 @@ CREATE TABLE course (
     CONSTRAINT fk_course_teacher FOREIGN KEY (teacher_id) REFERENCES "user"(user_id)
 );
 
--- Tabla de lecciones
 CREATE TABLE lesson (
     lesson_id SERIAL PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
@@ -34,7 +31,6 @@ CREATE TABLE lesson (
     CONSTRAINT fk_lesson_course FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
--- Tabla de inscripciones de estudiantes a cursos
 CREATE TABLE enrollment (
     enrollment_id SERIAL PRIMARY KEY,
     student_id INT NOT NULL,
@@ -47,7 +43,6 @@ CREATE TABLE enrollment (
     CONSTRAINT fk_enrollment_course FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
--- Tabla de exámenes
 CREATE TABLE exam (
     exam_id SERIAL PRIMARY KEY,
     course_id INT NOT NULL UNIQUE,
@@ -56,7 +51,6 @@ CREATE TABLE exam (
     CONSTRAINT fk_exam_course FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
--- Tabla de preguntas
 CREATE TABLE question (
     question_id SERIAL PRIMARY KEY,
     exam_id INT NOT NULL,
@@ -69,7 +63,6 @@ CREATE TABLE question (
     CONSTRAINT fk_question_exam FOREIGN KEY (exam_id) REFERENCES exam(exam_id)
 );
 
--- Tabla de respuestas de estudiantes a exámenes
 CREATE TABLE answer (
     answer_id SERIAL PRIMARY KEY,
     question_id INT NOT NULL,
@@ -80,15 +73,14 @@ CREATE TABLE answer (
     CONSTRAINT fk_answer_student FOREIGN KEY (student_id) REFERENCES "user"(user_id)
 );
 
--- Tabla de pagos (simulado o real)
 CREATE TABLE payment (
     payment_id SERIAL PRIMARY KEY,
     student_id INT NOT NULL,
     course_id INT NOT NULL,
     amount NUMERIC(10, 2) NOT NULL,
-    status VARCHAR(20) DEFAULT 'PENDIENTE', -- COMPLETADO, RECHAZADO
+    status VARCHAR(20) DEFAULT 'PENDIENTE' CHECK (status IN ('PENDIENTE', 'COMPLETADO', 'RECHAZADO')),
     payment_date TIMESTAMPTZ DEFAULT NOW(),
-    payment_method VARCHAR(50), -- YAPE, STRIPE, MERCADO_PAGO, etc.
+    payment_method VARCHAR(50) CHECK (payment_method IN ('YAPE', 'TARJETA_CREDITO')),
     CONSTRAINT fk_payment_student FOREIGN KEY (student_id) REFERENCES "user"(user_id),
     CONSTRAINT fk_payment_course FOREIGN KEY (course_id) REFERENCES course(course_id)
 );

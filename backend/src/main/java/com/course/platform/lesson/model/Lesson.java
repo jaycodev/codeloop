@@ -1,4 +1,4 @@
-package com.course.platform.lesson;
+package com.course.platform.lesson.model;
 
 import com.course.platform.course.Course;
 

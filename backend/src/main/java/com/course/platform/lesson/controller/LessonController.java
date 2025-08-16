@@ -1,4 +1,4 @@
-package com.course.platform.lesson;
+package com.course.platform.lesson.controller;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import com.course.platform.lesson.dto.CreateLessonDto;
 import com.course.platform.lesson.dto.LessonDetailDto;
 import com.course.platform.lesson.dto.LessonListDto;
 import com.course.platform.lesson.dto.UpdateLessonDto;
+import com.course.platform.lesson.service.LessonService;
 import com.course.platform.shared.util.ApiError;
 import com.course.platform.shared.util.ApiResponse;
 
