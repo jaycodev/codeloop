@@ -1,5 +1,7 @@
 package com.course.platform.lesson;
 
+import com.course.platform.course.Course;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,10 +25,9 @@ public class Lesson {
     @Column(columnDefinition = "TEXT")
     private String videoUrl;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "course_id", nullable = false)
-    @Column(name = "course_id", nullable = false)
-    private Integer courseId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
     @Builder.Default
     private Integer orderNum = 0;
