@@ -39,6 +39,16 @@ public class LessonController {
         }
         return ResponseEntity.ok(lessons);
     }
+    
+    @GetMapping("/course/{id}")
+    public ResponseEntity<?> listByCourse(@PathVariable Integer idCourse) {
+        List<LessonListDto> lessons = lessonService.getListByCourse(idCourse);
+        if (lessons.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(new ApiError(false, "No lessons found.", "no_content", 204));
+        }
+        return ResponseEntity.ok(lessons);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Integer id) {
