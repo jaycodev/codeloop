@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.course.platform.enrollment.dto.EnrollmentCreateOrUpdateDto;
 import com.course.platform.shared.util.ApiError;
 import com.course.platform.shared.util.ApiResponse;
 
@@ -45,9 +46,9 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Enrollment enrollment) {
+    public ResponseEntity<?> create(@RequestBody EnrollmentCreateOrUpdateDto enrollmentCreateDto) {
         try {
-            Enrollment created = enrollmentService.create(enrollment);
+            Enrollment created = enrollmentService.create(enrollmentCreateDto);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(true, created));
         } catch (Exception e) {
@@ -57,7 +58,7 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Enrollment enrollmentDetails) {
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody EnrollmentCreateOrUpdateDto enrollmentDetails) {
         try {
             Enrollment updated = enrollmentService.update(id, enrollmentDetails);
             return ResponseEntity.ok(new ApiResponse(true, updated));

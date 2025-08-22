@@ -32,6 +32,10 @@ public class LessonService {
     public List<LessonListDto> getList() {
         return lessonRepository.findList();
     }
+    
+    public List<LessonListDto> getListByCourse(int idCourse) {
+        return lessonRepository.findByCourseId(idCourse);
+    }
 
     public Optional<Lesson> findById(Integer lessonId) {
         return lessonRepository.findById(lessonId);

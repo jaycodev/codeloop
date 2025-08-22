@@ -4,6 +4,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.course.platform.course.CourseRepository;
+import com.course.platform.enrollment.dto.EnrollmentCreateOrUpdateDto;
+import com.course.platform.user.UserRepository;
+
 import java.util.List;
 
 @Service
@@ -11,31 +15,53 @@ public class EnrollmentService {
 
     @Autowired
     private EnrollmentRepository enrollmentRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private CourseRepository courseRepository;
 
     public List<Enrollment> list() {
         return enrollmentRepository.findAll();
     }
+    
+    public Enrollment create(EnrollmentCreateOrUpdateDto dto) {
+        
+    	Enrollment enrollment = new Enrollment();
+        
+    	enrollment.setStudent(userRepository.findById(dto.getIdStudent())
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado")));
+        
+        enrollment.setCourse(courseRepository.findById(dto.getIdCourse())
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado")));
+        
+        enrollment.setEnrollmentDate(dto.getEnrollmentDate());
+        enrollment.setProgress(dto.getProgress());
+        enrollment.setStatus("ACTIVO");
 
-    public Enrollment create(Enrollment enrollment) {
-    	
         return enrollmentRepository.save(enrollment);
     }
+    
+    
 
     public Enrollment search(Integer id) {
         return enrollmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Enrollment not found with id: " + id));
     }
 
-    public Enrollment update(Integer id, Enrollment enrollmentDetails) {
+    public Enrollment update(Integer id, EnrollmentCreateOrUpdateDto enrollmentDetails) {
         Enrollment existing = enrollmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Enrollment not found with id: " + id));
 
-        if (enrollmentDetails.getStudent() != null) {
-            existing.setStudent(enrollmentDetails.getStudent());
-        }
-        if (enrollmentDetails.getCourse() != null) {
-            existing.setCourse(enrollmentDetails.getCourse());
-        }
+        if (enrollmentDetails.getIdStudent() != null)
+        existing.setStudent(userRepository.findById(enrollmentDetails.getIdStudent())
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado")));
+        
+        if (enrollmentDetails.getIdCourse() != null)
+        existing.setCourse(courseRepository.findById(enrollmentDetails.getIdCourse())
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado")));
+            
         if (enrollmentDetails.getEnrollmentDate() != null) {
             existing.setEnrollmentDate(enrollmentDetails.getEnrollmentDate());
         }
