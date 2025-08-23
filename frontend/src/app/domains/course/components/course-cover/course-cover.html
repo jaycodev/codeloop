@@ -13,7 +13,7 @@
       <img *ngIf="profileImage" [src]="profileImage" [alt]="profileName ?? 'profile'"
            class="w-14 h-14 rounded-full object-cover border-2 border-white shadow-md" />
       <div *ngIf="course.teacher?.name" class="mt-2 text-sm font-medium drop-shadow">
-        {{ profileName }}
+        {{ course.teacher.name }}
       </div>
     </div>
 

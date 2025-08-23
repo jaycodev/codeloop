@@ -4,10 +4,11 @@ import { CourseService } from '../../../domains/course/services/course.service';
 import { Course } from '../../../domains/course/models/course.model';
 import { ApiError } from '../../../shared/models/api-error.model';
 import { CourseCoverComponent } from '../../../domains/course/components/course-cover/course-cover';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-description-course',
-  imports: [CourseCoverComponent],
+  imports: [CourseCoverComponent,CommonModule],
   templateUrl: './description-course.html'
 })
 export class CourseDescription implements OnInit {
