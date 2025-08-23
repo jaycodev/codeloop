@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import {  } from './domains/course/components/listado-prueba/listado-prueba';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [ButtonModule,DatePickerModule,FormsModule],
-  templateUrl: './app.html',
+  imports: [RouterOutlet],
+  template: `
+    <router-outlet></router-outlet>
+  `
 })
 export class App {
   title = 'frontend';
