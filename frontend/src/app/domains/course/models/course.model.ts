@@ -1,8 +1,10 @@
+import { User } from "../../user/models/user.model";
+
 export interface Course {
   courseId: number;
   title: string;
   description: string;
-  teacherName: string;
+  teacher: User;
   price: number;
   createdAt: string; // ISO date string
 }
