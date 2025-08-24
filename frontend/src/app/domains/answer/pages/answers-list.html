@@ -1,0 +1,32 @@
+<div class="container">
+  <h1 class="text-primary">Respuestas de la Pregunta {{questionId}}</h1>
+
+  <table class="table table-primary table-bordered mt-4" *ngIf="answers.length > 0; else vacio">
+    <thead>
+      <tr>
+        <th>AnswerID</th>
+        <th>StudentID</th>
+        <th>Answer</th>
+        <th>¿Es correcta?</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(a of answers; track a.answerId){
+        <tr>
+          <td>{{ a.answerId }}</td>
+          <td>{{ a.studentId }}</td>
+          <td>{{ a.answer }}</td>
+          <td>
+            <span class="badge" [class.bg-success]="a.isCorrect" [class.bg-danger]="!a.isCorrect">
+              {{ a.isCorrect ? 'Sí' : 'No' }}
+            </span>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <ng-template #vacio>
+    <div class="alert alert-info mt-3">No hay respuestas para esta pregunta.</div>
+  </ng-template>
+</div>
