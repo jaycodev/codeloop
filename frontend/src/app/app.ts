@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {  } from './domains/course/components/listado-prueba/listado-prueba';
 import { RouterOutlet } from '@angular/router';
 
 
