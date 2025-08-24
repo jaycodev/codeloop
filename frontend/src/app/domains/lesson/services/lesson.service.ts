@@ -5,7 +5,7 @@ import { LessonListDto } from '../models/dto/lesson-list.dto';
 import { LessonDetailDto } from '../models/dto/lesson-detail.dto';
 import { LessonCreateDto } from '../models/dto/lesson-create.dto';
 import { LessonUpdateDto } from '../models/dto/lesson-update.dto';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 import { ApiError } from '../../../shared/models/api-error.model';
 import { ApiResponse } from '../../../shared/models/api-response.model';
 

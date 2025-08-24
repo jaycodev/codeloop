@@ -1,52 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CourseService } from '../../../domains/course/services/course.service';
-import { Course } from '../../../domains/course/models/course.model';
-import { ApiError } from '../../../shared/models/api-error.model';
-import { CourseCoverComponent } from '../../../domains/course/components/course-cover/course-cover';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Course, CourseService } from '../../../domains/course/services/course-service';
 
 @Component({
   selector: 'app-description-course',
-  imports: [CourseCoverComponent,CommonModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './description-course.html'
 })
-export class CourseDescription implements OnInit {
-  courseId: number | null = null;
-  course?: Course;
-  loading = false;
-  error?: ApiError;
+export class CourseDescription {
 
-  constructor(private route: ActivatedRoute, private courseService: CourseService) {}
+  course: Course = { title: '', description: '', price: 0, teacherId: 0 };
+
+  constructor(
+    private route: ActivatedRoute,
+    private courseService: CourseService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    // Lee el parámetro de ruta :id (ruta ejemplo: /course-descripcion/1)
-    this.route.paramMap.subscribe(params => {
-      const idStr = params.get('id');
-      this.courseId = idStr ? Number(idStr) : null;
-      if (this.courseId !== null) {
-        this.loadCourse(this.courseId);
-      }
-    });
-  }
-
-  private loadCourse(id: number) {
-    console.log('Cargando curso con id:', id);
-    this.loading = true;
-    this.error = undefined;
-    console.log(this.course);
-    this.courseService.getCourseById(id).subscribe({
-      next: (c) => {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.courseService.buscarPorId(parseInt(id)).subscribe(c => {
         this.course = c;
-        this.loading = false;
-        console.log(this.course);
-      },
-      error: (err: ApiError) => {
-        this.error = err;
-        this.course = undefined;
-        this.loading = false;
-      }
-    });
-    console.log(this.course);
+        this.cdr.markForCheck();
+      });
+    }
   }
 }

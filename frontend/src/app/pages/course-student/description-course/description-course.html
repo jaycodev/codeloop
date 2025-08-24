@@ -1,1 +1,6 @@
-<app-course-cover *ngIf="course" [course]="course"></app-course-cover>
+<div *ngIf="course">
+  <h2>{{ course.title }}</h2>
+  <p>{{ course.description }}</p>
+  <p><strong>Precio:</strong> S/ {{ course.price }}</p>
+  <p><strong>ID del Profesor:</strong> {{ course.teacherId }}</p>
+</div>
