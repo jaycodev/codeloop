@@ -1,8 +1,7 @@
 package com.course.platform.user;
 
-import com.course.platform.shared.util.ApiError;
-import com.course.platform.shared.util.ApiResponse;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,67 +11,42 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
+	@Autowired
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping
-    public ResponseEntity<?> list() {
+    public ResponseEntity<List<User>> list() {
         List<User> users = userService.list();
         if (users.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ApiError(false, "No users found.", "no_content", 204));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Integer id) {
-        try {
-            User user = userService.search(id);
-            return ResponseEntity.ok(user);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, "User not found.", "not_found", 404));
-        }
+    public ResponseEntity<User> get(@PathVariable Integer id) {
+        User user = userService.search(id); // lanza EntityNotFoundException si no existe
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody User user) {
-        try {
-            User created = userService.create(user);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse(true, created));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiError(false, e.getMessage(), "creation_failed", 400));
-        }
+    public ResponseEntity<User> create(@RequestBody User user) {
+        User created = userService.create(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody User userDetails) {
-        try {
-            User updated = userService.update(id, userDetails);
-            return ResponseEntity.ok(new ApiResponse(true, updated));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, e.getMessage(), "update_failed", 404));
-        }
+    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User userDetails) {
+        User updated = userService.update(id, userDetails);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        try {
-            userService.delete(id);
-            return ResponseEntity.ok(new ApiResponse(true, "User deleted successfully"));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, e.getMessage(), "delete_failed", 404));
-        }
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build(); // 204 vacío
     }
 }

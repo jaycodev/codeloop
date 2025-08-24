@@ -7,50 +7,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.course.platform.shared.util.ApiError;
-import com.course.platform.shared.util.ApiResponse;
-
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/exams")
+@RequiredArgsConstructor
 public class ExamController {
 
+	@Autowired
     private final ExamService examService;
 
-    @Autowired
-    public ExamController(ExamService examService) {
-        this.examService = examService;
-    }
-
     @GetMapping
-    public ResponseEntity<?> list() {
+    public ResponseEntity<List<Exam>> list() {
         List<Exam> exams = examService.listExam();
         if (exams.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ApiError(false, "No exams found.", "no_content", 204));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(exams);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Integer id) {
-        try {
-            Exam exam = examService.search(id);
-            return ResponseEntity.ok(exam);
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, "Exam not found.", "not_found", 404));
-        }
+    public ResponseEntity<Exam> get(@PathVariable Integer id) {
+        Exam exam = examService.search(id); // lanza excepción si no existe
+        return ResponseEntity.ok(exam);
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<?> listByCourse(@PathVariable("courseId") Integer courseId) {
+    public ResponseEntity<List<Exam>> listByCourse(@PathVariable("courseId") Integer courseId) {
         List<Exam> exams = examService.listExamByCourse(courseId);
         if (exams.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ApiError(false, "No exams found for this course.", "no_content", 204));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.ok(new ApiResponse(true, exams));
+        return ResponseEntity.ok(exams);
     }
 }

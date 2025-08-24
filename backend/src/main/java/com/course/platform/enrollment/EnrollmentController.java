@@ -8,74 +8,50 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.course.platform.enrollment.dto.EnrollmentCreateOrUpdateDto;
-import com.course.platform.shared.util.ApiError;
-import com.course.platform.shared.util.ApiResponse;
-
-import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/enrollments")
+@RequiredArgsConstructor
 public class EnrollmentController {
 
+	@Autowired
     private final EnrollmentService enrollmentService;
-
-    @Autowired
-    public EnrollmentController(EnrollmentService enrollmentService) {
-        this.enrollmentService = enrollmentService;
-    }
+    
 
     @GetMapping
-    public ResponseEntity<?> list() {
+    public ResponseEntity<List<Enrollment>> list() {
         List<Enrollment> enrollments = enrollmentService.list();
         if (enrollments.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ApiError(false, "No enrollments found.", "no_content", 204));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(enrollments);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Integer id) {
-        try {
-            Enrollment enrollment = enrollmentService.search(id);
-            return ResponseEntity.ok(enrollment);
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, "Enrollment not found.", "not_found", 404));
-        }
+    public ResponseEntity<Enrollment> get(@PathVariable Integer id) {
+        Enrollment enrollment = enrollmentService.search(id); // si no existe lanza excepción
+        return ResponseEntity.ok(enrollment);
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody EnrollmentCreateOrUpdateDto enrollmentCreateDto) {
-        try {
-            Enrollment created = enrollmentService.create(enrollmentCreateDto);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new ApiResponse(true, created));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ApiError(false, e.getMessage(), "creation_failed", 400));
-        }
+    public ResponseEntity<Enrollment> create(@RequestBody EnrollmentCreateOrUpdateDto enrollmentCreateDto) {
+        Enrollment created = enrollmentService.create(enrollmentCreateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody EnrollmentCreateOrUpdateDto enrollmentDetails) {
-        try {
-            Enrollment updated = enrollmentService.update(id, enrollmentDetails);
-            return ResponseEntity.ok(new ApiResponse(true, updated));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, e.getMessage(), "update_failed", 404));
-        }
+    public ResponseEntity<Enrollment> update(
+            @PathVariable Integer id,
+            @RequestBody EnrollmentCreateOrUpdateDto enrollmentDetails) {
+
+        Enrollment updated = enrollmentService.update(id, enrollmentDetails);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        try {
-            enrollmentService.delete(id);
-            return ResponseEntity.ok(new ApiResponse(true, "Enrollment deleted successfully"));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ApiError(false, e.getMessage(), "delete_failed", 404));
-        }
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        enrollmentService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
