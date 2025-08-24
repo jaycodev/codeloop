@@ -2,14 +2,9 @@ package com.course.platform.question;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,37 +13,47 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class QuestionController {
 
-	private final QuestionService questionService;
+    private final QuestionService questionService;
 
-	@GetMapping("/list")
-	public List<Question> list(){
-		return questionService.list();
-	}
+    @GetMapping
+    public ResponseEntity<List<Question>> list() {
+        List<Question> questions = questionService.list();
+        if (questions.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(questions);
+    }
 
     @GetMapping("/{id}")
-    public Question findById(@PathVariable("id") Integer id) {
-    	return questionService.findById(id); 
-	}
-    
-    @PostMapping("/new")
-    public Question create(@RequestBody Question q) {
-    	return questionService.create(q); 
-	}
+    public ResponseEntity<Question> findById(@PathVariable Integer id) {
+        Question question = questionService.findById(id); // lanza EntityNotFoundException si no existe
+        return ResponseEntity.ok(question);
+    }
+
+    @PostMapping
+    public ResponseEntity<Question> create(@RequestBody Question q) {
+        Question created = questionService.create(q);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
 
     @PutMapping("/{id}")
-    public Question update(@PathVariable("id") Integer id, @RequestBody Question q) {
-    	return questionService.update(id, q); 
-	}
+    public ResponseEntity<Question> update(@PathVariable Integer id, @RequestBody Question q) {
+        Question updated = questionService.update(id, q);
+        return ResponseEntity.ok(updated);
+    }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Integer id) {
-    	questionService.delete(id);
-    	
-    	return "Question deleted successfully";
-	}
-    
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        questionService.delete(id);
+        return ResponseEntity.noContent().build(); // 204 vacío en borrado exitoso
+    }
+
     @GetMapping("/exam/{examId}")
-    public List<Question> byExam(@PathVariable("examId") Integer examId) {
-    	return questionService.listByExam(examId); 
-	}
+    public ResponseEntity<List<Question>> byExam(@PathVariable Integer examId) {
+        List<Question> questions = questionService.listByExam(examId);
+        if (questions.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(questions);
+    }
 }

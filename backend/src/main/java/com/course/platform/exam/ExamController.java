@@ -3,33 +3,42 @@ package com.course.platform.exam;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/exams")
-@RequiredArgsConstructor
 public class ExamController {
 
-    @Autowired
-    private final ExamService examServices;
+    private final ExamService examService;
 
-    @GetMapping("/list")
-    public List<Exam> list() {
-        return examServices.listExam();
+    @Autowired
+    public ExamController(ExamService examService) {
+        this.examService = examService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Exam>> list() {
+        List<Exam> exams = examService.listExam();
+        if (exams.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(exams);
     }
 
     @GetMapping("/{id}")
-    public Exam search(@PathVariable("id") Integer id) {
-        return examServices.search(id);
+    public ResponseEntity<Exam> get(@PathVariable Integer id) {
+        Exam exam = examService.search(id); // lanza excepción si no existe
+        return ResponseEntity.ok(exam);
     }
 
-    @GetMapping("/find/exams/{id}")
-    public List<Exam> listExamByCourse(@PathVariable("courseid") Integer courseid) {
-        return examServices.listExamByCourse(courseid);
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<Exam>> listByCourse(@PathVariable("courseId") Integer courseId) {
+        List<Exam> exams = examService.listExamByCourse(courseId);
+        if (exams.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(exams);
     }
 }

@@ -2,34 +2,44 @@ package com.course.platform.answer;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/answers")
-@RequiredArgsConstructor
 public class AnswerController {
-	
-	private final AnswerService answerService;
-	
-	@PostMapping("/submit")
-	public Answer submit(@RequestBody Answer a) {
-		return answerService.submit(a);
-	}
-	
-	@GetMapping("/question/{questionId}")
-	public List<Answer> findByQuestion(@PathVariable("questionId") Integer questionId){
-		return answerService.findByQuestion(questionId);
-	}
-	
-//	@GetMapping("/exam/{examId}/student/{studentId}")
-//	public List<Answer> byExamAndStudent(@PathVariable("examId") Integer examId, @PathVariable("studentId") Integer studentId){
-//		return answerService.findByExamAndStudent(examId, studentId);
-//	}
+
+    private final AnswerService answerService;
+
+    @Autowired
+    public AnswerController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Answer> submit(@RequestBody Answer a) {
+        Answer submitted = answerService.submit(a);
+        return ResponseEntity.status(HttpStatus.CREATED).body(submitted);
+    }
+
+    @GetMapping("/question/{questionId}")
+    public ResponseEntity<List<Answer>> findByQuestion(@PathVariable Integer questionId) {
+        List<Answer> answers = answerService.findByQuestion(questionId);
+        if (answers.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(answers);
+    }
+
+    // Si deseas habilitarlo:
+    // @GetMapping("/exam/{examId}/student/{studentId}")
+    // public ResponseEntity<List<Answer>> byExamAndStudent(@PathVariable Integer examId, @PathVariable Integer studentId) {
+    //     List<Answer> answers = answerService.findByExamAndStudent(examId, studentId);
+    //     if (answers.isEmpty()) {
+    //         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    //     }
+    //     return ResponseEntity.ok(answers);
+    // }
 }
