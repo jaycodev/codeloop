@@ -35,6 +35,19 @@ cargarCourses(){
     })
   }
 
-  //FALTA ELIMINAR
+
+  eliminar(id: number){
+    if(confirm('Está seguro de eliminar este curso?')){
+      this.CourseService.eliminar(id).subscribe({
+        next: (resp) => {
+          alert(resp)
+          this.cargarCourses()
+        },
+        error: (err) => {
+          console.error(`Error en cursos => ${JSON.stringify(err)}`)
+        }
+      })
+    }
+  }
   
 }

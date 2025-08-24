@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CourseCreateDTO } from '../models/dto/course-create.dto';
 
 export interface Course {
   courseId?: number;
@@ -21,7 +22,7 @@ export class CourseService {
     return this.http.get<Course[]>(`${this.urlBase}`);
   }
 
-  crear(course: Course): Observable<any> {
+  crear(course: CourseCreateDTO): Observable<any> {
     return this.http.post(`${this.urlBase}`, course);
   }
 
@@ -29,5 +30,12 @@ export class CourseService {
     return this.http.get<Course>(`${this.urlBase}/${id}`);
   }
 
+  actualizar(id: number, course: CourseCreateDTO): Observable<Course>{
+    return this.http.put<Course>(`${this.urlBase}/${id}`, course)
+  }
+
+  eliminar(id: number): Observable<string> {
+    return this.http.delete<string>(`${this.urlBase}/${id}`, { responseType: 'text' as 'json'})
+  }
   // Agrega métodos de actualizar y eliminar si luego implementas esos endpoints
 }
