@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import { Answer } from '../models/answer.model';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 import { ApiError } from '../../../shared/models/api-error.model';
 import { ApiResponse } from '../../../shared/models/api-response.model';
 

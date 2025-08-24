@@ -1,0 +1,29 @@
+<h1>Listado de Cursos</h1>
+
+<div *ngIf="courses.length === 0">
+  <p>No hay cursos registrados.</p>
+</div>
+
+<div *ngIf="courses.length > 0">
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>ID Docente</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of courses">
+        <td>{{ curso.courseId }}</td>
+        <td>{{ curso.title }}</td>
+        <td>{{ curso.description }}</td>
+        <td>{{ curso.price }}</td>
+        <td>{{ curso.teacherId }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import { Enrollment } from '../models/enrollment.model';
 import { EnrollmentCreateOrUpdateDto } from '../models/dto/enrollment-create-update.dto';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment.prod';
 import { ApiError } from '../../../shared/models/api-error.model';
 
 @Injectable({ providedIn: 'root' })
