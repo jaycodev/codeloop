@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Course, CourseService } from '../../../domains/course/services/course-service';
+import { Course, CourseService } from '../../domains/course/services/course-service';
 
 @Component({
   selector: 'app-description-course',
