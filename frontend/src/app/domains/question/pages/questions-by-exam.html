@@ -1,0 +1,33 @@
+<div class="container">
+  <h1 class="text-primary">Preguntas del Examen {{ examId }}</h1>
+
+  <table class="table table-primary table-bordered mt-4" *ngIf="preguntas.length > 0; else vacio">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Enunciado</th>
+        <th>Opciones</th>
+        <th>Correcta</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(q of preguntas; track q.questionId){
+        <tr>
+          <td>{{ q.questionId }}</td>
+          <td>{{ q.statement }}</td>
+          <td>
+            <div *ngIf="q.optionA">A. {{ q.optionA }}</div>
+            <div *ngIf="q.optionB">B. {{ q.optionB }}</div>
+            <div *ngIf="q.optionC">C. {{ q.optionC }}</div>
+            <div *ngIf="q.optionD">D. {{ q.optionD }}</div>
+          </td>
+          <td><b>{{ q.correctAnswer }}</b></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <ng-template #vacio>
+    <div class="alert alert-info mt-3">No hay preguntas para este examen.</div>
+  </ng-template>
+</div>

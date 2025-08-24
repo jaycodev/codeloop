@@ -1,0 +1,36 @@
+<div class="container">
+  <h1 class="text-primary">Listado de Preguntas</h1>
+
+  <button class="btn btn-success me-2" [routerLink]="['/questions/new']">Nueva Pregunta</button>
+
+  <table class="table table-primary table-bordered mt-4" *ngIf="preguntas.length > 0; else vacio">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>ExamID</th>
+        <th>Enunciado</th>
+        <th>RptaCorrecta</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(q of preguntas; track q.questionId){
+        <tr>
+          <td>{{ q.questionId }}</td>
+          <td>{{ q.examId }}</td>
+          <td>{{ q.statement }}</td>
+          <td>{{ q.correctAnswer }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-2" [routerLink]="['/questions/edit', q.questionId]">Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="eliminar(q.questionId)">Eliminar</button>
+            <button class="btn btn-sm btn-info me-2" [routerLink]="['/questions', q.questionId]">Ver</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <ng-template #vacio>
+    <div class="alert alert-info mt-3">No hay preguntas.</div>
+  </ng-template>
+</div>

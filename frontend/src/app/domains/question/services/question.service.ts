@@ -1,110 +1,34 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, map, catchError, throwError } from 'rxjs';
-import { environment } from '../../../../environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Question } from '../models/question.model';
-import { ApiError } from '../../../shared/models/api-error.model';
-import { ApiResponse } from '../../../shared/models/api-response.model';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
-  private baseUrl = `${environment.apiUrl}/questions`;
+  private http = inject(HttpClient);
+  private readonly urlBase = 'http://localhost:8080/questions';
 
-  constructor(private http: HttpClient) {}
-
-  // GET /questions
-  getList(): Observable<Question[]> {
-    return this.http.get<ApiResponse<Question[]> | ApiError | Question[]>(this.baseUrl).pipe(
-      map(res => {
-        if (Array.isArray(res)) return res as Question[];
-        if ((res as ApiResponse<Question[]>).success === true && (res as ApiResponse<Question[]>).data)
-          return (res as ApiResponse<Question[]>).data;
-        if ((res as ApiError).success === false) throw res as ApiError;
-        return [] as Question[];
-      }),
-      catchError(err => this.handleHttpError(err))
-    );
+  listar(): Observable<Question[]> {
+    return this.http.get<Question[]>(this.urlBase);
   }
 
-  // GET /questions/{id}
-  getById(id: number): Observable<Question> {
-    const url = `${this.baseUrl}/${id}`;
-    return this.http.get<ApiResponse<Question> | ApiError | Question>(url).pipe(
-      map(res => {
-        if ((res as ApiResponse<Question>).success === true && (res as ApiResponse<Question>).data)
-          return (res as ApiResponse<Question>).data;
-        if ((res as ApiError).success === false) throw res as ApiError;
-        return res as Question;
-      }),
-      catchError(err => this.handleHttpError(err))
-    );
+  buscarPorId(id: number): Observable<Question> {
+    return this.http.get<Question>(`${this.urlBase}/${id}`);
   }
 
-  // POST /questions
-  create(dto: Question): Observable<Question> {
-    return this.http.post<ApiResponse<Question> | ApiError>(this.baseUrl, dto).pipe(
-      map(res => {
-        if ((res as ApiResponse<Question>).success === true && (res as ApiResponse<Question>).data)
-          return (res as ApiResponse<Question>).data;
-        if ((res as ApiError).success === false) throw res as ApiError;
-        return res as unknown as Question;
-      }),
-      catchError(err => this.handleHttpError(err))
-    );
+  listarPorExamen(examId: number): Observable<Question[]> {
+    return this.http.get<Question[]>(`${this.urlBase}/exam/${examId}`);
   }
 
-  // PUT /questions/{id}
-  update(id: number, dto: Partial<Question>): Observable<Question> {
-    const url = `${this.baseUrl}/${id}`;
-    return this.http.put<ApiResponse<Question> | ApiError>(url, dto).pipe(
-      map(res => {
-        if ((res as ApiResponse<Question>).success === true && (res as ApiResponse<Question>).data)
-          return (res as ApiResponse<Question>).data;
-        if ((res as ApiError).success === false) throw res as ApiError;
-        return res as unknown as Question;
-      }),
-      catchError(err => this.handleHttpError(err))
-    );
+  crear(q: Question): Observable<Question> {
+    return this.http.post<Question>(this.urlBase, q);
   }
 
-  // DELETE /questions/{id}
-  delete(id: number): Observable<void> {
-    const url = `${this.baseUrl}/${id}`;
-    return this.http.delete<ApiResponse<any> | ApiError>(url).pipe(
-      map(res => {
-        if ((res as ApiError).success === false) throw res as ApiError;
-        return void 0;
-      }),
-      catchError(err => this.handleHttpError(err))
-    );
+  actualizar(id: number, q: Question): Observable<Question> {
+    return this.http.put<Question>(`${this.urlBase}/${id}`, q);
   }
 
-  // GET /questions/exam/{examId}
-  getByExam(examId: number): Observable<Question[]> {
-    const url = `${this.baseUrl}/exam/${examId}`;
-    return this.http.get<ApiResponse<Question[]> | ApiError | Question[]>(url).pipe(
-      map(res => {
-        if (Array.isArray(res)) return res as Question[];
-        if ((res as ApiResponse<Question[]>).success === true && (res as ApiResponse<Question[]>).data)
-          return (res as ApiResponse<Question[]>).data;
-        if ((res as ApiError).success === false) throw res as ApiError;
-        return [] as Question[];
-      }),
-      catchError(err => this.handleHttpError(err))
-    );
-  }
-
-  // Normaliza HttpErrorResponse a ApiError y propaga
-  private handleHttpError(err: any): Observable<never> {
-    if (err instanceof HttpErrorResponse) {
-      const apiError: ApiError = {
-        success: false,
-        message: err.error?.message ?? err.message ?? 'Error desconocido',
-        errorType: err.error?.errorType ?? err.statusText ?? 'http_error',
-        statusCode: err.status ?? 0
-      };
-      return throwError(() => apiError);
-    }
-    return throwError(() => err); // ya es ApiError u otro objeto lanzado en map
+  eliminar(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.urlBase}/${id}`);
   }
 }
