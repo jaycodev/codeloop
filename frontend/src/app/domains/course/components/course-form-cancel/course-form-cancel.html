@@ -1,0 +1,40 @@
+<h2>{{ tipoEdicion ? 'Editar Curso' : 'Nuevo Curso' }}</h2>
+
+<form (ngSubmit)="guardar()">
+  <div>
+    <label for="title">Título:</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      [(ngModel)]="course.title"
+      required
+    />
+  </div>
+
+  <div>
+    <label for="description">Descripción:</label>
+    <textarea
+      id="description"
+      name="description"
+      [(ngModel)]="course.description"
+      required
+    ></textarea>
+  </div>
+
+  <div>
+    <label for="price">Precio:</label>
+    <input
+      type="number"
+      id="price"
+      name="price"
+      [(ngModel)]="course.price"
+      required
+    />
+  </div>
+
+  <div>
+    <button type="submit">{{ tipoEdicion ? 'Actualizar' : 'Guardar' }}</button>
+    <button type="button" (click)="cancelar()">Cancelar</button>
+  </div>
+</form>

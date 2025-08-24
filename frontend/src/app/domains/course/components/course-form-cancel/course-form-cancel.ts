@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Course, CourseService } from '../../services/course-service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-form-cancel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './course-form-cancel.html'
 })
 export class CourseFormCancel {
@@ -32,11 +33,18 @@ export class CourseFormCancel {
     }
   }
 
-guardar(){
+  guardar(){
+    if(this.tipoEdicion){
+      this.CourseService.actualizar(this.course.courseId!, this.course).subscribe(() => {
+        this.router.navigate(['/courses'])
+      })
+    }
+    else{
       this.CourseService.crear(this.course).subscribe(() => {
         this.router.navigate(['/courses'])
       })
     }
+  }
 
 cancelar(){
     this.router.navigate(['/courses'])
