@@ -8,17 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.course.platform.enrollment.dto.EnrollmentCreateOrUpdateDto;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/enrollments")
+@RequiredArgsConstructor
 public class EnrollmentController {
 
+	@Autowired
     private final EnrollmentService enrollmentService;
-
-    @Autowired
-    public EnrollmentController(EnrollmentService enrollmentService) {
-        this.enrollmentService = enrollmentService;
-    }
+    
 
     @GetMapping
     public ResponseEntity<List<Enrollment>> list() {
