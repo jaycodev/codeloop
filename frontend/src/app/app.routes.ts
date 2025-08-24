@@ -1,9 +1,24 @@
 import { Routes } from '@angular/router';
-import { ListadoPrueba } from './domains/course/components/listado-prueba/listado-prueba';
-import { CourseDescription } from './pages/course-student/description-course/descripcion-curso';
+
+// Imports Answer
+import { AnswersList } from './domains/answer/components/answer.component';
+
+// Imports Question
+import { QuestionsList } from './domains/question/components/question.component';
+import { QuestionsByExam } from './domains/question/components/question-by-exam.component';
+import { QuestionsForm } from './domains/question/components/question-form.component';
+import { QuestionDetail } from './domains/question/components/question-detail.component';
 
 export const routes: Routes = [
-  { path: '', component: ListadoPrueba }, // Ruta raíz
-  { path: 'cursos-descripcion/:id', component: CourseDescription }, // Ruta con parámetro id
- // { path: '**', redirectTo: '' } // Redirección si la ruta no existe
-];
+  { path: '', redirectTo: 'questions', pathMatch: 'full' }, // Ruta raíz
+
+  // Answers
+  { path: 'answers/:questionId', component: AnswersList },
+
+  // Questions
+  { path: 'questions', component: QuestionsList },
+  { path: 'questions/:id', component: QuestionDetail },
+  { path: 'questions/new', component: QuestionsForm },
+  { path: 'questions/edit/:id', component: QuestionsForm },
+  { path: 'questions/exam/:examId', component: QuestionsByExam }
+]
