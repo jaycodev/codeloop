@@ -20,6 +20,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { EnrollmentService } from '@/domains/enrollment/services/enrollment.service';
 import { Enrollment } from '@/domains/enrollment/models/enrollment.model';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 interface Column {
   field: string;
@@ -53,19 +54,20 @@ interface ExportColumn {
     TagModule,
     InputIconModule,
     IconFieldModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ProgressBarModule
   ],
   template: `
-        <p-toolbar styleClass="mb-6">
+        <!-- <p-toolbar styleClass="mb-6">
             <ng-template #start>
-                <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2"  />
+                <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
                 <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined [disabled]="!selectedEnrollments || !selectedEnrollments.length" />
             </ng-template>
 
             <ng-template #end>
                 <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
             </ng-template>
-        </p-toolbar>
+        </p-toolbar> -->
 
         <p-table
             #dt
@@ -87,15 +89,15 @@ interface ExportColumn {
                     <h5 class="m-0">Manage Enrollment</h5>
                     <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                        <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
                     </p-iconfield>
                 </div>
             </ng-template>
             <ng-template #header>
                 <tr>
-                    <th style="width: 3rem">
+                    <!-- <th style="width: 3rem">
                         <p-tableHeaderCheckbox />
-                    </th>
+                    </th> -->
                     <th pSortableColumn="enrollmentId" style="min-width:16rem">
                         Id
                         <p-sortIcon field="id" />
@@ -116,23 +118,30 @@ interface ExportColumn {
                         Profesor
                         <p-sortIcon field="teacher" />
                     </th>
-                    <th style="min-width: 12rem"></th>
+                    <th pSortableColumn="progress" style="min-width: 12rem">
+                        Progreso
+                        <p-sortIcon field="progress" />
+                    </th>
+                    <!-- <th style="min-width: 12rem"></th> -->
                 </tr>
             </ng-template>
             <ng-template #body let-enrollment>
                 <tr>
-                    <td style="width: 3rem">
+                    <!-- <td style="width: 3rem">
                         <p-tableCheckbox [value]="enrollment" />
-                    </td>
+                    </td> -->
                     <td style="min-width: 12rem">{{ enrollment.enrollmentId }}</td>
                     <td style="min-width: 16rem">{{ enrollment.student.name }}</td>
                     <td style="min-width: 16rem">{{ enrollment.student.email }}</td>
                     <td style="min-width: 16rem">{{ enrollment.course.title }}</td>
                     <td style="min-width: 16rem">{{ enrollment.course.teacher.name }}</td>
-                    <td>
+                    <td style="min-width: 16rem">
+                      <p-progressBar [value]="enrollment.progress"/>
+                    </td>
+                    <!-- <td>
                         <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true"  />
                         <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true"  />
-                    </td>
+                    </td> -->
                 </tr>
             </ng-template>
         </p-table>
@@ -212,8 +221,6 @@ export class EnrollmentCrud implements OnInit {
 
   submitted: boolean = false;
 
-  statuses: any[] = [];
-
   @ViewChild('dt') dt!: Table;
 
   exportColumns: ExportColumn[] = [];
@@ -228,6 +235,7 @@ export class EnrollmentCrud implements OnInit {
 
   exportCSV() {
     if (this.dt) {
+      console.log(this.dt);
       this.dt.exportCSV();
     }
   }
@@ -247,7 +255,8 @@ export class EnrollmentCrud implements OnInit {
       { field: 'student', header: 'Student' },
       { field: 'email', header: 'Email' },
       { field: 'course', header: 'Course' },
-      { field: 'teacher', header: 'Teacher' }
+      { field: 'teacher', header: 'Teacher' },
+      { field: 'progress', header: 'Progress' }
     ];
 
     this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
@@ -258,120 +267,120 @@ export class EnrollmentCrud implements OnInit {
     console.log(value);
     table.filterGlobal(value, 'contains');
   }
-/*
+
   openNew() {
-    this.product = {};
+    this.enrollment = new Object() as Enrollment;
     this.submitted = false;
     this.enrollmentDialog = true;
   }
-
-  editProduct(product: Product) {
-    this.product = { ...product };
-    this.enrollmentDialog = true;
-  }
-
-  deleteSelectedProducts() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected enrollments?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.enrollments.set(this.enrollments().filter((val) => !this.selectedProducts?.includes(val)));
-        this.selectedProducts = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Products Deleted',
-          life: 3000
-        });
-      }
-    });
-  }
-
-  hideDialog() {
-    this.enrollmentDialog = false;
-    this.submitted = false;
-  }
-
-  deleteProduct(product: Product) {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.enrollments.set(this.enrollments().filter((val) => val.id !== product.id));
-        this.product = {};
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Deleted',
-          life: 3000
-        });
-      }
-    });
-  }
-
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.enrollments().length; i++) {
-      if (this.enrollments()[i].id === id) {
-        index = i;
-        break;
-      }
+  /*
+    editProduct(product: Product) {
+      this.product = { ...product };
+      this.enrollmentDialog = true;
     }
 
-    return index;
-  }
-
-  createId(): string {
-    let id = '';
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
+    deleteSelectedProducts() {
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to delete the selected enrollments?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.enrollments.set(this.enrollments().filter((val) => !this.selectedProducts?.includes(val)));
+          this.selectedProducts = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Products Deleted',
+            life: 3000
+          });
+        }
+      });
     }
-    return id;
-  }
 
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warn';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return 'info';
-    }
-  }
-
-  saveProduct() {
-    this.submitted = true;
-    let _enrollments = this.enrollments();
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        _enrollments[this.findIndexById(this.product.id)] = this.product;
-        this.enrollments.set([..._enrollments]);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Updated',
-          life: 3000
-        });
-      } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000
-        });
-        this.enrollments.set([..._enrollments, this.product]);
-      }
-
+    hideDialog() {
       this.enrollmentDialog = false;
-      this.product = {};
+      this.submitted = false;
     }
-  }*/
+
+    deleteProduct(product: Product) {
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to delete ' + product.name + '?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          this.enrollments.set(this.enrollments().filter((val) => val.id !== product.id));
+          this.product = {};
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Product Deleted',
+            life: 3000
+          });
+        }
+      });
+    }
+
+    findIndexById(id: string): number {
+      let index = -1;
+      for (let i = 0; i < this.enrollments().length; i++) {
+        if (this.enrollments()[i].id === id) {
+          index = i;
+          break;
+        }
+      }
+
+      return index;
+    }
+
+    createId(): string {
+      let id = '';
+      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for (var i = 0; i < 5; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return id;
+    }
+
+    getSeverity(status: string) {
+      switch (status) {
+        case 'INSTOCK':
+          return 'success';
+        case 'LOWSTOCK':
+          return 'warn';
+        case 'OUTOFSTOCK':
+          return 'danger';
+        default:
+          return 'info';
+      }
+    }
+
+    saveProduct() {
+      this.submitted = true;
+      let _enrollments = this.enrollments();
+      if (this.product.name?.trim()) {
+        if (this.product.id) {
+          _enrollments[this.findIndexById(this.product.id)] = this.product;
+          this.enrollments.set([..._enrollments]);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Product Updated',
+            life: 3000
+          });
+        } else {
+          this.product.id = this.createId();
+          this.product.image = 'product-placeholder.svg';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'Product Created',
+            life: 3000
+          });
+          this.enrollments.set([..._enrollments, this.product]);
+        }
+
+        this.enrollmentDialog = false;
+        this.product = {};
+      }
+    }*/
 }

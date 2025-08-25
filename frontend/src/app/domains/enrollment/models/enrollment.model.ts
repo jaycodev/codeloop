@@ -1,5 +1,5 @@
 import { User } from "@/domains/user/models/user.model";
-import { Course } from "@/student/courses/courses";
+import { Course } from "@/domains/course/models/course.model"
 
 export interface Enrollment {
   enrollmentId?: number;
