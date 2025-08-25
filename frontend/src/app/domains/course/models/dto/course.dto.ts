@@ -1,8 +1,9 @@
+import { User } from "@/domains/user/models/user.model";
+
 export interface CourseDTO {
-  courseId: number;
+  courseId?: number;
   title: string;
   description: string;
-  teacherName: string;
+  teacher: User;
   price: number;
-  createdAt: string; // ISO string desde el backend
 }
