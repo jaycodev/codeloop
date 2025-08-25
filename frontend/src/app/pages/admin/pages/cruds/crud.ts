@@ -236,6 +236,7 @@ export class Crud implements OnInit {
     ) {}
 
     exportCSV() {
+        console.log(this.dt);
         this.dt.exportCSV();
     }
 
