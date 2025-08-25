@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'footer-widget',
+    selector: 'app-footer',
     imports: [RouterModule],
     template: `
         <div class="py-12 px-12 mx-0 mt-20 lg:mx-20">
@@ -26,7 +26,7 @@ import { Router, RouterModule } from '@angular/router';
                                 />
                             </g>
                         </svg>
-                        <h4 class="font-medium text-3xl text-surface-900 dark:text-surface-0">SAKAI</h4>
+                        <h4 class="font-medium text-3xl text-surface-900 dark:text-surface-0">Loop</h4>
                     </a>
                 </div>
 
@@ -68,6 +68,6 @@ import { Router, RouterModule } from '@angular/router';
         </div>
     `
 })
-export class FooterWidget {
+export class Footer {
     constructor(public router: Router) {}
 }
