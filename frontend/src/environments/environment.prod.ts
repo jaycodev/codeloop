@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://miapi.com/api',
+  apiUrl: 'http://localhost:8080',
   apiKey: 'PROD_API_KEY',
 };
