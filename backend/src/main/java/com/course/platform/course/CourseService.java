@@ -31,6 +31,19 @@ public class CourseService {
     public void delete(Integer id) {
         courseRepository.deleteById(id);
     }
+    
+    public Course update(Course updatedCourse) {
+        Course existing = courseRepository.findById(updatedCourse.getCourseId())
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
+
+        existing.setTitle(updatedCourse.getTitle());
+        existing.setDescription(updatedCourse.getDescription());
+        existing.setPrice(updatedCourse.getPrice());
+        existing.setTeacher(updatedCourse.getTeacher());
+
+        return courseRepository.save(existing);
+    }
+
 
     /*
      * public List<CourseDTO> listarCoursesByTeacher(Integer teacherid){

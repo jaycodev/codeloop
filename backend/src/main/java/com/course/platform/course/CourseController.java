@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,5 +58,25 @@ public class CourseController {
 
         Course created = coursesService.keep(course);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Course> update(@PathVariable Integer id, @RequestBody CourseCreateDTO courseDto) {
+        User teacher = userService.search(courseDto.getTeacherId());
+        Course updatedCourse = Course.builder()
+                .title(courseDto.getTitle())
+                .description(courseDto.getDescription())
+                .price(courseDto.getPrice())
+                .teacher(teacher)
+                .build();
+
+        Course saved = coursesService.update(updatedCourse);
+        return ResponseEntity.ok(saved);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        coursesService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
