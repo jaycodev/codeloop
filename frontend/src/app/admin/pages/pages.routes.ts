@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Crud } from './cruds/crud';
-import { EnrollmentCrud } from './cruds/enrollment';
+import { EnrollmentCrud } from './cruds/enrollment-crud';
 
 export default [
     { path: 'answer', component: EnrollmentCrud },

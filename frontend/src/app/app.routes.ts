@@ -8,6 +8,9 @@ import { QuestionsList } from './domains/question/components/question.component'
 import { QuestionsByExam } from './domains/question/components/question-by-exam.component';
 import { QuestionsForm } from './domains/question/components/question-form.component';
 import { QuestionDetail } from './domains/question/components/question-detail.component';
+import { CourseListado } from './domains/course/components/course-list-delete/course-list-delete';
+import { CourseDescription } from './student/description-course/descripcion-curso';
+import { CourseFormCancel } from './domains/course/components/course-form-cancel/course-form-cancel';
 
 
 export const appRoutes: Routes = [
