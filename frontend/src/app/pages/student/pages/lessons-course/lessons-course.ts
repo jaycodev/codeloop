@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-lessons-course',
   imports: [],
-  templateUrl: './lessons-course.html'
+  template: ``,
 })
-export class LessonsCourse {
-
-}
+export class LessonsCourse {}

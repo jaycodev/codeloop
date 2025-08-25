@@ -8,7 +8,7 @@ import { AppFooter } from './app.footer';
 import { LayoutService } from '../service/layout.service';
 
 @Component({
-    selector: 'app-layout',
+    selector: 'admin-layout',
     standalone: true,
     imports: [CommonModule, AppTopbar, AppSidebar, RouterModule, AppFooter],
     template: `<div class="layout-wrapper" [ngClass]="containerClass">
@@ -23,7 +23,7 @@ import { LayoutService } from '../service/layout.service';
         <div class="layout-mask animate-fadein"></div>
     </div> `
 })
-export class AppLayout {
+export class AdminLayout {
     overlayMenuOpenSubscription: Subscription;
 
     menuOutsideClickListener: any;
