@@ -21,6 +21,10 @@ interface Column {
   field: string;
   header: string;
 }
+interface ExportColumn {
+  title: string;
+  dataKey: string;
+}
 
 @Component({
   selector: 'app-user-crud',
@@ -42,7 +46,7 @@ interface Column {
     ConfirmDialogModule,
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: 'users.html',
+  templateUrl: './users.html',
 })
 export class UserCrudComponent implements OnInit {
   userDialog: boolean = false;
@@ -51,6 +55,7 @@ export class UserCrudComponent implements OnInit {
   user: User = { name: '', email: '', password_hash: '', role: 'STUDENT' };
   submitted: boolean = false;
   cols: Column[] = [];
+  exportColumns: ExportColumn[] = [];
 
   @ViewChild('dt') dt!: Table;
 
@@ -69,6 +74,8 @@ export class UserCrudComponent implements OnInit {
       { field: 'email', header: 'Email' },
       { field: 'role', header: 'Rol' },
     ];
+
+    this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
   }
 
   cargarUsuarios() {
@@ -84,7 +91,7 @@ export class UserCrudComponent implements OnInit {
   }
 
   openNew() {
-    this.user = { name: '', email: '', password_hash: '', role: 'STUDENT' };
+    this.user = { name: '', email: '', password_hash: '', role: '' };
     this.submitted = false;
     this.userDialog = true;
   }

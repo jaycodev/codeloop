@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { EnrollmentCrud } from './cruds/enrollment/enrollment-crud';
+import { EnrollmentCrud } from './cruds/enrollment/enrollment.crud';
 import { ExamCrud } from './cruds/exam/exam-crud';
 import { CourseCrud } from './cruds/course/course-crud';
 import { Crud } from './cruds/CRUD-EXAMPLE/crud';
