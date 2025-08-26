@@ -26,18 +26,18 @@ public interface LessonRepository extends JpaRepository<Lesson, Integer> {
     List<LessonListDto> findList();
     
     @Query("""
-    	    SELECT new com.course.platform.lesson.dto.LessonListDto(
-    	        l.lessonId,
-    	        l.title,
-    	        l.content,
-    	        l.videoUrl,
-    	        c.title,
-    	        l.orderNum
-    	    )
-    	    FROM Lesson l
-    	    JOIN l.course c	
-    	    WHERE c.courseId = :courseId
-    	    ORDER BY l.orderNum ASC
-    	""")
-    	List<LessonListDto> findByCourseId(@Param("courseId") Integer courseId);
+        SELECT new com.course.platform.lesson.dto.LessonListDto(
+            l.lessonId,
+            l.title,
+            l.content,
+            l.videoUrl,
+            c.title,
+            l.orderNum
+        )
+        FROM Lesson l
+        JOIN l.course c	
+        WHERE c.courseId = :courseId
+        ORDER BY l.orderNum ASC
+    """)
+    List<LessonListDto> findByCourseId(@Param("courseId") Integer courseId);
 }

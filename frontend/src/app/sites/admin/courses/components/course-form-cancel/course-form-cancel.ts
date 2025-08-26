@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CourseService } from '@domains/course/services/course-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseCreateDTO } from '@domains/course/dtos/course-create.dto';
+import { CourseCreateDTO } from '@/domains/course/dtos/create-course.dto';
 import { User } from '@domains/user/models/user.model';
 import { UserService } from '@domains/user/services/user.service';
 

@@ -18,7 +18,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { CourseCreateDTO } from '@domains/course/dtos/course-create.dto';
+import { CourseCreateDTO } from '@/domains/course/dtos/create-course.dto';
 
 interface Column {
   field: string;

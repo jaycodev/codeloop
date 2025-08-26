@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.course.platform.course.CourseRepository;
+import com.course.platform.course.repository.CourseRepository;
 import com.course.platform.enrollment.dto.EnrollmentCreateOrUpdateDto;
 import com.course.platform.user.UserRepository;
 

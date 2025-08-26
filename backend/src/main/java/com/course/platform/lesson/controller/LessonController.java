@@ -2,7 +2,6 @@ package com.course.platform.lesson.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LessonController {
 
-	@Autowired
     private final LessonService lessonService;
 
     @GetMapping
@@ -43,7 +41,7 @@ public class LessonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<LessonDetailDto> get(@PathVariable Integer id) {
-        LessonDetailDto lesson = lessonService.getInfoById(id); // lanza EntityNotFoundException si no existe
+        LessonDetailDto lesson = lessonService.getInfoById(id);
         return ResponseEntity.ok(lesson);
     }
 
