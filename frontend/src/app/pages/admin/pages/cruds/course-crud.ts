@@ -137,7 +137,7 @@ interface Column {
     </p-dialog>
   `,
 })
-export class CourseCrudComponent implements OnInit {
+export class CourseCrud implements OnInit {
   courseDialog: boolean = false;
   courses = signal<CourseDTO[]>([]);
   selectedCourses!: CourseDTO[] | null;
