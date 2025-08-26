@@ -106,7 +106,7 @@ export class CourseCrudComponent implements OnInit {
   }
 
   editCourse(course: CourseDTO) {
-    this.courseCreate = { ...course, teacherId: course.teacher.userId };
+    this.courseCreate = { ...course, teacherId: course.teacher.userId ?? 0 };
     this.tipoEdicion = true;
     this.courseDialog = true;
   }

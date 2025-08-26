@@ -16,20 +16,20 @@ export class UserService {
     return this.http.get<User[]>(`${this.urlBase}`);
   }
 
-  /* crear(course: CourseCreateDTO): Observable<CourseCreateDTO> {
-    return this.http.post<CourseCreateDTO>(`${this.urlBase}`, course);
-  }*/
+  crear(user: User): Observable<User> {
+    return this.http.post<User>(`${this.urlBase}`, user);
+  }
 
   buscarPorId(id: number): Observable<User> {
     return this.http.get<User>(`${this.urlBase}/${id}`);
   }
 
-  /*actualizar(id: number, course: CourseCreateDTO): Observable<CourseCreateDTO>{
-    return this.http.put<CourseCreateDTO>(`${this.urlBase}/${id}`, course)
+  actualizar(id: number, user: User): Observable<User>{
+    return this.http.put<User>(`${this.urlBase}/${id}`, user)
   }
 
   eliminar(id: number): Observable<string> {
     return this.http.delete<string>(`${this.urlBase}/${id}`, { responseType: 'text' as 'json'})
   }
-    */
+    
 }
