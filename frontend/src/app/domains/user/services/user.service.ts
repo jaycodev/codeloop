@@ -1,12 +1,9 @@
 // ...existing code...
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, map, catchError, throwError } from 'rxjs';
-import { environment } from '@environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
-import { UserSummaryDto } from '../dtos/user-summary.dto';
-import { ApiError } from '@shared/models/api-error.model';
-import { ApiResponse } from '@shared/models/api-response.model';
+
 
 @Injectable({
   providedIn: 'root',
