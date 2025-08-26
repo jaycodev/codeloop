@@ -3,9 +3,9 @@ import { EnrollmentCrud } from './cruds/enrollment/enrollment-crud';
 import { ExamCrud } from './cruds/exam/exam-crud';
 import { CourseCrud } from './courses/pages/course-crud';
 import { Crud } from './cruds/CRUD-EXAMPLE/crud';
-import { QuestionCrud } from './questions/components/question-crud';
-import { AnswerListByQuestion } from './answers/components/answer-by-question';
-import { AnswerList } from './answers/components/answer-list';
+import { QuestionCrud } from './cruds/questions/components/question-crud';
+import { AnswerListByQuestion } from './cruds/answers/components/answer-by-question';
+import { AnswerList } from './cruds/answers/components/answer-list';
 
 export default [
   { path: 'answer', component: AnswerList },

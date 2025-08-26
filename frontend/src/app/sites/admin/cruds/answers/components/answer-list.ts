@@ -36,8 +36,8 @@ export class AnswerList implements OnInit {
 
   ngOnInit(): void {
     this.answerService.listarTodas().subscribe({
-      next: (data: Answer[]) => (this.answers = data),
-      error: (err: any) => console.error('Error loading answers', err),
+      next: (data) => (this.answers = data),
+      error: (err) => console.error('Error loading answers', err),
     });
   }
 
