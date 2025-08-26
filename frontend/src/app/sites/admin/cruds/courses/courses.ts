@@ -46,189 +46,7 @@ interface Column {
     ConfirmDialogModule,
   ],
   providers: [MessageService, ConfirmationService],
-  template: `
-    <p-toast></p-toast>
-    <p-confirmDialog></p-confirmDialog>
-
-    <p-toolbar styleClass="mb-4">
-      <ng-template pTemplate="left">
-        <button
-          pButton
-          pRipple
-          label="Nuevo curso"
-          icon="pi pi-plus"
-          class="p-button-success mr-2"
-          (click)="openNew()"
-        ></button>
-        <button
-          pButton
-          pRipple
-          label="Eliminar"
-          icon="pi pi-trash"
-          class="p-button-danger"
-          [disabled]="!selectedCourses || selectedCourses.length === 0"
-          (click)="deleteSelectedCourses()"
-        ></button>
-      </ng-template>
-      <ng-template pTemplate="right">
-        <p-iconField iconPosition="left">
-          <p-inputIcon class="pi pi-search"></p-inputIcon>
-          <input
-            pInputText
-            type="text"
-            (input)="onGlobalFilter(dt, $event)"
-            placeholder="Buscar..."
-          />
-        </p-iconField>
-      </ng-template>
-    </p-toolbar>
-
-    <p-table
-      #dt
-      [value]="courses()"
-      [columns]="cols"
-      [rows]="10"
-      [paginator]="true"
-      [globalFilterFields]="['title', 'description', 'teacherName']"
-      [rowHover]="true"
-      dataKey="id"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} cursos"
-      [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10, 20, 30]"
-      [(selection)]="selectedCourses"
-    >
-      <ng-template pTemplate="caption">
-        <h5 class="m-0">Gestión de cursos</h5>
-      </ng-template>
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
-          <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
-            {{ col.header }}
-            <p-sortIcon field="{{ col.field }}"></p-sortIcon>
-          </th>
-          <th style="min-width: 10rem">Acciones</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-course>
-        <tr>
-          <td style="width: 3rem">
-            <p-tableCheckbox [value]="course"></p-tableCheckbox>
-          </td>
-          <td>{{ course.id }}</td>
-          <td>{{ course.title }}</td>
-          <td>{{ course.description }}</td>
-          <td>{{ course.price | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
-          <td>{{ course.teacherName }}</td>
-          <td>
-            <p-button
-              icon="pi pi-pencil"
-              class="mr-2"
-              [rounded]="true"
-              [outlined]="true"
-              (click)="editCourse(course)"
-            />
-            <p-button
-              icon="pi pi-trash"
-              severity="danger"
-              [rounded]="true"
-              [outlined]="true"
-              (click)="deleteCourse(course.id)"
-            />
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="6" class="text-center">No se encontraron cursos.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-
-    <p-dialog
-      [(visible)]="courseDialog"
-      [style]="{ width: '450px' }"
-      header="{{ tipoEdicion ? 'Editar Curso' : 'Nuevo Curso' }}"
-      [modal]="true"
-    >
-      <ng-template pTemplate="content">
-        <div class="field mb-3">
-          <label for="title">Título:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            [(ngModel)]="courseForm.title"
-            pInputText
-            class="w-full"
-            required
-          />
-        </div>
-
-        <div class="field mb-3">
-          <label for="description">Descripción:</label>
-          <textarea
-            id="description"
-            name="description"
-            [(ngModel)]="courseForm.description"
-            pInputTextarea
-            class="w-full"
-            rows="3"
-            required
-          ></textarea>
-        </div>
-
-        <div class="field mb-3">
-          <label for="price">Precio:</label>
-          <p-inputNumber
-            id="price"
-            [(ngModel)]="courseForm.price"
-            mode="currency"
-            currency="USD"
-            locale="en-US"
-            class="w-full"
-            [min]="0"
-          ></p-inputNumber>
-        </div>
-
-        <div class="field mb-3">
-          <label for="teacher">Docente:</label>
-          <select
-            id="teacher"
-            name="teacher"
-            [(ngModel)]="courseForm.teacherId"
-            class="w-full p-inputtext"
-            required
-          >
-            <option value="">Seleccionar docente</option>
-            <option *ngFor="let prof of profesores" [value]="prof.userId">{{ prof.name }}</option>
-          </select>
-        </div>
-      </ng-template>
-
-      <ng-template pTemplate="footer">
-        <button
-          pButton
-          pRipple
-          label="Cancelar"
-          icon="pi pi-times"
-          class="p-button-text"
-          (click)="hideDialog()"
-        ></button>
-        <button
-          pButton
-          pRipple
-          label="{{ tipoEdicion ? 'Actualizar' : 'Guardar' }}"
-          icon="pi pi-check"
-          class="p-button-text"
-          (click)="saveCourse()"
-          [disabled]="!isFormValid()"
-        ></button>
-      </ng-template>
-    </p-dialog>
-  `,
+  templateUrl: 'courses.html',
 })
 export class CourseCrud implements OnInit {
   courseDialog: boolean = false;
@@ -264,7 +82,7 @@ export class CourseCrud implements OnInit {
       { field: 'title', header: 'Título' },
       { field: 'description', header: 'Descripción' },
       { field: 'price', header: 'Precio' },
-      { field: 'teacher.name', header: 'Profesor' },
+      { field: 'teacherName', header: 'Profesor' },
     ];
   }
 
@@ -402,7 +220,7 @@ export class CourseCrud implements OnInit {
     return !!(
       this.courseForm.title.trim() &&
       this.courseForm.description.trim() &&
-      this.courseForm.price > 0 &&
+      (this.courseForm.price === 0 || this.courseForm.price) &&
       this.courseForm.teacherId > 0
     );
   }
