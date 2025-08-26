@@ -2,7 +2,6 @@ import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CourseService } from '@domains/course/services/course-service';
-import { CourseDTO } from '@domains/course/dtos/course.dto';
 import { User } from '@domains/user/models/user.model';
 import { UserService } from '@domains/user/services/user.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -18,7 +17,9 @@ import { DialogModule } from 'primeng/dialog';
 import { InputIconModule } from 'primeng/inputicon';
 import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { CourseCreateDTO } from '@domains/course/dtos/course-create.dto';
+import { CourseListDto } from '@domains/course/dtos/course-list.dto';
+import { CreateCourseDto } from '@domains/course/dtos/create-course.dto';
+import { UpdateCourseDto } from '@domains/course/dtos/update-course-dto';
 
 interface Column {
   field: string;
@@ -54,7 +55,7 @@ interface Column {
         <button
           pButton
           pRipple
-          label="Nuevo Curso"
+          label="Nuevo curso"
           icon="pi pi-plus"
           class="p-button-success mr-2"
           (click)="openNew()"
@@ -88,16 +89,16 @@ interface Column {
       [columns]="cols"
       [rows]="10"
       [paginator]="true"
-      [globalFilterFields]="['title', 'description', 'teacher.name']"
+      [globalFilterFields]="['title', 'description', 'teacherName']"
       [rowHover]="true"
-      dataKey="courseId"
+      dataKey="id"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} cursos"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 20, 30]"
       [(selection)]="selectedCourses"
     >
       <ng-template pTemplate="caption">
-        <h5 class="m-0">Gestión de Cursos</h5>
+        <h5 class="m-0">Gestión de cursos</h5>
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
@@ -116,26 +117,26 @@ interface Column {
           <td style="width: 3rem">
             <p-tableCheckbox [value]="course"></p-tableCheckbox>
           </td>
-          <td>{{ course.courseId }}</td>
+          <td>{{ course.id }}</td>
           <td>{{ course.title }}</td>
           <td>{{ course.description }}</td>
           <td>{{ course.price | currency : 'USD' : 'symbol' : '1.2-2' }}</td>
-          <td>{{ course.teacher.name }}</td>
+          <td>{{ course.teacherName }}</td>
           <td>
-            <button
-              pButton
-              pRipple
+            <p-button
               icon="pi pi-pencil"
-              class="p-button-rounded p-button-info mr-2"
+              class="mr-2"
+              [rounded]="true"
+              [outlined]="true"
               (click)="editCourse(course)"
-            ></button>
-            <button
-              pButton
-              pRipple
+            />
+            <p-button
               icon="pi pi-trash"
-              class="p-button-rounded p-button-danger"
-              (click)="deleteCourse(course.courseId!)"
-            ></button>
+              severity="danger"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="deleteCourse(course.id)"
+            />
           </td>
         </tr>
       </ng-template>
@@ -155,7 +156,15 @@ interface Column {
       <ng-template pTemplate="content">
         <div class="field mb-3">
           <label for="title">Título:</label>
-          <input type="text" id="title" name="title" [(ngModel)]="courseCreate.title" required />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            [(ngModel)]="courseForm.title"
+            pInputText
+            class="w-full"
+            required
+          />
         </div>
 
         <div class="field mb-3">
@@ -163,19 +172,37 @@ interface Column {
           <textarea
             id="description"
             name="description"
-            [(ngModel)]="courseCreate.description"
+            [(ngModel)]="courseForm.description"
+            pInputTextarea
+            class="w-full"
+            rows="3"
             required
           ></textarea>
         </div>
 
         <div class="field mb-3">
           <label for="price">Precio:</label>
-          <input type="number" id="price" name="price" [(ngModel)]="courseCreate.price" required />
+          <p-inputNumber
+            id="price"
+            [(ngModel)]="courseForm.price"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            class="w-full"
+            [min]="0"
+          ></p-inputNumber>
         </div>
 
         <div class="field mb-3">
           <label for="teacher">Docente:</label>
-          <select id="teacher" name="teacher" [(ngModel)]="courseCreate.teacherId" required>
+          <select
+            id="teacher"
+            name="teacher"
+            [(ngModel)]="courseForm.teacherId"
+            class="w-full p-inputtext"
+            required
+          >
+            <option value="">Seleccionar docente</option>
             <option *ngFor="let prof of profesores" [value]="prof.userId">{{ prof.name }}</option>
           </select>
         </div>
@@ -197,6 +224,7 @@ interface Column {
           icon="pi pi-check"
           class="p-button-text"
           (click)="saveCourse()"
+          [disabled]="!isFormValid()"
         ></button>
       </ng-template>
     </p-dialog>
@@ -204,11 +232,17 @@ interface Column {
 })
 export class CourseCrud implements OnInit {
   courseDialog: boolean = false;
-  courses = signal<CourseDTO[]>([]);
-  selectedCourses!: CourseDTO[] | null;
+  courses = signal<CourseListDto[]>([]);
+  selectedCourses!: CourseListDto[] | null;
   profesores: User[] = [];
-  courseCreate: CourseCreateDTO = { title: '', description: '', price: 0, teacherId: 0 };
+  courseForm: CreateCourseDto | UpdateCourseDto = {
+    title: '',
+    description: '',
+    price: 0,
+    teacherId: 0,
+  };
   tipoEdicion = false;
+  editingCourseId: number | null = null;
   submitted: boolean = false;
   cols: Column[] = [];
 
@@ -226,7 +260,7 @@ export class CourseCrud implements OnInit {
     this.cargarProfesores();
 
     this.cols = [
-      { field: 'courseId', header: 'ID' },
+      { field: 'id', header: 'Código' },
       { field: 'title', header: 'Título' },
       { field: 'description', header: 'Descripción' },
       { field: 'price', header: 'Precio' },
@@ -254,16 +288,37 @@ export class CourseCrud implements OnInit {
   }
 
   openNew() {
-    this.courseCreate = { title: '', description: '', price: 0, teacherId: 0 };
+    this.courseForm = { title: '', description: '', price: 0, teacherId: 0 };
     this.tipoEdicion = false;
+    this.editingCourseId = null;
     this.submitted = false;
     this.courseDialog = true;
   }
 
-  editCourse(course: CourseDTO) {
-    this.courseCreate = { ...course, teacherId: course.teacher.userId ?? 0 };
+  editCourse(course: CourseListDto) {
     this.tipoEdicion = true;
-    this.courseDialog = true;
+    this.editingCourseId = course.id;
+
+    this.courseService.buscarPorId(course.id).subscribe({
+      next: (courseDetail) => {
+        this.courseForm = {
+          title: courseDetail.title,
+          description: courseDetail.description,
+          price: courseDetail.price,
+          teacherId: courseDetail.teacher.id,
+        };
+        this.courseDialog = true;
+      },
+      error: (err) => {
+        console.error('Error al cargar detalles del curso:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al cargar los detalles del curso',
+          life: 3000,
+        });
+      },
+    });
   }
 
   deleteCourse(id: number) {
@@ -302,22 +357,38 @@ export class CourseCrud implements OnInit {
       header: 'Confirmar Eliminación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        const idsToDelete = this.selectedCourses?.map((course) => course.courseId!);
-        // Aquí podrías llamar a un servicio para eliminar varios cursos a la vez.
-        // Como no tienes ese método, lo simulo con eliminaciones individuales.
-        this.selectedCourses?.forEach((course) => {
-          this.courseService.eliminar(course.courseId!).subscribe({
-            next: () => this.cargarCursos(),
-            error: (err) => console.error(`Error al eliminar curso ${course.courseId!}:`, err),
+        if (this.selectedCourses) {
+          let deletedCount = 0;
+          const totalToDelete = this.selectedCourses.length;
+
+          this.selectedCourses.forEach((course) => {
+            this.courseService.eliminar(course.id).subscribe({
+              next: () => {
+                deletedCount++;
+                if (deletedCount === totalToDelete) {
+                  this.cargarCursos();
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Éxito',
+                    detail: 'Cursos eliminados con éxito',
+                    life: 3000,
+                  });
+                }
+              },
+              error: (err) => {
+                console.error(`Error al eliminar curso ${course.id}:`, err);
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: `Error al eliminar el curso ${course.title}`,
+                  life: 3000,
+                });
+              },
+            });
           });
-        });
-        this.selectedCourses = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: 'Cursos eliminados con éxito',
-          life: 3000,
-        });
+
+          this.selectedCourses = null;
+        }
       },
     });
   }
@@ -327,33 +398,54 @@ export class CourseCrud implements OnInit {
     this.submitted = false;
   }
 
+  isFormValid(): boolean {
+    return !!(
+      this.courseForm.title.trim() &&
+      this.courseForm.description.trim() &&
+      this.courseForm.price > 0 &&
+      this.courseForm.teacherId > 0
+    );
+  }
+
   saveCourse() {
     this.submitted = true;
 
-    if (this.tipoEdicion) {
-      this.courseService.actualizar(this.courseCreate.courseId!, this.courseCreate).subscribe({
-        next: () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Éxito',
-            detail: 'Curso actualizado con éxito',
-            life: 3000,
-          });
-          this.cargarCursos();
-          this.hideDialog();
-        },
-        error: (err) => {
-          console.error(err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Error al actualizar el curso',
-            life: 3000,
-          });
-        },
+    if (!this.isFormValid()) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Advertencia',
+        detail: 'Por favor complete todos los campos requeridos',
+        life: 3000,
       });
+      return;
+    }
+
+    if (this.tipoEdicion && this.editingCourseId) {
+      this.courseService
+        .actualizar(this.editingCourseId, this.courseForm as UpdateCourseDto)
+        .subscribe({
+          next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Éxito',
+              detail: 'Curso actualizado con éxito',
+              life: 3000,
+            });
+            this.cargarCursos();
+            this.hideDialog();
+          },
+          error: (err) => {
+            console.error(err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error al actualizar el curso',
+              life: 3000,
+            });
+          },
+        });
     } else {
-      this.courseService.crear(this.courseCreate).subscribe({
+      this.courseService.crear(this.courseForm as CreateCourseDto).subscribe({
         next: () => {
           this.messageService.add({
             severity: 'success',

@@ -1,4 +1,4 @@
-package com.course.platform.course;
+package com.course.platform.course.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

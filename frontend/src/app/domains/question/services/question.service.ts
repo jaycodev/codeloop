@@ -1,4 +1,4 @@
-/* import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QuestionDTO } from '../dtos/question.dto';
@@ -33,4 +33,3 @@ export class QuestionService {
     return this.http.delete<void>(`${this.urlBase}/${id}`);
   }
 }
- */

@@ -3,7 +3,7 @@ package com.course.platform.enrollment;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.course.platform.course.Course;
+import com.course.platform.course.model.Course;
 import com.course.platform.user.User;
 
 import jakarta.persistence.Column;
