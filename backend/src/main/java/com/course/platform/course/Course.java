@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 
 import com.course.platform.user.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,6 +39,13 @@ public class Course {
     private User teacher;
 
     private BigDecimal price;
+
+    @Column(length = 500)
+    private String imageUrl;
+
+    @Column(length = 50)
+    @Builder.Default
+    private String language = "Español";
 
     @Builder.Default
     private OffsetDateTime createdAt = OffsetDateTime.now();
