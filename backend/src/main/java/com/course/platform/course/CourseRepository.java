@@ -1,6 +1,12 @@
 package com.course.platform.course;
 
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.course.platform.course.dto.CourseSummaryDto;
 
 public interface CourseRepository extends JpaRepository<Course, Integer>{
 	
@@ -13,4 +19,12 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
 			+ " WHERE u.userId = :teacherid")
 	List<CourseDTO> listarCoursesByTeacher(@Param("teacherid") Integer teacherid);
 	*/
+	@Query("SELECT new "
+	+ "com.course.platform.course.dto.CourseSummaryDto( "
+	+ "c.id, c.title, c.description"
+	+ " )"
+	+ " FROM Course c"
+	)
+	List<CourseSummaryDto> listCourseSummary() ;
+
 }

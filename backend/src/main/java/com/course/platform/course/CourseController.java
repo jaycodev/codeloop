@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.course.platform.course.dto.CourseCreateDTO;
+import com.course.platform.course.dto.CourseSummaryDto;
 import com.course.platform.user.User;
 import com.course.platform.user.UserService;
 import org.springframework.http.HttpStatus;
@@ -28,9 +29,6 @@ public class CourseController {
     @Autowired
     private final CourseService coursesService;
 
-    @Autowired
-    private final UserService userService;
-
     @GetMapping
     public ResponseEntity<List<Course>> list() {
         List<Course> courses = coursesService.listCours();
@@ -39,6 +37,16 @@ public class CourseController {
         }
         return ResponseEntity.ok(courses);
     }
+    
+    @GetMapping("/summary")
+    public ResponseEntity<List<CourseSummaryDto>> comboBox() {
+        List<CourseSummaryDto> coursesSumary = coursesService.listCourseSummary();
+        if (coursesSumary.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(coursesSumary);
+    }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> get(@PathVariable Integer id) {
