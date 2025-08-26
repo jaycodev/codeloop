@@ -1,8 +1,8 @@
-import { CourseSummaryDto } from '../../course/dtos/course-summary.dto';
+import { Course } from '../../course/models/course.model';
 
 export interface Exam {
   examId?: number;
-  course: CourseSummaryDto;
+  course: Course;
   title: string;
   createdAt?: string | Date;
 }

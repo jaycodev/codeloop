@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CourseCreateDTO } from '../dtos/course-create.dto';
 import { CourseDTO } from '../dtos/course.dto';
+import { CourseSummaryDto } from '../dtos/course-summary.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +30,10 @@ export class CourseService {
 
   eliminar(id: number): Observable<string> {
     return this.http.delete<string>(`${this.urlBase}/${id}`, { responseType: 'text' as 'json' });
+  }
+
+  // 🔥 Nuevo método para comboBox
+  listarResumen(): Observable<CourseSummaryDto[]> {
+    return this.http.get<CourseSummaryDto[]>(`${this.urlBase}/summary`);
   }
 }
