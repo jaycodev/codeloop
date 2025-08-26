@@ -1,4 +1,4 @@
-import { CourseSummaryDto } from '../../course/models/dto/course-summary.dto';
+import { CourseSummaryDto } from '../../course/dtos/course-summary.dto';
 
 export interface Lesson {
   lessonId: number;
