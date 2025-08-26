@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.course.platform.answer.dto.AnswerDto;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,23 +24,22 @@ public class AnswerController {
         Answer submitted = answerService.submit(a);
         return ResponseEntity.status(HttpStatus.CREATED).body(submitted);
     }
-
-    @GetMapping("/question/{questionId}")
-    public ResponseEntity<List<Answer>> findByQuestion(@PathVariable Integer questionId) {
-        List<Answer> answers = answerService.findByQuestion(questionId);
+    
+    @GetMapping
+    public ResponseEntity<List<AnswerDto>> list() {
+        List<AnswerDto> answers = answerService.list();
         if (answers.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(answers);
     }
 
-    // Si deseas habilitarlo:
-    // @GetMapping("/exam/{examId}/student/{studentId}")
-    // public ResponseEntity<List<Answer>> byExamAndStudent(@PathVariable Integer examId, @PathVariable Integer studentId) {
-    //     List<Answer> answers = answerService.findByExamAndStudent(examId, studentId);
-    //     if (answers.isEmpty()) {
-    //         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    //     }
-    //     return ResponseEntity.ok(answers);
-    // }
+    @GetMapping("/question/{questionId}")
+    public ResponseEntity<List<AnswerDto>> findByQuestion(@PathVariable Integer questionId) {
+        List<AnswerDto> answers = answerService.findByQuestion(questionId);
+        if (answers.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(answers);
+    }
 }
