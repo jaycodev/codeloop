@@ -16,6 +16,7 @@ import com.course.platform.course.dto.CreateCourseDto;
 import com.course.platform.course.dto.UpdateCourseDto;
 import com.course.platform.course.dto.CourseDetailDto;
 import com.course.platform.course.dto.CourseListDto;
+import com.course.platform.course.dto.CourseSummaryDto;
 import com.course.platform.course.service.CourseService;
 
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,15 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(courses);
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<List<CourseSummaryDto>> comboBox() {
+        List<CourseSummaryDto> coursesSumary = courseService.listCourseSummary();
+        if (coursesSumary.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(coursesSumary);
     }
 
     @GetMapping("/{id}")

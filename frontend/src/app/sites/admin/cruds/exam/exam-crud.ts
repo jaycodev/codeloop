@@ -18,7 +18,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { ExamCreateDTO } from '@/domains/exam/dtos/exam-create.dto';
 import { ExamUpdateDTO } from '@/domains/exam/dtos/exam-update.dto';
 import { CourseService } from '@/domains/course/services/course-service';
-import { CourseSummaryDto } from '../../../../domains/course/dtos/course-summary.dto';
+import { CourseSummaryDto } from '@domains/course/dtos/course-summary.dto';
 import { SelectModule } from 'primeng/select';
 
 interface Column {
