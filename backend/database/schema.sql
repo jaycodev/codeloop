@@ -47,7 +47,7 @@ CREATE TABLE enrollment (
 
 CREATE TABLE exam (
     exam_id SERIAL PRIMARY KEY,
-    course_id INT NOT NULL UNIQUE,
+    course_id INT NOT NULL,
     title VARCHAR(100),
     created_at TIMESTAMPTZ DEFAULT NOW(),
     CONSTRAINT fk_exam_course FOREIGN KEY (course_id) REFERENCES course(course_id)
