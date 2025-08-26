@@ -7,5 +7,6 @@ public record CourseListDto(
     String title,
     String description,
     BigDecimal price,
-    String teacherName
+    String teacherName,
+    String imageUrl
 ) {}

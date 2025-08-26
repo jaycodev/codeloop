@@ -4,4 +4,5 @@ export interface CourseListDto {
   description: string;
   price: number;
   teacherName: string;
+  imageUrl: string;
 }
