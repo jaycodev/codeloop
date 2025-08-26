@@ -12,9 +12,10 @@ import { RouterModule } from '@angular/router';
       class="block relative overflow-hidden rounded-lg shadow-lg group w-full h-72 hover:shadow-2xl transition-shadow duration-300"
     >
       <img
-        [src]="imageUrl"
+        [src]="imageUrl ? imageUrl : '/placeholder.svg'"
         alt="{{ title }}"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        (error)="onImgError($event)"
       />
 
       <div
@@ -42,4 +43,8 @@ export class CourseCard {
   @Input() imageUrl!: string;
   @Input() title!: string;
   @Input() price!: string;
+
+  onImgError(event: Event) {
+    (event.target as HTMLImageElement).src = '/placeholder.svg';
+  }
 }
