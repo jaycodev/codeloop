@@ -33,7 +33,7 @@ export const appRoutes: Routes = [
   },
 
   // Authentication routes
-  { path: '', loadChildren: () => import('@admin/auth/auth.routes') },
+  { path: '', loadChildren: () => import('@public/auth/auth.routes') },
 
   { path: 'notfound', component: Notfound },
   { path: '**', redirectTo: '/notfound' },
