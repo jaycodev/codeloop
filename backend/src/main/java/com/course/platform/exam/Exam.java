@@ -2,7 +2,7 @@ package com.course.platform.exam;
 
 import java.time.OffsetDateTime;
 
-import com.course.platform.course.Course;
+import com.course.platform.course.model.Course;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

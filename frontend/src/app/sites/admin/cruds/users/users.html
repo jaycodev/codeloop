@@ -1,0 +1,200 @@
+<ng-template #caption>
+  <div class="flex items-center justify-between">
+    <h5 class="m-0">Manage Exam</h5>
+    <p-iconfield>
+      <p-inputicon styleClass="pi pi-search" />
+      <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)"
+        placeholder="Search..." />
+    </p-iconfield>
+  </div>
+</ng-template>
+<p-toolbar styleClass="mb-6">
+  <ng-template #start>
+    <p-button label="New Exam" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
+    <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedUsers()"
+      [disabled]="!selectedUsers || !selectedUsers.length" />
+  </ng-template>
+</p-toolbar>
+
+<p-table #dt [value]="users()" [rows]="10" [columns]="cols" [paginator]="true"
+  [globalFilterFields]="['name', 'email', 'role']" [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="selectedUsers"
+  [rowHover]="true" dataKey="userId" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 30]">
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestion Usuarios</h5>
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+      </p-iconfield>
+    </div>
+  </ng-template>
+
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox />
+      </th>
+      <th pSortableColumn="userId">ID <p-sortIcon field="userId" /></th>
+      <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+      <th pSortableColumn="email">Email <p-sortIcon field="email" /></th>
+      <th pSortableColumn="role">Role <p-sortIcon field="role" /></th>
+      <th style="min-width: 8rem"></th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-user>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="user" />
+      </td>
+      <td>{{ user.userId }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editUser(user)" />
+        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteUser(user)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Dialog
+<p-dialog [(visible)]="examDialog" [style]="{ width: '550px' }" header="Exam Details" [modal]="true">
+  <ng-template #content>
+    <div class="flex gap-6">
+      <!-- Title -->
+      <!-- <div>
+        <label for="title" class="block font-bold mb-3">Title</label>
+        <input type="text" pInputText id="title" [(ngModel)]="exam.title" required autofocus fluid />
+        <small class="text-red-500" *ngIf="submitted && !exam.title">
+          Title is required.
+        </small>
+      </div> -->
+
+      <!-- Course -->
+      <!-- <div>
+        <label for="course" class="block font-bold mb-3">Course</label>
+        <p-select [style]="{ width: '300px' }" [options]="coursesComboBox" [(ngModel)]="course" optionLabel="title"
+          placeholder="Select a Course" class="w-full md:w-56" [disabled]="isUpdateMode" appendTo="body" />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
+    <p-button label="Save" icon="pi pi-check" (click)="saveExam()" />
+  </ng-template>
+</p-dialog>
+
+<p-confirmdialog [style]="{ width: '450px' }" /> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p-dialog
+  [(visible)]="userDialog"
+  [style]="{ width: '550px' }"
+  header="{{ user.userId ? 'Editar Usuario' : 'Nuevo Usuario' }}"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex gap-6">
+      <!-- Nombre -->
+      <div class="flex-1">
+        <label for="name" class="block font-bold mb-3">Nombre</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          [(ngModel)]="user.name"
+          required
+          autofocus
+          class="w-full"
+        />
+        <small class="text-red-500" *ngIf="submitted && !user.name">
+          Nombre es requerido.
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="flex-1">
+        <label for="email" class="block font-bold mb-3">Email</label>
+        <input
+          type="email"
+          pInputText
+          id="email"
+          [(ngModel)]="user.email"
+          required
+          class="w-full"
+        />
+        <small class="text-red-500" *ngIf="submitted && !user.email">
+          Email es requerido.
+        </small>
+      </div>
+    </div>
+
+    <div class="flex gap-6 mt-4">
+      <!-- Contraseña -->
+      <div class="flex-1">
+        <label for="password_hash" class="block font-bold mb-3">Contraseña</label>
+        <input
+          type="password"
+          pInputText
+          id="password_hash"
+          [(ngModel)]="user.password_hash"
+          required
+          class="w-full"
+        />
+        <small class="text-red-500" *ngIf="submitted && !user.password_hash">
+          Contraseña es requerida.
+        </small>
+      </div>
+
+      <!-- Rol -->
+      <div class="flex-1">
+        <label for="role" class="block font-bold mb-3">Rol</label>
+        <select id="role" [(ngModel)]="user.role" [value]="user.role" required class="w-full p-inputtext">
+          <option value="ADMIN">ADMIN</option>
+          <option value="PROFESOR">PROFESOR</option>
+          <option value="ESTUDIANTE">ESTUDIANTE</option>
+        </select>
+        <small class="text-red-500" *ngIf="submitted && !user.role">
+          Rol es requerido.
+        </small>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (click)="hideDialog()"></p-button>
+    <p-button
+      label="{{ user.userId ? 'Actualizar' : 'Guardar' }}"
+      icon="pi pi-check"
+      (click)="saveUser()"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+
+
+<p-confirmdialog [style]="{ width: '450px' }" />

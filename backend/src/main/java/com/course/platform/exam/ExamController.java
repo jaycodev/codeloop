@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.course.platform.exam.dto.ExamCreateDTO;
 import com.course.platform.exam.dto.ExamUpdateDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -54,5 +55,10 @@ public class ExamController {
         Exam updatedExam = examService.update(id, exam);
         return ResponseEntity.ok(updatedExam);
     }
-
+    
+    @PostMapping
+    public ResponseEntity<Exam> create( @RequestBody ExamCreateDTO exam) {
+        Exam updatedExam = examService.create(exam);
+        return ResponseEntity.ok(updatedExam);
+    }
 }

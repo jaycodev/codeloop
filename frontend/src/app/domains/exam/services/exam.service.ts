@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Exam } from '../models/exam.model';
 import { environment } from '../../../../environments/environment.prod';
+import { ExamCreateDTO } from '../dtos/exam-create.dto';
+import { ExamUpdateDTO } from '../dtos/exam-update.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +25,11 @@ export class ExamService {
     return this.http.get<Exam[]>(`${this.baseUrl}/course/${courseId}`);
   }
 
-  crear(exam: Exam): Observable<Exam> {
+  crear(exam: ExamCreateDTO): Observable<Exam> {
     return this.http.post<Exam>(`${this.baseUrl}`, exam);
   }
 
-  actualizar(id: number, exam: Exam): Observable<Exam> {
+  actualizar(id: number, exam: ExamUpdateDTO): Observable<Exam> {
     return this.http.put<Exam>(`${this.baseUrl}/${id}`, exam);
   }
 

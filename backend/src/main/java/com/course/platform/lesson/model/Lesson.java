@@ -1,6 +1,6 @@
 package com.course.platform.lesson.model;
 
-import com.course.platform.course.Course;
+import com.course.platform.course.model.Course;
 
 import jakarta.persistence.*;
 import lombok.*;

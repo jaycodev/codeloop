@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.course.platform.course.Course;
-import com.course.platform.course.CourseRepository;
-import com.course.platform.course.CourseService;
+import com.course.platform.course.model.Course;
+import com.course.platform.course.repository.CourseRepository;
+import com.course.platform.course.service.CourseService;
 import com.course.platform.payment.dto.CreatePaymentDto;
 import com.course.platform.payment.dto.PaymentDetailDto;
 import com.course.platform.payment.dto.PaymentListDto;

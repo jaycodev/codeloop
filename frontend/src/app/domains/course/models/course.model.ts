@@ -1,4 +1,4 @@
-import { User } from '../../user/models/user.model';
+import { User } from '@domains/user/models/user.model';
 
 export interface Course {
   courseId?: number;
