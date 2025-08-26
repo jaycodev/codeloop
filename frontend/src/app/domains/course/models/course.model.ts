@@ -1,4 +1,4 @@
-import { User } from "../../user/models/user.model";
+import { User } from '../../user/models/user.model';
 
 export interface Course {
   courseId?: number;
@@ -7,4 +7,3 @@ export interface Course {
   teacher: User;
   price: number;
 }
-

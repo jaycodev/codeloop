@@ -1,5 +1,5 @@
-import { CourseSummaryDto } from '../../../course/models/dto/course-summary.dto';
-import { UserSummaryDto } from '../../../user/models/dto/user-summary.dto';
+import { CourseSummaryDto } from '../../../course/dtos/course-summary.dto';
+import { UserSummaryDto } from '../../../user/dtos/user-summary.dto';
 
 export interface PaymentDetailDto {
   id: number;

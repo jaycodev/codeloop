@@ -1,0 +1,38 @@
+<h1>Listado de Cursos</h1>
+<button class="btn btn-success me-2" [routerLink]="['/courses/new']">Agregar Paciente</button>
+
+<div *ngIf="courses.length === 0">
+  <p>No hay cursos registrados.</p>
+</div>
+
+<div *ngIf="courses.length > 0">
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>ID Docente</th>
+        <th>Docente</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of courses; track item.courseId) {
+      <tr>
+        <td>{{ item.courseId }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.teacher.userId }}</td>
+        <td>{{ item.teacher.name }}</td>
+        <td>
+          <button [routerLink]="['/courses/edit/', item.courseId]">Editar</button>
+          <button (click)="eliminar(item.courseId!)">Eliminar</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

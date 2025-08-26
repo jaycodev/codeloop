@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Enrollment } from '../models/enrollment.model';
-import { EnrollmentCreateOrUpdateDto } from '../models/dto/enrollment-create-update.dto';
-import { environment } from '../../../../environments/environment.prod';
+import { EnrollmentCreateOrUpdateDto } from '../dtos/enrollment-create-update.dto';
+import { environment } from '@environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
