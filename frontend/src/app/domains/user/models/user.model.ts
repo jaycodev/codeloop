@@ -2,7 +2,7 @@ export interface User {
   userId: number;
   name: string;
   email: string;
-  role: 'ESTUDIANTE' | 'PROFESOR' | 'ADMIN';
+  role: string;
   status: string;
   createdAt: string;
 }

@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../../services/course-service';
-import { Course } from '../../services/course-service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CourseDTO } from '../../models/dto/course.dto';
+import { Course } from '../../models/course.model';
 
 @Component({
   selector: 'app-course-list-cancel',
@@ -11,7 +12,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   templateUrl: './course-list-delete.html'
 })
 export class CourseListado implements OnInit {
-  courses: Course[] = [];
+  courses: CourseDTO[] = [];
 
   constructor(
     private CourseService: CourseService,
@@ -25,7 +26,7 @@ ngOnInit(): void {
 
 cargarCourses(){
     this.CourseService.listar().subscribe({
-      next: (data: Course[]) => {
+      next: (data: CourseDTO[]) => {
         this.courses = data
         this.cdr.markForCheck()
       },

@@ -1,8 +1,13 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Course, CourseService } from '../../services/course-service';
+import { CourseService } from '../../services/course-service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CourseDTO } from '../../models/dto/course.dto';
+import { Course } from '../../models/course.model';
+import { CourseCreateDTO } from '../../models/dto/course-create.dto';
+import { User } from '@/domains/user/models/user.model';
+import { UserService } from '@/domains/user/services/user.service';
 
 @Component({
   selector: 'app-course-form-cancel',
@@ -12,22 +17,36 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CourseFormCancel {
 
-  course: Course = { title: '', description: '', price: 0, teacherId: 0 }
+  courseCreate: CourseCreateDTO = { title: '', description: '', price: 0, teacherId: 0 }
+  profesores: User[] = [];
+  
   tipoEdicion = false
 
   constructor(
     private route: ActivatedRoute,
     private CourseService: CourseService,
+    private UserService: UserService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ){}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id')
+
+    this.UserService.listar().subscribe(data => {
+     this.profesores = data;
+  });
+
     if(id){
       this.tipoEdicion = true
       this.CourseService.buscarPorId(parseInt(id)).subscribe(c => {
-        this.course = c
+        this.courseCreate = {
+          courseId: c.courseId,
+          title: c.title,
+          description: c.description,
+          price: c.price,
+          teacherId: c.teacher.userId
+        }
         this.cdr.markForCheck()
       })
     }
@@ -35,12 +54,12 @@ export class CourseFormCancel {
 
   guardar(){
     if(this.tipoEdicion){
-      this.CourseService.actualizar(this.course.courseId!, this.course).subscribe(() => {
+      this.CourseService.actualizar(this.courseCreate.courseId!, this.courseCreate).subscribe(() => {
         this.router.navigate(['/courses'])
       })
     }
     else{
-      this.CourseService.crear(this.course).subscribe(() => {
+      this.CourseService.crear(this.courseCreate).subscribe(() => {
         this.router.navigate(['/courses'])
       })
     }
