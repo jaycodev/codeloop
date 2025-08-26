@@ -6,6 +6,7 @@ import { Crud } from './cruds/CRUD-EXAMPLE/crud';
 // import { QuestionCrud } from './questions/components/question-crud';
 import { AnswerListByQuestion } from './answers/components/answer-by-question';
 import { AnswerList } from './answers/components/answer-list';
+import { UserCrudComponent } from './cruds/users/users';
 
 export default [
   { path: 'answer', component: AnswerList },
@@ -16,6 +17,6 @@ export default [
   { path: 'lesson', component: Crud },
   { path: 'payment', component: Crud },
   // { path: 'question', component: QuestionCrud },
-  { path: 'user', component: Crud },
+  { path: 'user', component: UserCrudComponent },
   { path: '**', redirectTo: '/notfound' },
 ] as Routes;
