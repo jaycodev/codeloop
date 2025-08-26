@@ -16,7 +16,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
             c.title,
             c.description,
             c.price,
-            c.teacher.name
+            c.teacher.name,
+            c.imageUrl
         )
         FROM Course c
         ORDER BY c.courseId DESC

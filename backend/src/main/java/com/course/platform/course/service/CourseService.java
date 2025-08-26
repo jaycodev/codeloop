@@ -132,6 +132,7 @@ public class CourseService {
                 course.getTitle(),
                 course.getDescription(),
                 course.getPrice(),
-                course.getTeacher().getName());
+                course.getTeacher().getName(),
+                course.getImageUrl());
     }
 }
