@@ -5,6 +5,7 @@ import { CourseListDto } from '../dtos/course-list.dto';
 import { CreateCourseDto } from '../dtos/create-course.dto';
 import { CourseDetailDto } from '../dtos/course-detail.dto';
 import { UpdateCourseDto } from '../dtos/update-course-dto';
+import { CourseSummaryDto } from '../dtos/course-summary.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,9 @@ export class CourseService {
 
   eliminar(id: number): Observable<void> {
     return this.http.delete<void>(`${this.urlBase}/${id}`);
+  }
+
+  listarResumen(): Observable<CourseSummaryDto[]> {
+    return this.http.get<CourseSummaryDto[]>(`${this.urlBase}/summary`);
   }
 }

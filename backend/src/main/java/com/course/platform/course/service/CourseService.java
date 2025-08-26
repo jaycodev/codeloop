@@ -33,6 +33,10 @@ public class CourseService {
         return courseRepository.findList();
     }
 
+    public List<CourseSummaryDto> listCourseSummary() {
+        return courseRepository.listCourseSummary();
+    }
+
     public Optional<Course> findById(Integer courseId) {
         return courseRepository.findById(courseId);
     }
