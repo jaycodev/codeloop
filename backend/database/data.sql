@@ -25,22 +25,27 @@ INSERT INTO "user" (name, email, password_hash, role, status) VALUES
 ('Prof. Alejandro José Díaz', 'alejandro.diaz@profesor.com', '$2b$12$profhash5', 'PROFESOR', 'ACTIVO'),
 ('Admin Principal', 'admin@sistema.com', '$2b$12$adminhash1', 'ADMIN', 'ACTIVO');
 
-INSERT INTO course (title, description, teacher_id, price) VALUES
-('Introducción a la Programación con Python', 'Curso básico para aprender los fundamentos de Python desde cero', 16, 150.00),
-('Desarrollo Web con JavaScript', 'Aprende a crear aplicaciones web modernas con JavaScript', 17, 200.00),
-('Base de Datos con PostgreSQL', 'Domina el diseño y manejo de bases de datos relacionales', 18, 180.00),
-('Marketing Digital Estratégico', 'Estrategias efectivas para el marketing en redes sociales', 19, 120.00),
-('Diseño Gráfico con Adobe', 'Curso completo de diseño usando herramientas profesionales', 20, 250.00),
-('Excel Avanzado para Empresas', 'Análisis de datos y reportes empresariales con Excel', 16, 100.00),
-('Fotografía Digital Profesional', 'Técnicas avanzadas de fotografía y edición', 17, 300.00),
-('Gestión de Proyectos Ágiles', 'Metodologías Scrum y Kanban para gestión efectiva', 18, 160.00),
-('Inteligencia Artificial Básica', 'Introducción a Machine Learning y Deep Learning', 19, 400.00),
-('Contabilidad para No Contadores', 'Fundamentos contables para emprendedores', 20, 90.00),
-('Inglés de Negocios Intermedio', 'Inglés especializado para el mundo empresarial', 16, 110.00),
-('Cocina Internacional Gourmet', 'Técnicas culinarias de diferentes países', 17, 80.00),
-('Yoga y Meditación Mindfulness', 'Bienestar físico y mental a través del yoga', 18, 70.00),
-('Emprendimiento Digital', 'Cómo crear y escalar tu negocio online', 19, 220.00),
-('Finanzas Personales Inteligentes', 'Manejo efectivo del dinero y inversiones básicas', 20, 130.00);
+INSERT INTO course (title, description, teacher_id, price, image_url) VALUES 
+('HTML desde Cero', 'Aprende los fundamentos de HTML para crear estructuras web sólidas', 16, 19.99, 'https://midu.dev/courses/html-desde-cero.webp'),
+('CSS desde Cero', 'Domina el diseño web con CSS desde conceptos básicos hasta avanzados', 17, 39.99, 'https://midu.dev/courses/css-desde-cero.webp'),
+('Angular 19 PWA', 'Desarrollo de aplicaciones web progresivas con la última versión de Angular', 18, 39.99, 'https://midu.dev/courses/angular-og.webp'),
+('Curso de Tailwind CSS', 'Framework CSS utilitario para crear interfaces modernas rápidamente', 19, 29.99, 'https://midu.dev/courses/tailwind-desde-cero.webp'),
+('Python desde Cero', 'Curso básico para aprender los fundamentos de Python desde cero', 20, 29.99, 'https://midu.dev/courses/python-desde-cero.webp'),
+('Figma para Devs', 'Herramientas de diseño UI/UX especializadas para desarrolladores', 16, 49.99, 'https://midu.dev/courses/figma-para-devs.webp'),
+('Desarrollo Web con JavaScript', 'Aprende a crear aplicaciones web modernas con JavaScript', 17, 200.00, NULL),
+('Base de Datos con PostgreSQL', 'Domina el diseño y manejo de bases de datos relacionales', 18, 180.00, NULL),
+('Marketing Digital Estratégico', 'Estrategias efectivas para el marketing en redes sociales', 19, 120.00, NULL),
+('Diseño Gráfico con Adobe', 'Curso completo de diseño usando herramientas profesionales', 20, 250.00, NULL),
+('Excel Avanzado para Empresas', 'Análisis de datos y reportes empresariales con Excel', 16, 100.00, NULL),
+('Fotografía Digital Profesional', 'Técnicas avanzadas de fotografía y edición', 17, 300.00, NULL),
+('Gestión de Proyectos Ágiles', 'Metodologías Scrum y Kanban para gestión efectiva', 18, 160.00, NULL),
+('Inteligencia Artificial Básica', 'Introducción a Machine Learning y Deep Learning', 19, 400.00, NULL),
+('Contabilidad para No Contadores', 'Fundamentos contables para emprendedores', 20, 90.00, NULL),
+('Inglés de Negocios Intermedio', 'Inglés especializado para el mundo empresarial', 16, 110.00, NULL),
+('Cocina Internacional Gourmet', 'Técnicas culinarias de diferentes países', 17, 80.00, NULL),
+('Yoga y Meditación Mindfulness', 'Bienestar físico y mental a través del yoga', 18, 70.00, NULL),
+('Emprendimiento Digital', 'Cómo crear y escalar tu negocio online', 19, 220.00, NULL),
+('Finanzas Personales Inteligentes', 'Manejo efectivo del dinero y inversiones básicas', 20, 130.00, NULL);
 
 INSERT INTO lesson (title, content, video_url, course_id, order_num) VALUES
 ('¿Qué es Python?', 'Introducción al lenguaje Python y sus aplicaciones', 'https://video.com/python1', 1, 1),
