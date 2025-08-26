@@ -7,7 +7,7 @@ CREATE TABLE "user" (
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL CHECK (role IN ('ESTUDIANTE', 'PROFESOR', 'ADMIN')),
-	status VARCHAR(20) DEFAULT 'ACTIVO',
+    status VARCHAR(20) DEFAULT 'ACTIVO',
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -62,7 +62,7 @@ CREATE TABLE question (
     option_c VARCHAR(255),
     option_d VARCHAR(255),
     correct_answer VARCHAR(1) CHECK (correct_answer IN ('A', 'B', 'C', 'D')),
-    CONSTRAINT fk_question_exam FOREIGN KEY (exam_id) REFERENCES exam(exam_id)
+    CONSTRAINT fk_question_exam FOREIGN KEY (exam_id) REFERENCES exam(exam_id) ON DELETE CASCADE
 );
 
 CREATE TABLE answer (
@@ -71,7 +71,7 @@ CREATE TABLE answer (
     student_id INT NOT NULL,
     answer VARCHAR(1),
     is_correct BOOLEAN,
-    CONSTRAINT fk_answer_question FOREIGN KEY (question_id) REFERENCES question(question_id),
+    CONSTRAINT fk_answer_question FOREIGN KEY (question_id) REFERENCES question(question_id) ON DELETE CASCADE,
     CONSTRAINT fk_answer_student FOREIGN KEY (student_id) REFERENCES "user"(user_id)
 );
 

@@ -3,8 +3,10 @@ package com.course.platform.exam.dto;
 import lombok.Data;
 
 @Data
-public class ExamUpdateDTO {
+public class ExamCreateDTO {
+
+	private int course_id;
 
 	private String title;
-	
+
 }
