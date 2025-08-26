@@ -8,7 +8,9 @@ import { Answer } from '@domains/answer/models/answer.model';
   selector: 'app-answer-list',
   standalone: true,
   imports: [RouterModule, CommonModule],
-  templateUrl: '../pages/answers-list.html',
+  //templateUrl: '../pages/answers-list.html',
+  template: `
+    <div class="card">`
 })
 export class AnswersList implements OnInit {
   questionId!: number;
