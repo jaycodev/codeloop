@@ -40,4 +40,11 @@ public class ExamController {
         }
         return ResponseEntity.ok(exams);
     }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        examService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
