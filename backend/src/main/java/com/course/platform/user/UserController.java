@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.course.platform.user.dto.UserDTO;
+
 import java.util.List;
 
 @RestController
@@ -33,13 +35,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<User> create(@RequestBody UserDTO user) {
         User created = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User userDetails) {
+    public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody UserDTO userDetails) {
         User updated = userService.update(id, userDetails);
         return ResponseEntity.ok(updated);
     }

@@ -1,12 +1,9 @@
 // ...existing code...
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, map, catchError, throwError } from 'rxjs';
-import { environment } from '@environments/environment.prod';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
-import { UserSummaryDto } from '../dtos/user-summary.dto';
-import { ApiError } from '@shared/models/api-error.model';
-import { ApiResponse } from '@shared/models/api-response.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -19,20 +16,20 @@ export class UserService {
     return this.http.get<User[]>(`${this.urlBase}`);
   }
 
-  /* crear(course: CourseCreateDTO): Observable<CourseCreateDTO> {
-    return this.http.post<CourseCreateDTO>(`${this.urlBase}`, course);
-  }*/
+  crear(user: User): Observable<User> {
+    return this.http.post<User>(`${this.urlBase}`, user);
+  }
 
   buscarPorId(id: number): Observable<User> {
     return this.http.get<User>(`${this.urlBase}/${id}`);
   }
 
-  /*actualizar(id: number, course: CourseCreateDTO): Observable<CourseCreateDTO>{
-    return this.http.put<CourseCreateDTO>(`${this.urlBase}/${id}`, course)
+  actualizar(id: number, user: User): Observable<User>{
+    return this.http.put<User>(`${this.urlBase}/${id}`, user)
   }
 
   eliminar(id: number): Observable<string> {
     return this.http.delete<string>(`${this.urlBase}/${id}`, { responseType: 'text' as 'json'})
   }
-    */
+    
 }

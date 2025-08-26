@@ -1,10 +1,12 @@
 package com.course.platform.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.course.platform.user.dto.UserDTO;
 import com.course.platform.user.dto.UserSummaryDto;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -14,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 
+    @Autowired
+    private UserRepository userRepository;
+
     public UserSummaryDto toSummaryDto(User user) {
         return UserSummaryDto.builder()
                 .id(user.getUserId())
@@ -22,9 +27,6 @@ public class UserService {
                 .build();
     }
     
-    @Autowired
-    private UserRepository userRepository;
-
     public List<User> list() {
         return userRepository.findAll();
     }
@@ -34,18 +36,24 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
 
-    public User create(User user) {
+    public User create(UserDTO userDTO) {
+        User user = new User();
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword_hash(userDTO.getPassword_hash());
+        user.setRole(userDTO.getRole());
+        user.setStatus("ACTIVE"); // O el estado por defecto que desees
         return userRepository.save(user);
     }
 
-    public User update(Integer id, User userDetails) {
+    public User update(Integer id, UserDTO userDTO) {
         User existing = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
-        if (userDetails.getName() != null) existing.setName(userDetails.getName());
-        if (userDetails.getEmail() != null) existing.setEmail(userDetails.getEmail());
-        if (userDetails.getRole() != null) existing.setRole(userDetails.getRole());
-        if (userDetails.getStatus() != null) existing.setStatus(userDetails.getStatus());
+        if (userDTO.getName() != null) existing.setName(userDTO.getName());
+        if (userDTO.getEmail() != null) existing.setEmail(userDTO.getEmail());
+        if (userDTO.getPassword_hash() != null) existing.setPassword_hash(userDTO.getPassword_hash());
+        if (userDTO.getRole() != null) existing.setRole(userDTO.getRole());
 
         return userRepository.save(existing);
     }
