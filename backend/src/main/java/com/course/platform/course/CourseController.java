@@ -48,29 +48,13 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Course> create(@RequestBody CourseCreateDTO courseDto) {
-        User teacher = userService.search(courseDto.getTeacherId());
-        Course course = Course.builder()
-                .title(courseDto.getTitle())
-                .description(courseDto.getDescription())
-                .price(courseDto.getPrice())
-                .teacher(teacher)
-                .build();
-
-        Course created = coursesService.keep(course);
+        Course created = coursesService.create(courseDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
     
     @PutMapping("/{id}")
     public ResponseEntity<Course> update(@PathVariable Integer id, @RequestBody CourseCreateDTO courseDto) {
-        User teacher = userService.search(courseDto.getTeacherId());
-        Course updatedCourse = Course.builder()
-                .title(courseDto.getTitle())
-                .description(courseDto.getDescription())
-                .price(courseDto.getPrice())
-                .teacher(teacher)
-                .build();
-
-        Course saved = coursesService.update(updatedCourse);
+        Course saved = coursesService.update(id, courseDto);
         return ResponseEntity.ok(saved);
     }
     

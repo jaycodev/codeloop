@@ -17,6 +17,8 @@ CREATE TABLE course (
     description TEXT,
     teacher_id INT NOT NULL,
     price NUMERIC(10, 2) DEFAULT 0.00,
+    image_url VARCHAR(500),
+    language VARCHAR(50) DEFAULT 'Español',
     created_at TIMESTAMPTZ DEFAULT NOW(),
     CONSTRAINT fk_course_teacher FOREIGN KEY (teacher_id) REFERENCES "user"(user_id)
 );

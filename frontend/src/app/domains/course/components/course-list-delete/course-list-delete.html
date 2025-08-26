@@ -14,23 +14,25 @@
         <th>Descripción</th>
         <th>Precio</th>
         <th>ID Docente</th>
+        <th>Docente</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let curso of courses">
-        <td>{{ curso.courseId }}</td>
-        <td>{{ curso.title }}</td>
-        <td>{{ curso.description }}</td>
-        <td>{{ curso.price }}</td>
-        <td>{{ curso.teacherId }}</td>
+      @for (item of courses; track item.courseId) {
+      <tr>
+        <td>{{ item.courseId }}</td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.teacher.userId }}</td>
+        <td>{{ item.teacher.name }}</td>
         <td>
-          <button class="btn btn-sm btn-warning me-2" [routerLink]="['/courses/edit/', curso.courseId]">
-            Editar
-          </button>
-          <button class="btn btn-sm btn-danger" (click)="eliminar(curso.courseId!)">Eliminar</button>
+          <button [routerLink]="['/courses/edit/', item.courseId]">Editar</button>
+          <button (click)="eliminar(item.courseId!)">Eliminar</button>
         </td>
       </tr>
+      }
     </tbody>
   </table>
 </div>

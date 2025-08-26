@@ -3,13 +3,7 @@
 <form (ngSubmit)="guardar()">
   <div>
     <label for="title">Título:</label>
-    <input
-      type="text"
-      id="title"
-      name="title"
-      [(ngModel)]="course.title"
-      required
-    />
+    <input type="text" id="title" name="title" [(ngModel)]="courseCreate.title" required />
   </div>
 
   <div>
@@ -17,21 +11,19 @@
     <textarea
       id="description"
       name="description"
-      [(ngModel)]="course.description"
+      [(ngModel)]="courseCreate.description"
       required
     ></textarea>
   </div>
 
   <div>
     <label for="price">Precio:</label>
-    <input
-      type="number"
-      id="price"
-      name="price"
-      [(ngModel)]="course.price"
-      required
-    />
+    <input type="number" id="price" name="price" [(ngModel)]="courseCreate.price" required />
   </div>
+
+  <select id="teacher" name="teacher" [(ngModel)]="courseCreate.teacherId" required>
+    <option *ngFor="let prof of profesores" [value]="prof.userId">{{ prof.name }}</option>
+  </select>
 
   <div>
     <button type="submit">{{ tipoEdicion ? 'Actualizar' : 'Guardar' }}</button>
