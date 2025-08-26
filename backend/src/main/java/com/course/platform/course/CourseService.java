@@ -25,6 +25,10 @@ public class CourseService {
 	public List<Course> listCours() {
 		return courseRepository.findAll();
 	}
+	
+	public List<CourseSummaryDto> listCourseSummary() {
+		return courseRepository.listCourseSummary();
+	}
 
 	public Course create(CourseCreateDTO dto) {
 	    Course course = new Course();
