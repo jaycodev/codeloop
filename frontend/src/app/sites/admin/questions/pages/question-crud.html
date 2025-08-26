@@ -1,0 +1,188 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="container-fluid mt-4">
+  <p-toolbar styleClass="mb-6">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="New Question"
+        icon="pi pi-plus"
+        class="p-button-secondary mr-2"
+        (click)="openNew()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Delete"
+        icon="pi pi-trash"
+        class="p-button-secondary"
+        outlined
+        [disabled]="!selectedQuestions || selectedQuestions.length === 0"
+        (click)="deleteSelectedQuestions()"
+      ></button>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <div class="flex align-items-center gap-2">
+        <input
+          pInputText
+          type="number"
+          min="0"
+          [(ngModel)]="searchExamId"
+          placeholder="Find by Exam ID"
+          style="width: 160px;"
+        />
+        <button
+          pButton
+          label="Find"
+          icon="pi pi-search"
+          class="p-button-secondary"
+          (click)="findByExamId()"
+        ></button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="questions()"
+    [columns]="cols"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="['statement', 'optionA', 'optionB', 'optionC', 'optionD', 'correctAnswer']"
+    [rowHover]="true"
+    dataKey="questionId"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} questions"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [(selection)]="selectedQuestions"
+    [tableStyle]="{ 'min-width': '75rem' }"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex items-center justify-between">
+        <h5 class="m-0">Questions Management</h5>
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let col of columns" pSortableColumn="{{ col.field }}">
+          {{ col.header }}
+          <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+        </th>
+        <th style="min-width: 10rem">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-question>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="question"></p-tableCheckbox>
+        </td>
+        <td>{{ question.questionId }}</td>
+        <td>{{ question.examId }}</td>
+        <td>{{ question.statement }}</td>
+        <td>{{ question.optionA }}</td>
+        <td>{{ question.optionB }}</td>
+        <td>{{ question.optionC }}</td>
+        <td>{{ question.optionD }}</td>
+        <td><b>{{ question.correctAnswer }}</b></td>
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-rounded mr-2"
+            outlined
+            (click)="editQuestion(question)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            outlined
+            (click)="deleteQuestion(question.questionId)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="10" class="text-center">No questions found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog
+    [(visible)]="questionDialog"
+    [style]="{ width: '450px' }"
+    header="{{ tipoEdicion ? 'Edit Question' : 'New Question' }}"
+    [modal]="true"
+  >
+    <ng-template pTemplate="content">
+      <div class="flex flex-col gap-4">
+        <div>
+          <label for="examId" class="block font-bold mb-2">Exam ID</label>
+          <input type="number" pInputText id="examId" [(ngModel)]="questionCreate.examId" required />
+        </div>
+        <div>
+          <label for="statement" class="block font-bold mb-2">Statement</label>
+          <textarea
+            id="statement"
+            pInputText
+            [(ngModel)]="questionCreate.statement"
+            required
+            rows="2"
+          ></textarea>
+        </div>
+        <div>
+          <label for="optionA" class="block font-bold mb-2">Option A</label>
+          <input type="text" pInputText id="optionA" [(ngModel)]="questionCreate.optionA" />
+        </div>
+        <div>
+          <label for="optionB" class="block font-bold mb-2">Option B</label>
+          <input type="text" pInputText id="optionB" [(ngModel)]="questionCreate.optionB" />
+        </div>
+        <div>
+          <label for="optionC" class="block font-bold mb-2">Option C</label>
+          <input type="text" pInputText id="optionC" [(ngModel)]="questionCreate.optionC" />
+        </div>
+        <div>
+          <label for="optionD" class="block font-bold mb-2">Option D</label>
+          <input type="text" pInputText id="optionD" [(ngModel)]="questionCreate.optionD" />
+        </div>
+        <div>
+          <label for="correctAnswer" class="block font-bold mb-2">Correct Answer</label>
+          <select id="correctAnswer" [(ngModel)]="questionCreate.correctAnswer" class="form-select" required>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+          </select>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        text
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="{{ tipoEdicion ? 'Update' : 'Save' }}"
+        icon="pi pi-check"
+        (click)="saveQuestion()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</div>

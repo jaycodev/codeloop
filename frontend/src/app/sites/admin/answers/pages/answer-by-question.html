@@ -1,0 +1,54 @@
+<div class="container-fluid mt-4">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        label="Back"
+        icon="pi pi-arrow-left"
+        class="p-button-secondary"
+        (click)="goBack()"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <p-table #dt [value]="answers" [columns]="cols" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div class="flex items-center justify-between">
+        <h5 class="m-0">Answers for Question {{ questionId }}</h5>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+          <ng-template [pTemplate]="'filter'" let-filter>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filter($event.target.value, col.field, 'contains')"
+              placeholder="Filter"
+              style="width: 100%; margin-top: 4px;"
+            />
+          </ng-template>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-answer>
+      <tr>
+        <td>{{ answer.answerId }}</td>
+        <td>{{ answer.studentId }}</td>
+        <td>{{ answer.studentName }}</td>
+        <td>{{ answer.answer }}</td>
+        <td>
+          <span [ngClass]="answer.isCorrect ? 'text-success' : 'text-danger'">
+            {{ answer.isCorrect ? 'Correct' : 'Incorrect' }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center">No answers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
