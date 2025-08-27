@@ -299,3 +299,170 @@ INSERT INTO payment (student_id, course_id, amount, status, payment_method) VALU
 (6, 18, 70.00, 'COMPLETADO', 'YAPE'),
 (7, 19, 220.00, 'PENDIENTE', 'TARJETA_CREDITO'),
 (8, 20, 130.00, 'COMPLETADO', 'YAPE');
+
+-- ENERO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(1, 5, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-01-05 09:15:00', '%Y-%m-%d %H:%i:%s')),
+(2, 3, 39.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-01-08 14:30:00', '%Y-%m-%d %H:%i:%s')),
+(3, 1, 19.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-01-12 11:20:00', '%Y-%m-%d %H:%i:%s')),
+(4, 2, 39.99, 'PENDIENTE', 'TARJETA_CREDITO', STR_TO_DATE('2023-01-15 16:45:00', '%Y-%m-%d %H:%i:%s')),
+(5, 6, 49.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-01-20 10:30:00', '%Y-%m-%d %H:%i:%s')),
+(6, 4, 29.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-01-25 13:50:00', '%Y-%m-%d %H:%i:%s'));
+
+-- FEBRERO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(7, 8, 180.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-02-02 08:20:00', '%Y-%m-%d %H:%i:%s')),
+(8, 1, 19.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-02-07 15:15:00', '%Y-%m-%d %H:%i:%s')),
+(9, 10, 250.00, 'RECHAZADO', 'YAPE', STR_TO_DATE('2023-02-10 12:40:00', '%Y-%m-%d %H:%i:%s')),
+(10, 7, 200.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-02-14 17:25:00', '%Y-%m-%d %H:%i:%s')),
+(11, 2, 39.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-02-18 09:55:00', '%Y-%m-%d %H:%i:%s')),
+(12, 9, 120.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-02-23 14:10:00', '%Y-%m-%d %H:%i:%s')),
+(13, 5, 29.99, 'PENDIENTE', 'YAPE', STR_TO_DATE('2023-02-28 16:30:00', '%Y-%m-%d %H:%i:%s'));
+
+-- MARZO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(14, 11, 100.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-03-03 10:45:00', '%Y-%m-%d %H:%i:%s')),
+(15, 3, 39.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-03-08 13:20:00', '%Y-%m-%d %H:%i:%s')),
+(1, 12, 300.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-03-12 15:35:00', '%Y-%m-%d %H:%i:%s')),
+(2, 6, 49.99, 'RECHAZADO', 'YAPE', STR_TO_DATE('2023-03-15 11:50:00', '%Y-%m-%d %H:%i:%s')),
+(3, 14, 400.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-03-20 14:15:00', '%Y-%m-%d %H:%i:%s')),
+(4, 8, 180.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-03-25 09:30:00', '%Y-%m-%d %H:%i:%s')),
+(5, 13, 160.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-03-29 16:20:00', '%Y-%m-%d %H:%i:%s'));
+
+-- ABRIL 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(6, 15, 90.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-04-05 08:40:00', '%Y-%m-%d %H:%i:%s')),
+(7, 1, 19.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-04-10 12:25:00', '%Y-%m-%d %H:%i:%s')),
+(8, 16, 110.00, 'PENDIENTE', 'YAPE', STR_TO_DATE('2023-04-14 15:50:00', '%Y-%m-%d %H:%i:%s')),
+(9, 4, 29.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-04-18 10:15:00', '%Y-%m-%d %H:%i:%s')),
+(10, 17, 80.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-04-22 13:40:00', '%Y-%m-%d %H:%i:%s')),
+(11, 7, 200.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-04-26 16:05:00', '%Y-%m-%d %H:%i:%s'));
+
+-- MAYO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(12, 18, 70.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-05-03 09:20:00', '%Y-%m-%d %H:%i:%s')),
+(13, 2, 39.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-05-08 14:45:00', '%Y-%m-%d %H:%i:%s')),
+(14, 19, 220.00, 'RECHAZADO', 'YAPE', STR_TO_DATE('2023-05-12 11:30:00', '%Y-%m-%d %H:%i:%s')),
+(15, 5, 29.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-05-16 15:20:00', '%Y-%m-%d %H:%i:%s')),
+(1, 20, 130.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-05-21 10:55:00', '%Y-%m-%d %H:%i:%s')),
+(2, 9, 120.00, 'PENDIENTE', 'TARJETA_CREDITO', STR_TO_DATE('2023-05-25 13:15:00', '%Y-%m-%d %H:%i:%s')),
+(3, 6, 49.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-05-30 16:40:00', '%Y-%m-%d %H:%i:%s'));
+
+-- JUNIO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(4, 11, 100.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-06-02 08:25:00', '%Y-%m-%d %H:%i:%s')),
+(5, 1, 19.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-06-07 12:50:00', '%Y-%m-%d %H:%i:%s')),
+(6, 10, 250.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-06-11 15:35:00', '%Y-%m-%d %H:%i:%s')),
+(7, 3, 39.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-06-15 09:10:00', '%Y-%m-%d %H:%i:%s')),
+(8, 12, 300.00, 'RECHAZADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-06-20 14:25:00', '%Y-%m-%d %H:%i:%s')),
+(9, 8, 180.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-06-24 11:45:00', '%Y-%m-%d %H:%i:%s'));
+
+-- JULIO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(10, 13, 160.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-07-05 10:30:00', '%Y-%m-%d %H:%i:%s')),
+(11, 4, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-07-10 13:15:00', '%Y-%m-%d %H:%i:%s')),
+(12, 14, 400.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-07-14 16:20:00', '%Y-%m-%d %H:%i:%s')),
+(13, 7, 200.00, 'PENDIENTE', 'YAPE', STR_TO_DATE('2023-07-18 08:55:00', '%Y-%m-%d %H:%i:%s')),
+(14, 2, 39.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-07-22 12:40:00', '%Y-%m-%d %H:%i:%s')),
+(15, 15, 90.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-07-27 15:05:00', '%Y-%m-%d %H:%i:%s'));
+
+-- AGOSTO 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(1, 16, 110.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-08-03 09:20:00', '%Y-%m-%d %H:%i:%s')),
+(2, 5, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-08-08 14:35:00', '%Y-%m-%d %H:%i:%s')),
+(3, 17, 80.00, 'RECHAZADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-08-12 11:50:00', '%Y-%m-%d %H:%i:%s')),
+(4, 6, 49.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-08-16 15:25:00', '%Y-%m-%d %H:%i:%s')),
+(5, 18, 70.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-08-21 10:10:00', '%Y-%m-%d %H:%i:%s')),
+(6, 9, 120.00, 'PENDIENTE', 'YAPE', STR_TO_DATE('2023-08-25 13:45:00', '%Y-%m-%d %H:%i:%s')),
+(7, 19, 220.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-08-30 16:30:00', '%Y-%m-%d %H:%i:%s'));
+
+-- SEPTIEMBRE 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(8, 20, 130.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-09-04 08:40:00', '%Y-%m-%d %H:%i:%s')),
+(9, 1, 19.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-09-09 12:25:00', '%Y-%m-%d %H:%i:%s')),
+(10, 11, 100.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-09-13 15:50:00', '%Y-%m-%d %H:%i:%s')),
+(11, 3, 39.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-09-17 09:15:00', '%Y-%m-%d %H:%i:%s')),
+(12, 12, 300.00, 'RECHAZADO', 'YAPE', STR_TO_DATE('2023-09-22 14:30:00', '%Y-%m-%d %H:%i:%s')),
+(13, 8, 180.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-09-26 11:05:00', '%Y-%m-%d %H:%i:%s'));
+
+-- OCTUBRE 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(14, 4, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-10-02 10:20:00', '%Y-%m-%d %H:%i:%s')),
+(15, 13, 160.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-10-07 13:45:00', '%Y-%m-%d %H:%i:%s')),
+(1, 7, 200.00, 'PENDIENTE', 'YAPE', STR_TO_DATE('2023-10-11 16:15:00', '%Y-%m-%d %H:%i:%s')),
+(2, 14, 400.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-10-16 08:50:00', '%Y-%m-%d %H:%i:%s')),
+(3, 2, 39.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-10-20 12:35:00', '%Y-%m-%d %H:%i:%s')),
+(4, 15, 90.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-10-25 15:20:00', '%Y-%m-%d %H:%i:%s')),
+(5, 10, 250.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-10-29 09:40:00', '%Y-%m-%d %H:%i:%s'));
+
+-- NOVIEMBRE 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(6, 16, 110.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-11-03 11:25:00', '%Y-%m-%d %H:%i:%s')),
+(7, 5, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-11-08 14:50:00', '%Y-%m-%d %H:%i:%s')),
+(8, 17, 80.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-11-12 10:15:00', '%Y-%m-%d %H:%i:%s')),
+(9, 9, 120.00, 'RECHAZADO', 'YAPE', STR_TO_DATE('2023-11-16 13:40:00', '%Y-%m-%d %H:%i:%s')),
+(10, 18, 70.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-11-21 16:05:00', '%Y-%m-%d %H:%i:%s')),
+(11, 1, 19.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-11-25 08:30:00', '%Y-%m-%d %H:%i:%s'));
+
+-- DICIEMBRE 2023
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(12, 6, 49.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-12-01 09:45:00', '%Y-%m-%d %H:%i:%s')),
+(13, 19, 220.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-12-06 12:20:00', '%Y-%m-%d %H:%i:%s')),
+(14, 3, 39.99, 'PENDIENTE', 'TARJETA_CREDITO', STR_TO_DATE('2023-12-10 15:35:00', '%Y-%m-%d %H:%i:%s')),
+(15, 11, 100.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-12-14 11:50:00', '%Y-%m-%d %H:%i:%s')),
+(1, 20, 130.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-12-18 14:25:00', '%Y-%m-%d %H:%i:%s')),
+(2, 8, 180.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2023-12-22 10:40:00', '%Y-%m-%d %H:%i:%s')),
+(3, 12, 300.00, 'RECHAZADO', 'TARJETA_CREDITO', STR_TO_DATE('2023-12-28 16:15:00', '%Y-%m-%d %H:%i:%s'));
+
+-- ===== AÑO 2024 (6 meses adicionales) =====
+
+-- ENERO 2024
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(4, 4, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-01-05 08:30:00', '%Y-%m-%d %H:%i:%s')),
+(5, 7, 200.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-01-10 11:45:00', '%Y-%m-%d %H:%i:%s')),
+(6, 1, 19.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-01-15 14:20:00', '%Y-%m-%d %H:%i:%s')),
+(7, 13, 160.00, 'PENDIENTE', 'TARJETA_CREDITO', STR_TO_DATE('2024-01-20 16:35:00', '%Y-%m-%d %H:%i:%s')),
+(8, 9, 120.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-01-25 09:50:00', '%Y-%m-%d %H:%i:%s'));
+
+-- FEBRERO 2024
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(9, 14, 400.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-02-03 10:25:00', '%Y-%m-%d %H:%i:%s')),
+(10, 2, 39.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-02-08 13:40:00', '%Y-%m-%d %H:%i:%s')),
+(11, 15, 90.00, 'RECHAZADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-02-12 15:15:00', '%Y-%m-%d %H:%i:%s')),
+(12, 6, 49.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-02-17 08:05:00', '%Y-%m-%d %H:%i:%s')),
+(13, 16, 110.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-02-22 12:30:00', '%Y-%m-%d %H:%i:%s')),
+(14, 5, 29.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-02-27 16:55:00', '%Y-%m-%d %H:%i:%s'));
+
+-- MARZO 2024
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(15, 17, 80.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-03-04 09:15:00', '%Y-%m-%d %H:%i:%s')),
+(1, 18, 70.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-03-09 12:40:00', '%Y-%m-%d %H:%i:%s')),
+(2, 10, 250.00, 'PENDIENTE', 'TARJETA_CREDITO', STR_TO_DATE('2024-03-14 15:25:00', '%Y-%m-%d %H:%i:%s')),
+(3, 19, 220.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-03-18 11:50:00', '%Y-%m-%d %H:%i:%s')),
+(4, 3, 39.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-03-23 14:10:00', '%Y-%m-%d %H:%i:%s')),
+(5, 20, 130.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-03-28 10:35:00', '%Y-%m-%d %H:%i:%s'));
+
+-- ABRIL 2024
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(6, 11, 100.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-04-02 13:20:00', '%Y-%m-%d %H:%i:%s')),
+(7, 8, 180.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-04-07 16:45:00', '%Y-%m-%d %H:%i:%s')),
+(8, 2, 39.99, 'RECHAZADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-04-12 08:30:00', '%Y-%m-%d %H:%i:%s')),
+(9, 12, 300.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-04-16 11:55:00', '%Y-%m-%d %H:%i:%s')),
+(10, 4, 29.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-04-21 15:20:00', '%Y-%m-%d %H:%i:%s'));
+
+-- MAYO 2024
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(11, 13, 160.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-05-05 09:40:00', '%Y-%m-%d %H:%i:%s')),
+(12, 1, 19.99, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-05-10 12:15:00', '%Y-%m-%d %H:%i:%s')),
+(13, 7, 200.00, 'PENDIENTE', 'YAPE', STR_TO_DATE('2024-05-15 14:50:00', '%Y-%m-%d %H:%i:%s')),
+(14, 14, 400.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-05-20 10:05:00', '%Y-%m-%d %H:%i:%s')),
+(15, 9, 120.00, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-05-25 13:30:00', '%Y-%m-%d %H:%i:%s'));
+
+-- JUNIO 2024
+INSERT INTO payment (student_id, course_id, amount, status, payment_method, payment_date) VALUES
+(1, 15, 90.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-06-03 08:45:00', '%Y-%m-%d %H:%i:%s')),
+(2, 6, 49.99, 'COMPLETADO', 'YAPE', STR_TO_DATE('2024-06-08 12:20:00', '%Y-%m-%d %H:%i:%s')),
+(3, 16, 110.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-06-13 15:35:00', '%Y-%m-%d %H:%i:%s')),
+(4, 17, 80.00, 'RECHAZADO', 'YAPE', STR_TO_DATE('2024-06-18 11:10:00', '%Y-%m-%d %H:%i:%s')),
+(5, 18, 70.00, 'COMPLETADO', 'TARJETA_CREDITO', STR_TO_DATE('2024-06-23 14:25:00', '%Y-%m-%d %H:%i:%s')),
+(6, 19, 220.00, 'PENDIENTE', 'YAPE', STR_TO_DATE('2024-06-28 16:50:00', '%Y-%m-%d %H:%i:%s'));
