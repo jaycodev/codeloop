@@ -6,4 +6,8 @@ export interface CourseDetailDto {
   description: string;
   teacher: UserSummaryDto;
   price: number;
+  imageUrl: string;
+  level: string;
+  durationHours: number;
+  lessonCount: number;
 }

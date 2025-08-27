@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Hero } from '../../components/hero';
-import { CourseCard } from '../../components/course-card';
-import { Pricing } from '../../components/pricing';
+import { Hero } from '../components/hero';
+import { CourseCard } from '../components/course-card';
+import { Pricing } from '../components/pricing';
 import { CourseService } from '@domains/course/services/course-service';
 import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs/operators';
@@ -32,7 +32,7 @@ import { map } from 'rxjs/operators';
 export class Home {
   private courseService = inject(CourseService);
 
-  courses$ = this.courseService.listar().pipe(
-    map(courses => courses.sort((a, b) => a.id - b.id))
-  );
+  courses$ = this.courseService
+    .listar()
+    .pipe(map((courses) => courses.sort((a, b) => a.id - b.id)));
 }

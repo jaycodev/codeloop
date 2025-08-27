@@ -19,6 +19,8 @@ CREATE TABLE course (
     price NUMERIC(10, 2) DEFAULT 0.00,
     image_url VARCHAR(500),
     language VARCHAR(50) DEFAULT 'Español',
+    level VARCHAR(20) DEFAULT 'Básico' CHECK (level IN ('Básico', 'Intermedio', 'Avanzado')),
+    duration_hours INT DEFAULT 0,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     CONSTRAINT fk_course_teacher FOREIGN KEY (teacher_id) REFERENCES "user"(user_id)
 );
@@ -30,6 +32,7 @@ CREATE TABLE lesson (
     video_url TEXT,
     course_id INT NOT NULL,
     order_num INT DEFAULT 0,
+    duration_minutes INT DEFAULT 0,
     CONSTRAINT fk_lesson_course FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CourseService } from '@domains/course/services/course-service';
-import { CourseCard } from '../../components/course-card';
+import { CourseCard } from '../components/course-card';
 import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 

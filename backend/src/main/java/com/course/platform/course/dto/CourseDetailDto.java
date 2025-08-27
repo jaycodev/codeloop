@@ -16,4 +16,8 @@ public class CourseDetailDto {
     private String description;
     private UserSummaryDto teacher;
     private BigDecimal price;
+    private String imageUrl;
+    private String level;
+    private Integer durationHours;
+    private Integer lessonCount;
 }
