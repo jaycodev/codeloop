@@ -138,32 +138,23 @@ public class PaymentService {
 
         @Transactional
         public PaymentStatsResponse getPaymentStats() {
-                StoredProcedureQuery query = entityManager
-                                .createStoredProcedureQuery("get_payments_stats");
-
-                // Registrar parámetros OUT
-                query.registerStoredProcedureParameter("monthly_payments", void.class,
-                                jakarta.persistence.ParameterMode.REF_CURSOR);
-                query.registerStoredProcedureParameter("total_revenue", BigDecimal.class,
+                StoredProcedureQuery revenueQuery = entityManager.createStoredProcedureQuery("get_payments_stats");
+                revenueQuery.registerStoredProcedureParameter("total_revenue", BigDecimal.class,
                                 jakarta.persistence.ParameterMode.OUT);
+                revenueQuery.execute();
+                BigDecimal totalRevenue = (BigDecimal) revenueQuery.getOutputParameterValue("total_revenue");
 
-                // Ejecutar
-                query.execute();
+                StoredProcedureQuery monthlyQuery = entityManager.createStoredProcedureQuery("get_monthly_payments");
+                monthlyQuery.execute();
+                @SuppressWarnings("unchecked")
+                List<Object[]> monthlyPayments = monthlyQuery.getResultList();
 
-                // Obtener el cursor como lista de Object[]
-                List<Object[]> monthlyPayments = query.getResultList();
-
-                // Mapear cursor (cada fila es un Object[] con [month, total_amount])
                 List<MonthlyPaymentDto> monthlyDtos = monthlyPayments.stream()
                                 .map(row -> new MonthlyPaymentDto(
                                                 (String) row[0],
                                                 ((Number) row[1]).doubleValue()))
                                 .toList();
 
-                // Obtener el valor total_revenue
-                BigDecimal totalRevenue = (BigDecimal) query.getOutputParameterValue("total_revenue");
-
                 return new PaymentStatsResponse(monthlyDtos, totalRevenue);
         }
-
 }
