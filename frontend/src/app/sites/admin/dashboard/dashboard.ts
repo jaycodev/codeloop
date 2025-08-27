@@ -24,9 +24,9 @@ export interface UserResumen {
   imports: [
     StatsWidget,
     RecentSalesWidget,
-    BestSellingWidget,
+    //BestSellingWidget,
     RevenueStreamWidget,
-    NotificationsWidget,
+    //NotificationsWidget,
     CommonModule
   ],
   template: `
