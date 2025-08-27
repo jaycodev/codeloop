@@ -40,4 +40,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Integer> {
         ORDER BY l.orderNum ASC
     """)
     List<LessonListDto> findByCourseId(@Param("courseId") Integer courseId);
+
+    long countByCourse_CourseId(Integer courseId);
 }

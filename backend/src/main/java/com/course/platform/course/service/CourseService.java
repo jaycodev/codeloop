@@ -13,6 +13,7 @@ import com.course.platform.course.dto.CourseListDto;
 import com.course.platform.course.dto.CourseSummaryDto;
 import com.course.platform.course.model.Course;
 import com.course.platform.course.repository.CourseRepository;
+import com.course.platform.lesson.repository.LessonRepository;
 import com.course.platform.user.UserRepository;
 import com.course.platform.user.UserService;
 
@@ -26,6 +27,7 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final LessonRepository lessonRepository;
 
     private final UserService userService;
 
@@ -45,12 +47,18 @@ public class CourseService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseId));
 
+        long lessonCount = lessonRepository.countByCourse_CourseId(courseId);
+
         return CourseDetailDto.builder()
                 .id(course.getCourseId())
                 .title(course.getTitle())
                 .description(course.getDescription())
                 .teacher(userService.toSummaryDto(course.getTeacher()))
                 .price(course.getPrice())
+                .imageUrl(course.getImageUrl())
+                .level(course.getLevel())
+                .durationHours(course.getDurationHours())
+                .lessonCount((int) lessonCount)
                 .build();
     }
 

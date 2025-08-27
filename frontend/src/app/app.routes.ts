@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { AdminLayout } from '@admin/layout/components/layout';
-import { Home } from '@public/pages/home/home';
+import { Home } from '@public/pages/home';
 import { Notfound } from '@admin/notfound/notfound';
 import { Dashboard } from '@admin/dashboard/dashboard';
 import { PublicLayout } from '@public/layout/layout';
-import { Courses } from '@public/pages/courses/courses';
+import { Courses } from '@/sites/public/pages/courses';
+import { CourseDetail } from './sites/public/pages/course-detail';
 
 export const appRoutes: Routes = [
   // Public page routes
@@ -14,6 +15,7 @@ export const appRoutes: Routes = [
     children: [
       { path: '', component: Home },
       { path: 'cursos', component: Courses },
+      { path: 'cursos/:id', component: CourseDetail },
     ],
   },
 

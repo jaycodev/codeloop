@@ -47,6 +47,14 @@ public class Course {
     @Builder.Default
     private String language = "Español";
 
+    @Column(length = 20, nullable = false)
+    @Builder.Default
+    private String level = "Básico";
+
+    @Column(name = "duration_hours")
+    @Builder.Default
+    private Integer durationHours = 0;
+
     @Builder.Default
     private OffsetDateTime createdAt = OffsetDateTime.now();
 }
