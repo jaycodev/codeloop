@@ -47,11 +47,11 @@ CREATE PROCEDURE get_monthly_payments()
 BEGIN
     SELECT DATE_FORMAT(payment_date, '%Y-%m') AS payment_month,
        SUM(amount) AS total_amount
-FROM payment
-WHERE status = 'COMPLETADO'
-GROUP BY DATE_FORMAT(payment_date, '%Y-%m')
-ORDER BY payment_month DESC
-LIMIT 6;
+    FROM payment
+    WHERE status = 'COMPLETADO'
+    GROUP BY DATE_FORMAT(payment_date, '%Y-%m')
+    ORDER BY payment_month DESC
+    LIMIT 6;
 END //
 
 CREATE PROCEDURE get_payments_stats(
