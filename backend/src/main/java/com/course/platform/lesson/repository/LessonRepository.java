@@ -17,7 +17,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Integer> {
             l.content,
             l.videoUrl,
             c.title,
-            l.orderNum
+            l.orderNum,
+            l.durationMinutes
         )
         FROM Lesson l
         JOIN l.course c
@@ -32,7 +33,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Integer> {
             l.content,
             l.videoUrl,
             c.title,
-            l.orderNum
+            l.orderNum,
+            l.durationMinutes
         )
         FROM Lesson l
         JOIN l.course c	

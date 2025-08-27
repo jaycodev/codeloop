@@ -32,7 +32,7 @@ public class LessonService {
     public List<LessonListDto> getList() {
         return lessonRepository.findList();
     }
-    
+
     public List<LessonListDto> getListByCourse(int idCourse) {
         return lessonRepository.findByCourseId(idCourse);
     }
@@ -106,6 +106,7 @@ public class LessonService {
                 lesson.getContent(),
                 lesson.getVideoUrl(),
                 lesson.getCourse().getTitle(),
-                lesson.getOrderNum());
+                lesson.getOrderNum(),
+                lesson.getDurationMinutes());
     }
 }
