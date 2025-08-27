@@ -1,7 +1,9 @@
 package com.course.platform.course.service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -16,13 +18,20 @@ import com.course.platform.course.repository.CourseRepository;
 import com.course.platform.user.UserRepository;
 import com.course.platform.user.UserService;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CourseService {
+	
+	@PersistenceContext
+    private EntityManager em;
 
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
@@ -134,5 +143,42 @@ public class CourseService {
                 course.getPrice(),
                 course.getTeacher().getName(),
                 course.getImageUrl());
+    }
+    
+    
+    @Transactional
+    public Map<String, Object> getCourseStats() {
+        StoredProcedureQuery query = em.createStoredProcedureQuery("get_course_stats");
+
+        // Registrar parámetros OUT e INOUT
+        query.registerStoredProcedureParameter("total_courses", Integer.class, ParameterMode.OUT);
+        query.registerStoredProcedureParameter("courses_last_month", Integer.class, ParameterMode.OUT);
+        query.registerStoredProcedureParameter("last_courses", void.class, ParameterMode.REF_CURSOR);
+        query.registerStoredProcedureParameter("top_courses", void.class, ParameterMode.REF_CURSOR);
+
+        // Ejecutar el procedimiento
+        query.execute();
+
+        // Recuperar los parámetros OUT
+        Integer totalCourses = (Integer) query.getOutputParameterValue("total_courses");
+        Integer coursesLastMonth = (Integer) query.getOutputParameterValue("courses_last_month");
+
+        // Primer cursor → últimos cursos
+        @SuppressWarnings("unchecked")
+        List<Object[]> lastCourses = query.getResultList();
+
+        // Segundo cursor → top cursos más comprados
+        query.hasMoreResults(); // avanzar al siguiente cursor
+        @SuppressWarnings("unchecked")
+        List<Object[]> topCourses = query.getResultList();
+
+        // Armar respuesta
+        Map<String, Object> result = new HashMap<>();
+        result.put("totalCourses", totalCourses);
+        result.put("coursesLastMonth", coursesLastMonth);
+        result.put("lastCourses", lastCourses);
+        result.put("topCourses", topCourses);
+
+        return result;
     }
 }

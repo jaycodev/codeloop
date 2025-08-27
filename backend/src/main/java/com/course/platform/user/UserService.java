@@ -1,16 +1,26 @@
 package com.course.platform.user;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.course.platform.user.dto.UserDTO;
+import com.course.platform.user.dto.UserStatsDto;
 import com.course.platform.user.dto.UserSummaryDto;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +28,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    private final JdbcTemplate jdbcTemplate;
 
     public UserSummaryDto toSummaryDto(User user) {
         return UserSummaryDto.builder()
@@ -64,4 +76,33 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
+    
+    /*
+    @Transactional
+    public List<UserStatsDto> getUserStats() {
+        List<UserStatsDto> results = new ArrayList<>();
+
+        jdbcTemplate.execute((Connection con) -> {
+            CallableStatement cs = con.prepareCall("{ CALL get_user_stats_all(?) }");
+            cs.registerOutParameter(1, Types.OTHER); // OUT refcursor
+            cs.execute();
+
+            ResultSet rs = (ResultSet) cs.getObject(1); // obtenemos el cursor
+            while (rs.next()) {
+                results.add(new UserStatsDto(
+                        rs.getString("role"),
+                        rs.getInt("total_users"),
+                        rs.getInt("new_last_month")
+                ));
+            }
+
+            rs.close();
+            cs.close();
+            return null;
+        });
+
+        return results;
+    }
+*/
+
 }
