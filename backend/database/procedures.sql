@@ -51,7 +51,7 @@ FROM payment
 WHERE status = 'COMPLETADO'
 GROUP BY DATE_FORMAT(payment_date, '%Y-%m')
 ORDER BY payment_month DESC
-LIMIT 5;
+LIMIT 6;
 END //
 
 CREATE PROCEDURE get_payments_stats(
