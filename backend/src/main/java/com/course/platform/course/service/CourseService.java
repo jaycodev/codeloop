@@ -16,8 +16,8 @@ import com.course.platform.course.dto.CourseSummaryDto;
 import com.course.platform.course.model.Course;
 import com.course.platform.course.repository.CourseRepository;
 import com.course.platform.lesson.repository.LessonRepository;
-import com.course.platform.user.UserRepository;
-import com.course.platform.user.UserService;
+import com.course.platform.user.repository.UserRepository;
+import com.course.platform.user.service.UserService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;

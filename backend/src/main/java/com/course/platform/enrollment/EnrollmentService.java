@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.course.platform.course.repository.CourseRepository;
 import com.course.platform.enrollment.dto.EnrollmentCreateOrUpdateDto;
-import com.course.platform.user.UserRepository;
+import com.course.platform.user.repository.UserRepository;
 
 import java.util.List;
 

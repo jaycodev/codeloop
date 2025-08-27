@@ -18,9 +18,9 @@ import com.course.platform.payment.dto.StatsDto.PaymentStatsResponse;
 import com.course.platform.payment.dto.UpdatePaymentDto;
 import com.course.platform.payment.model.Payment;
 import com.course.platform.payment.repository.PaymentRepository;
-import com.course.platform.user.User;
-import com.course.platform.user.UserRepository;
-import com.course.platform.user.UserService;
+import com.course.platform.user.model.User;
+import com.course.platform.user.repository.UserRepository;
+import com.course.platform.user.service.UserService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;

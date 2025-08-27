@@ -3,7 +3,7 @@ package com.course.platform.course.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.course.platform.user.User;
+import com.course.platform.user.model.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

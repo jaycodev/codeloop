@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import com.course.platform.course.model.Course;
-import com.course.platform.user.User;
+import com.course.platform.user.model.User;
 
 import jakarta.persistence.*;
 import lombok.*;

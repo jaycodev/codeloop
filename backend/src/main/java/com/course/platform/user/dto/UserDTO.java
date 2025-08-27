@@ -2,7 +2,7 @@ package com.course.platform.user.dto;
 
 import java.time.LocalDateTime;
 
-import com.course.platform.user.User;
+import com.course.platform.user.model.User;
 import com.course.platform.user.util.EnumRole;
 
 import lombok.Data;

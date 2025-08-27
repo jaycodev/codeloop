@@ -1,4 +1,4 @@
-package com.course.platform.answer;
+package com.course.platform.answer.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
