@@ -6,6 +6,7 @@ import { Dashboard } from '@admin/dashboard/dashboard';
 import { PublicLayout } from '@public/layout/layout';
 import { Courses } from '@/sites/public/pages/courses';
 import { CourseDetail } from './sites/public/pages/course-detail';
+import { LessonDetail } from './sites/public/pages/lesson-detail';
 
 export const appRoutes: Routes = [
   // Public page routes
@@ -15,7 +16,8 @@ export const appRoutes: Routes = [
     children: [
       { path: '', component: Home },
       { path: 'cursos', component: Courses },
-      { path: 'cursos/:id', component: CourseDetail },
+      { path: 'cursos/:courseId', component: CourseDetail },
+      { path: 'cursos/:courseId/leccion/:orderNum', component: LessonDetail },
     ],
   },
 

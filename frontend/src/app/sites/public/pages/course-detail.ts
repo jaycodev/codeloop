@@ -106,6 +106,7 @@ import { AccordionModule } from 'primeng/accordion';
                   icon="pi pi-play"
                   styleClass="w-full bg-blue-500 border-blue-500 hover:bg-blue-600 font-semibold py-3 rounded-lg mb-2"
                   size="large"
+                  [routerLink]="['/cursos', id, 'leccion', (lessons$ | async)?.[0]?.orderNum]"
                 />
 
                 <p class="text-xs text-muted-color text-center">
@@ -144,7 +145,7 @@ import { AccordionModule } from 'primeng/accordion';
         <!-- Course Description -->
         <p-card header="Sobre este curso" class="shadow-lg border-1 border-surface mb-6">
           <p class="text-muted-color leading-relaxed">
-            {{ course.description }}
+            {{ course.description }}.
           </p>
         </p-card>
 
@@ -161,7 +162,7 @@ import { AccordionModule } from 'primeng/accordion';
 
               <p-accordion-content>
                 <a
-                  [routerLink]="['leccion', lesson.id]"
+                  [routerLink]="['/cursos', id, 'leccion', lesson.orderNum]"
                   class="flex justify-between items-center p-3 w-full text-left cursor-pointer rounded transition-colors hover:bg-surface-100 dark:hover:bg-surface-800"
                 >
                   <span>{{ lesson.content }}</span>
@@ -203,7 +204,7 @@ export class CourseDetail {
   private lessonService = inject(LessonService);
   private courseService = inject(CourseService);
 
-  id = Number(this.route.snapshot.paramMap.get('id'));
+  id = Number(this.route.snapshot.paramMap.get('courseId'));
   course$ = this.courseService.buscarPorId(this.id);
 
   lessons$ = this.lessonService.listarPorCurso(this.id);

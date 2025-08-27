@@ -49,19 +49,19 @@ INSERT INTO course (title, description, teacher_id, price, image_url, language, 
 
 INSERT INTO lesson (title, content, video_url, course_id, order_num, duration_minutes) VALUES
 -- Curso 1: HTML desde Cero (5 lecciones)
-('Introducción a HTML', 'Conceptos básicos de HTML y estructura web', 'https://video.com/html1', 1, 1, 15),
-('Etiquetas HTML básicas', 'Aprende las etiquetas fundamentales de HTML', 'https://video.com/html2', 1, 2, 20),
-('Formularios en HTML', 'Creación de formularios interactivos', 'https://video.com/html3', 1, 3, 25),
-('Tablas y listas', 'Organización de contenido con tablas y listas', 'https://video.com/html4', 1, 4, 18),
-('HTML semántico', 'Uso de etiquetas semánticas para mejor accesibilidad', 'https://video.com/html5', 1, 5, 22),
+('Introducción a HTML', 'Conceptos básicos de HTML y estructura web', 'https://youtu.be/3nYLTiY5skU?t=0&si=TTWpEEjRt8hmOJuw', 1, 1, 15),
+('Etiquetas HTML básicas', 'Aprende las etiquetas fundamentales de HTML', 'https://youtu.be/3nYLTiY5skU?t=514&si=oclt6yCr7q8_kbVT', 1, 2, 20),
+('Formularios en HTML', 'Creación de formularios interactivos', 'https://youtu.be/3nYLTiY5skU?t=4568&si=_DGTXBdJSIzsUYT1', 1, 3, 25),
+('Tablas y listas', 'Organización de contenido con tablas y listas', 'https://youtu.be/3nYLTiY5skU?t=948&si=dVdgWnJYF-QmM9ku', 1, 4, 18),
+('HTML semántico', 'Uso de etiquetas semánticas para mejor accesibilidad', 'https://youtu.be/3nYLTiY5skU?t=567&si=EA8AR6bSZSu6MYs1', 1, 5, 22),
 
 -- Curso 2: CSS desde Cero (6 lecciones)
-('Introducción a CSS', 'Sintaxis básica y selectores CSS', 'https://video.com/css1', 2, 1, 18),
-('Modelo de caja', 'Padding, margin, border y box-sizing', 'https://video.com/css2', 2, 2, 22),
-('Posicionamiento CSS', 'Static, relative, absolute y fixed', 'https://video.com/css3', 2, 3, 25),
-('Flexbox', 'Layout moderno con Flexbox', 'https://video.com/css4', 2, 4, 28),
-('CSS Grid básico', 'Introducción a CSS Grid Layout', 'https://video.com/css5', 2, 5, 30),
-('Responsive Design', 'Media queries y diseño adaptable', 'https://video.com/css6', 2, 6, 26),
+('Introducción a CSS', 'Sintaxis básica y selectores CSS', 'https://youtu.be/hrxjBqZWsb0?t=0&si=JFjBnM9pPVf-OZxi', 2, 1, 18),
+('Modelo de caja', 'Padding, margin, border y box-sizing', 'https://youtu.be/hrxjBqZWsb0?t=5220&si=nl4H6hB1ff7HGG7B', 2, 2, 22),
+('Posicionamiento CSS', 'Static, relative, absolute y fixed', 'https://youtu.be/PSwlAuRbv_A?t=1106&si=oTD0-M55zFtowPuq', 2, 3, 25),
+('Flexbox', 'Layout moderno con Flexbox', 'https://youtu.be/PSwlAuRbv_A?t=2726&si=9ASuQs_orM-5q40b', 2, 4, 28),
+('CSS Grid básico', 'Introducción a CSS Grid Layout', 'https://youtu.be/iTjkiI8QQsM?t=238&si=8bXikbz7ct7zokis', 2, 5, 30),
+('Responsive Design', 'Media queries y diseño adaptable', 'https://youtu.be/TlJbu0BMLaY?t=4717&si=778LV4QXjpAwncIZ', 2, 6, 26),
 
 -- Curso 3: Angular 19 PWA (las 5 lecciones existentes)
 ('Introducción a bases de datos', 'Conceptos básicos de bases relacionales', 'https://video.com/pg1', 3, 1, 14),
