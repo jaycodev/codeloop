@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.course.platform.user.dto.UserDTO;
-import com.course.platform.user.dto.UserStatsDto;
 
 import java.util.List;
 
@@ -27,11 +26,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(users);
-    }
-
-    @GetMapping("/stats")
-    public List<UserStatsDto> getStats() {
-        return userService.getUserStats();
     }
     
     @GetMapping("/{id}")
