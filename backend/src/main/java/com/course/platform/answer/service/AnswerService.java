@@ -1,4 +1,4 @@
-package com.course.platform.answer;
+package com.course.platform.answer.service;
 
 import java.util.List;
 
@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.course.platform.answer.dto.AnswerDto;
+import com.course.platform.answer.model.Answer;
+import com.course.platform.answer.repository.AnswerRepository;
 import com.course.platform.question.Question;
 import com.course.platform.question.QuestionRepository;
-import com.course.platform.user.User;
-import com.course.platform.user.UserRepository;
+import com.course.platform.user.model.User;
+import com.course.platform.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

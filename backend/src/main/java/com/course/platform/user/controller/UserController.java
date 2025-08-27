@@ -1,4 +1,4 @@
-package com.course.platform.user;
+package com.course.platform.user.controller;
 
 import lombok.RequiredArgsConstructor;
 
@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.course.platform.user.dto.UserDTO;
 import com.course.platform.user.dto.UserStatsDto;
+import com.course.platform.user.model.User;
+import com.course.platform.user.service.UserService;
 
 import java.util.List;
 

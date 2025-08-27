@@ -1,4 +1,4 @@
-package com.course.platform.user;
+package com.course.platform.user.model;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.course.platform.answer;
+package com.course.platform.answer.controller;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.course.platform.answer.dto.AnswerDto;
+import com.course.platform.answer.model.Answer;
+import com.course.platform.answer.service.AnswerService;
 
 import lombok.RequiredArgsConstructor;
 

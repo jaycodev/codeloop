@@ -1,4 +1,4 @@
-package com.course.platform.user;
+package com.course.platform.user.service;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import com.course.platform.user.dto.UserDTO;
 import com.course.platform.user.dto.UserStatsDto;
 import com.course.platform.user.dto.UserSummaryDto;
+import com.course.platform.user.model.User;
+import com.course.platform.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
