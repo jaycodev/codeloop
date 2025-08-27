@@ -31,4 +31,7 @@ public class Lesson {
 
     @Builder.Default
     private Integer orderNum = 0;
+
+    @Builder.Default
+    private Integer durationMinutes = 0;
 }

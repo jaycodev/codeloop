@@ -6,5 +6,6 @@ public record LessonListDto(
     String content,
     String videoUrl,
     String courseTitle,
-    Integer orderNum
+    Integer orderNum,
+    Integer durationMinutes
 ) {}

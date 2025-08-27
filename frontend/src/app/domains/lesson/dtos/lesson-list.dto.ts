@@ -5,4 +5,5 @@ export interface LessonListDto {
   videoUrl: string;
   courseTitle: string;
   orderNum: number;
+  durationMinutes: number;
 }

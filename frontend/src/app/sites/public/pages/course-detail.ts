@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CourseService } from '@domains/course/services/course-service';
+import { LessonService } from '@domains/lesson/services/lesson.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 
 import { CardModule } from 'primeng/card';
@@ -12,12 +13,14 @@ import { DividerModule } from 'primeng/divider';
 import { ChipModule } from 'primeng/chip';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SkeletonModule } from 'primeng/skeleton';
+import { AccordionModule } from 'primeng/accordion';
 
 @Component({
   selector: 'app-course-detail',
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     AsyncPipe,
     NgIf,
     CardModule,
@@ -28,13 +31,16 @@ import { SkeletonModule } from 'primeng/skeleton';
     ChipModule,
     ProgressBarModule,
     SkeletonModule,
+    AccordionModule,
   ],
   template: `
     <div class="px-6 lg:px-20 py-8 w-full max-w-screen-2xl mx-auto">
       <ng-container *ngIf="course$ | async as course; else loading">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-6">
           <div class="lg:col-span-2 flex flex-col">
-            <div class="relative w-full aspect-[16/9] rounded-xl overflow-hidden border-1 border-surface">
+            <div
+              class="relative w-full aspect-[16/9] rounded-xl overflow-hidden border-1 border-surface"
+            >
               <img
                 [src]="course.imageUrl || '/placeholder.svg'"
                 alt="{{ course.title }}"
@@ -136,10 +142,35 @@ import { SkeletonModule } from 'primeng/skeleton';
         </div>
 
         <!-- Course Description -->
-        <p-card header="Sobre este curso" class="shadow-lg border-1 border-surface">
+        <p-card header="Sobre este curso" class="shadow-lg border-1 border-surface mb-6">
           <p class="text-muted-color leading-relaxed">
             {{ course.description }}
           </p>
+        </p-card>
+
+        <p-card header="Contenido del curso" class="shadow-lg border-1 border-surface">
+          <p-accordion [value]="0" [multiple]="true">
+            @for (lesson of lessons$ | async; track lesson.id) {
+            <p-accordion-panel [value]="lesson.id">
+              <p-accordion-header>
+                <div class="flex flex-col">
+                  <span class="text-sm text-primary">Capítulo {{ lesson.orderNum }}</span>
+                  <span class="font-medium">{{ lesson.title }}</span>
+                </div>
+              </p-accordion-header>
+
+              <p-accordion-content>
+                <a
+                  [routerLink]="['leccion', lesson.id]"
+                  class="flex justify-between items-center p-3 w-full text-left cursor-pointer rounded transition-colors hover:bg-surface-100 dark:hover:bg-surface-800"
+                >
+                  <span>{{ lesson.content }}</span>
+                  <span class="text-sm text-primary">{{ lesson.durationMinutes }} min</span>
+                </a>
+              </p-accordion-content>
+            </p-accordion-panel>
+            }
+          </p-accordion>
         </p-card>
       </ng-container>
 
@@ -169,10 +200,13 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class CourseDetail {
   private route = inject(ActivatedRoute);
+  private lessonService = inject(LessonService);
   private courseService = inject(CourseService);
 
   id = Number(this.route.snapshot.paramMap.get('id'));
   course$ = this.courseService.buscarPorId(this.id);
+
+  lessons$ = this.lessonService.listarPorCurso(this.id);
 
   onImgError(event: Event) {
     (event.target as HTMLImageElement).src = '/placeholder.svg';
