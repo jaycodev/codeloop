@@ -16,6 +16,7 @@ import { SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { PaymentStatus, PaymentMethod } from '@/domains/payment/models/payment.model';
 
 @Component({
   selector: 'app-payment-crud',
@@ -45,6 +46,8 @@ export class PaymentCrud implements OnInit {
   payment!: PaymentListDto | any;
   selectedPayments!: PaymentListDto[] | null;
   submitted: boolean = false;
+  PaymentStatus = PaymentStatus;
+  PaymentMethod=PaymentMethod;
 
   @ViewChild('dt') dt!: Table;
 

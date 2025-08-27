@@ -2,33 +2,15 @@
   <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
       <div class="flex align-items-center gap-2">
-        <input
-          pInputText
-          type="number"
-          min="0"
-          [(ngModel)]="searchQuestionId"
-          placeholder="Buscar por pregunta ID"
-          style="width: 180px;"
-        />
-        <button
-          pButton
-          label="Buscar"
-          icon="pi pi-search"
-          class="p-button-secondary"
-          (click)="goToQuestionAnswers()"
-          [disabled]="!searchQuestionId"
-        ></button>
+        <input pInputText type="number" min="0" [(ngModel)]="searchQuestionId" placeholder="Buscar por pregunta ID"
+          style="width: 180px;" />
+        <button pButton label="Buscar" icon="pi pi-search" class="p-button-secondary" (click)="goToQuestionAnswers()"
+          [disabled]="!searchQuestionId"></button>
       </div>
     </ng-template>
   </p-toolbar>
-  <p-table
-    #dt
-    [value]="answers"
-    [columns]="cols"
-    [paginator]="true"
-    [globalFilterFields]="['answerId', 'questionId', 'studentId', 'studentName', 'answer', 'isCorrect']"
-    [rows]="10"
-  >
+  <p-table #dt [value]="answers" [columns]="cols" [paginator]="true"
+    [globalFilterFields]="['answerId', 'questionId', 'studentId', 'studentName', 'answer', 'isCorrect']" [rows]="10">
     <ng-template pTemplate="caption">
       <div class="flex items-center justify-between">
         <h5 class="m-0">Respuestas</h5>
@@ -46,11 +28,10 @@
     <ng-template pTemplate="body" let-answer let-columns="columns">
       <tr>
         <td *ngFor="let col of columns">
-          <ng-container [ngSwitch]="col.field">
+          <ng-container [ngSwitch]="col.field" >
             <span *ngSwitchCase="'isCorrect'">
-              <span [ngClass]="answer.isCorrect ? 'text-success' : 'text-danger'">
-                {{ answer.isCorrect ? 'Correct' : 'Incorrect' }}
-              </span>
+              <i *ngIf="answer.isCorrect" class="pi pi-check text-green-500" style="font-size: 1.2rem;"></i>
+              <i *ngIf="!answer.isCorrect" class="pi pi-times text-red-500" style="font-size: 1.2rem;"></i>
             </span>
             <span *ngSwitchDefault>
               {{ answer[col.field] }}

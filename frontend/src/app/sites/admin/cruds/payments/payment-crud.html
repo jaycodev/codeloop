@@ -3,25 +3,25 @@
 
 
 <p-table #dt [value]="payments()" [rows]="10" [columns]="cols" [paginator]="true"
-  [globalFilterFields]="['studentName','courseTitle']" [(selection)]="selectedPayments"
-  [rowHover]="true" dataKey="id" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pagos"
-  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30]">
+  [globalFilterFields]="['studentName','courseTitle']" [(selection)]="selectedPayments" [rowHover]="true" dataKey="id"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pagos" [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10,20,30]">
 
 
-<ng-template #caption>
-  <div class="flex items-center justify-between">
-    <h5 class="m-0">Gestion de Pagos</h5>
-    <p-iconfield>
-      <p-inputicon styleClass="pi pi-search" />
-      <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)"
-        placeholder="Buscar..." />
-    </p-iconfield>
-  </div>
-</ng-template>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">Gestion de Pagos</h5>
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)"
+          placeholder="Buscar..." />
+      </p-iconfield>
+    </div>
+  </ng-template>
   <ng-template #header>
     <tr>
       <th *ngFor="let col of cols" pSortableColumn="{{col.field}}">
-        {{col.header}} <p-sortIcon field="{{col.field}}"/>
+        {{col.header}} <p-sortIcon field="{{col.field}}" />
       </th>
     </tr>
   </ng-template>
@@ -31,9 +31,25 @@
       <td>{{payment.studentName}}</td>
       <td>{{payment.courseTitle}}</td>
       <td>{{payment.amount}}</td>
-      <td>{{payment.status}}</td>
+      <td>
+        <span [ngClass]="{
+      'text-yellow-500 font-bold': payment.status === PaymentStatus.PENDIENTE,
+      'text-green-500 font-bold': payment.status === PaymentStatus.COMPLETADO,
+      'text-red-500 font-bold': payment.status === PaymentStatus.RECHAZADO
+        }">
+          {{payment.status}}
+        </span>
+      </td>
+
       <td>{{payment.paymentDate | date:'short'}}</td>
-      <td>{{payment.paymentMethod}}</td>
+   <td>
+        <span [ngClass]="{
+      'text-purple-500 font-bold': payment.paymentMethod === PaymentMethod.YAPE,
+      'text-blue-500 font-bold': payment.paymentMethod === PaymentMethod.TARJETA_CREDITO
+        }">
+          {{payment.paymentMethod}}
+        </span>
+      </td>
     </tr>
   </ng-template>
 </p-table>
@@ -56,11 +72,13 @@
       </div>
       <div>
         <label class="font-bold mb-1">Status</label>
-        <p-select [(ngModel)]="payment.status" [options]="['PENDIENTE','COMPLETADO','RECHAZADO']" placeholder="Select Status"></p-select>
+        <p-select [(ngModel)]="payment.status" [options]="['PENDIENTE','COMPLETADO','RECHAZADO']"
+          placeholder="Select Status"></p-select>
       </div>
       <div>
         <label class="font-bold mb-1">Payment Method</label>
-        <p-select [(ngModel)]="payment.paymentMethod" [options]="['YAPE','TARJETA_CREDITO']" placeholder="Select Method"></p-select>
+        <p-select [(ngModel)]="payment.paymentMethod" [options]="['YAPE','TARJETA_CREDITO']"
+          placeholder="Select Method"></p-select>
       </div>
       <div>
         <label class="font-bold mb-1">Payment Date</label>
