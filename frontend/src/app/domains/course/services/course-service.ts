@@ -6,6 +6,7 @@ import { CreateCourseDto } from '../dtos/create-course.dto';
 import { CourseDetailDto } from '../dtos/course-detail.dto';
 import { UpdateCourseDto } from '../dtos/update-course-dto';
 import { CourseSummaryDto } from '../dtos/course-summary.dto';
+import { CourseStats } from '../dtos/course-stats.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,9 @@ export class CourseService {
 
   listarResumen(): Observable<CourseSummaryDto[]> {
     return this.http.get<CourseSummaryDto[]>(`${this.urlBase}/summary`);
+  }
+
+   obtenerEstadisticas(): Observable<CourseStats> {
+    return this.http.get<CourseStats>(`${this.urlBase}/stats`);
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.course.platform.payment.dto.CreatePaymentDto;
 import com.course.platform.payment.dto.PaymentDetailDto;
 import com.course.platform.payment.dto.PaymentListDto;
+import com.course.platform.payment.dto.StatsDto.PaymentStatsResponse;
 import com.course.platform.payment.dto.UpdatePaymentDto;
 import com.course.platform.payment.service.PaymentService;
 
@@ -46,5 +47,10 @@ public class PaymentController {
     public ResponseEntity<PaymentListDto> update(@PathVariable Integer id, @RequestBody UpdatePaymentDto dto) {
         PaymentListDto updated = paymentService.update(id, dto);
         return ResponseEntity.ok(updated);
+    }
+    
+    @GetMapping("/stats")
+    public PaymentStatsResponse getPaymentsStats() {
+        return paymentService.getPaymentStats();
     }
 }
