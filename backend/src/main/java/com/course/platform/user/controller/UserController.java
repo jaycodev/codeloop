@@ -29,10 +29,10 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id) {
-        User user = userService.search(id); // lanza EntityNotFoundException si no existe
+        User user = userService.search(id);
         return ResponseEntity.ok(user);
     }
 
@@ -51,7 +51,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         userService.delete(id);
-        return ResponseEntity.noContent().build(); // 204 vacío
+        return ResponseEntity.noContent().build();
     }
-    
 }

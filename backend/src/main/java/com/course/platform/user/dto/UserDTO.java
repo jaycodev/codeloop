@@ -1,18 +1,13 @@
 package com.course.platform.user.dto;
 
-import java.time.LocalDateTime;
-
-import com.course.platform.user.model.User;
-import com.course.platform.user.util.EnumRole;
+import com.course.platform.user.model.UserRole;
 
 import lombok.Data;
 
 @Data
 public class UserDTO {
-
     private String name;
     private String email;
     private String password_hash;
-    private EnumRole role;
-
+    private UserRole role;
 }

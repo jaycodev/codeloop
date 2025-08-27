@@ -1,17 +1,20 @@
 package com.course.platform.course.model;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import com.course.platform.user.model.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,14 +50,18 @@ public class Course {
     @Builder.Default
     private String language = "Español";
 
-    @Column(length = 20, nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('Básico', 'Intermedio', 'Avanzado')")
     @Builder.Default
-    private String level = "Básico";
+    private CourseLevel level = CourseLevel.Básico;
 
-    @Column(name = "duration_hours")
     @Builder.Default
     private Integer durationHours = 0;
 
-    @Builder.Default
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

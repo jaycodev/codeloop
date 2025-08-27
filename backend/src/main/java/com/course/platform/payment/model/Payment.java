@@ -1,7 +1,7 @@
 package com.course.platform.payment.model;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import com.course.platform.course.model.Course;
 import com.course.platform.user.model.User;
@@ -32,13 +32,19 @@ public class Payment {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
-    @Builder.Default
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('PENDIENTE', 'COMPLETADO', 'RECHAZADO')")
+    @Builder.Default
     private PaymentStatus status = PaymentStatus.PENDIENTE;
 
-    @Builder.Default
-    private OffsetDateTime paymentDate = OffsetDateTime.now();
+    private LocalDateTime paymentDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('YAPE', 'TARJETA_CREDITO')")
     private PaymentMethod paymentMethod;
+
+    @PrePersist
+    protected void onCreate() {
+        paymentDate = LocalDateTime.now();
+    }
 }

@@ -32,133 +32,138 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
-	
-    @PersistenceContext
-    private EntityManager entityManager;
 
-    private final PaymentRepository paymentRepository;
-    private final UserRepository userRepository;
-    private final CourseRepository courseRepository;
+        @PersistenceContext
+        private EntityManager entityManager;
 
-    private final UserService userService;
-    private final CourseService courseService;
+        private final PaymentRepository paymentRepository;
+        private final UserRepository userRepository;
+        private final CourseRepository courseRepository;
 
-    public List<PaymentListDto> getList() {
-        return paymentRepository.findList();
-    }
+        private final UserService userService;
+        private final CourseService courseService;
 
-    public Optional<Payment> findById(Integer paymentId) {
-        return paymentRepository.findById(paymentId);
-    }
+        public List<PaymentListDto> getList() {
+                return paymentRepository.findList();
+        }
 
-    public PaymentDetailDto getInfoById(Integer paymentId) {
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new EntityNotFoundException("Payment not found with ID: " + paymentId));
+        public Optional<Payment> findById(Integer paymentId) {
+                return paymentRepository.findById(paymentId);
+        }
 
-        return PaymentDetailDto.builder()
-                .id(payment.getPaymentId())
-                .student(userService.toSummaryDto(payment.getStudent()))
-                .course(courseService.toSummaryDto(payment.getCourse()))
-                .amount(payment.getAmount())
-                .status(payment.getStatus().name())
-                .paymentDate(payment.getPaymentDate())
-                .paymentMethod(payment.getPaymentMethod().name())
-                .build();
-    }
+        public PaymentDetailDto getInfoById(Integer paymentId) {
+                Payment payment = paymentRepository.findById(paymentId)
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "Payment not found with ID: " + paymentId));
 
-    @Transactional
-    public PaymentListDto create(CreatePaymentDto dto) {
-        User student = userRepository.findById(dto.getStudentId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + dto.getStudentId()));
+                return PaymentDetailDto.builder()
+                                .id(payment.getPaymentId())
+                                .student(userService.toSummaryDto(payment.getStudent()))
+                                .course(courseService.toSummaryDto(payment.getCourse()))
+                                .amount(payment.getAmount())
+                                .status(payment.getStatus().name())
+                                .paymentDate(payment.getPaymentDate())
+                                .paymentMethod(payment.getPaymentMethod().name())
+                                .build();
+        }
 
-        Course course = courseRepository.findById(dto.getCourseId())
-                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + dto.getCourseId()));
+        @Transactional
+        public PaymentListDto create(CreatePaymentDto dto) {
+                User student = userRepository.findById(dto.getStudentId())
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "User not found with ID: " + dto.getStudentId()));
 
-        Payment payment = Payment.builder()
-                .student(student)
-                .course(course)
-                .amount(dto.getAmount())
-                .status(dto.getStatus())
-                .paymentDate(dto.getPaymentDate())
-                .paymentMethod(dto.getPaymentMethod())
-                .build();
+                Course course = courseRepository.findById(dto.getCourseId())
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "Course not found with ID: " + dto.getCourseId()));
 
-        Payment saved = paymentRepository.save(payment);
+                Payment payment = Payment.builder()
+                                .student(student)
+                                .course(course)
+                                .amount(dto.getAmount())
+                                .status(dto.getStatus())
+                                .paymentDate(dto.getPaymentDate())
+                                .paymentMethod(dto.getPaymentMethod())
+                                .build();
 
-        return toListDto(saved);
-    }
+                Payment saved = paymentRepository.save(payment);
 
-    @Transactional
-    public PaymentListDto update(Integer paymentId, UpdatePaymentDto dto) {
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new EntityNotFoundException("Payment not found with ID: " + paymentId));
+                return toListDto(saved);
+        }
 
-        User student = userRepository.findById(dto.getStudentId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + dto.getStudentId()));
+        @Transactional
+        public PaymentListDto update(Integer paymentId, UpdatePaymentDto dto) {
+                Payment payment = paymentRepository.findById(paymentId)
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "Payment not found with ID: " + paymentId));
 
-        Course course = courseRepository.findById(dto.getCourseId())
-                .orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + dto.getCourseId()));
+                User student = userRepository.findById(dto.getStudentId())
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "User not found with ID: " + dto.getStudentId()));
 
-        payment.setStudent(student);
-        payment.setCourse(course);
-        payment.setAmount(dto.getAmount());
-        payment.setStatus(dto.getStatus());
-        payment.setPaymentDate(dto.getPaymentDate());
-        payment.setPaymentMethod(dto.getPaymentMethod());
+                Course course = courseRepository.findById(dto.getCourseId())
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                                "Course not found with ID: " + dto.getCourseId()));
 
-        Payment saved = paymentRepository.save(payment);
+                payment.setStudent(student);
+                payment.setCourse(course);
+                payment.setAmount(dto.getAmount());
+                payment.setStatus(dto.getStatus());
+                payment.setPaymentDate(dto.getPaymentDate());
+                payment.setPaymentMethod(dto.getPaymentMethod());
 
-        return toListDto(saved);
-    }
+                Payment saved = paymentRepository.save(payment);
 
-    public PaymentSummaryDto toSummaryDto(Payment payment) {
-        return PaymentSummaryDto.builder()
-                .id(payment.getPaymentId())
-                .studentName(payment.getStudent().getName())
-                .courseTitle(payment.getCourse().getTitle())
-                .build();
-    }
+                return toListDto(saved);
+        }
 
-    private PaymentListDto toListDto(Payment payment) {
-        return new PaymentListDto(
-                payment.getPaymentId(),
-                payment.getStudent().getName(),
-                payment.getCourse().getTitle(),
-                payment.getAmount(),
-                payment.getStatus(),
-                payment.getPaymentDate(),
-                payment.getPaymentMethod());
-    }
-    
-    
+        public PaymentSummaryDto toSummaryDto(Payment payment) {
+                return PaymentSummaryDto.builder()
+                                .id(payment.getPaymentId())
+                                .studentName(payment.getStudent().getName())
+                                .courseTitle(payment.getCourse().getTitle())
+                                .build();
+        }
 
-    @Transactional
-    public PaymentStatsResponse getPaymentStats() {
-        StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("get_payments_stats");
+        private PaymentListDto toListDto(Payment payment) {
+                return new PaymentListDto(
+                                payment.getPaymentId(),
+                                payment.getStudent().getName(),
+                                payment.getCourse().getTitle(),
+                                payment.getAmount(),
+                                payment.getStatus(),
+                                payment.getPaymentDate(),
+                                payment.getPaymentMethod());
+        }
 
-        // Registrar parámetros OUT
-        query.registerStoredProcedureParameter("monthly_payments", void.class, jakarta.persistence.ParameterMode.REF_CURSOR);
-        query.registerStoredProcedureParameter("total_revenue", BigDecimal.class, jakarta.persistence.ParameterMode.OUT);
+        @Transactional
+        public PaymentStatsResponse getPaymentStats() {
+                StoredProcedureQuery query = entityManager
+                                .createStoredProcedureQuery("get_payments_stats");
 
-        // Ejecutar
-        query.execute();
+                // Registrar parámetros OUT
+                query.registerStoredProcedureParameter("monthly_payments", void.class,
+                                jakarta.persistence.ParameterMode.REF_CURSOR);
+                query.registerStoredProcedureParameter("total_revenue", BigDecimal.class,
+                                jakarta.persistence.ParameterMode.OUT);
 
-        // Obtener el cursor como lista de Object[]
-        List<Object[]> monthlyPayments = query.getResultList();
+                // Ejecutar
+                query.execute();
 
-        // Mapear cursor (cada fila es un Object[] con [month, total_amount])
-        List<MonthlyPaymentDto> monthlyDtos = monthlyPayments.stream()
-                .map(row -> new MonthlyPaymentDto(
-                        (String) row[0],
-                        ((Number) row[1]).doubleValue()
-                ))
-                .toList();
+                // Obtener el cursor como lista de Object[]
+                List<Object[]> monthlyPayments = query.getResultList();
 
-        // Obtener el valor total_revenue
-        BigDecimal totalRevenue = (BigDecimal) query.getOutputParameterValue("total_revenue");
+                // Mapear cursor (cada fila es un Object[] con [month, total_amount])
+                List<MonthlyPaymentDto> monthlyDtos = monthlyPayments.stream()
+                                .map(row -> new MonthlyPaymentDto(
+                                                (String) row[0],
+                                                ((Number) row[1]).doubleValue()))
+                                .toList();
 
-        return new PaymentStatsResponse(monthlyDtos, totalRevenue);
-    }
+                // Obtener el valor total_revenue
+                BigDecimal totalRevenue = (BigDecimal) query.getOutputParameterValue("total_revenue");
+
+                return new PaymentStatsResponse(monthlyDtos, totalRevenue);
+        }
 
 }

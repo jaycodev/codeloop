@@ -1,7 +1,7 @@
 package com.course.platform.payment.dto;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import com.course.platform.payment.model.PaymentMethod;
 import com.course.platform.payment.model.PaymentStatus;
@@ -12,6 +12,6 @@ public record PaymentListDto(
     String courseTitle,
     BigDecimal amount,
     PaymentStatus status,
-    OffsetDateTime paymentDate,
+    LocalDateTime paymentDate,
     PaymentMethod paymentMethod
 ) {}

@@ -12,8 +12,6 @@ import com.course.platform.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +19,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
-    private final JdbcTemplate jdbcTemplate;
 
     public UserSummaryDto toSummaryDto(User user) {
         return UserSummaryDto.builder()

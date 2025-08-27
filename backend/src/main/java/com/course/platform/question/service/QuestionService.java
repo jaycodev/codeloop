@@ -1,9 +1,12 @@
-package com.course.platform.question;
+package com.course.platform.question.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.course.platform.question.model.Question;
+import com.course.platform.question.repository.QuestionRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,6 +54,4 @@ public class QuestionService {
     public List<Question> listByExam(Integer examId) { 
     	return questionRepo.findQuestionByExamId(examId); 
     }
-    
-
 }
