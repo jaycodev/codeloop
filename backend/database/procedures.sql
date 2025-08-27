@@ -45,13 +45,13 @@ END //
 
 CREATE PROCEDURE get_monthly_payments()
 BEGIN
-    SELECT DATE_FORMAT(DATE_SUB(payment_date, INTERVAL DAYOFMONTH(payment_date)-1 DAY), '%Y-%m') AS payment_month,
-           SUM(amount) AS total_amount
-    FROM payment
-    WHERE status = 'COMPLETADO'
-      AND payment_date >= DATE_SUB(DATE_SUB(CURDATE(), INTERVAL DAYOFMONTH(CURDATE())-1 DAY), INTERVAL 5 MONTH)
-    GROUP BY DATE_FORMAT(DATE_SUB(payment_date, INTERVAL DAYOFMONTH(payment_date)-1 DAY), '%Y-%m')
-    ORDER BY payment_month;
+    SELECT DATE_FORMAT(payment_date, '%Y-%m') AS payment_month,
+       SUM(amount) AS total_amount
+FROM payment
+WHERE status = 'COMPLETADO'
+GROUP BY DATE_FORMAT(payment_date, '%Y-%m')
+ORDER BY payment_month DESC
+LIMIT 5;
 END //
 
 CREATE PROCEDURE get_payments_stats(
