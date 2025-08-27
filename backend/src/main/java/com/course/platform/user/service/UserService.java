@@ -1,13 +1,14 @@
-package com.course.platform.user;
+package com.course.platform.user.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.course.platform.user.dto.UserDTO;
 import com.course.platform.user.dto.UserSummaryDto;
+import com.course.platform.user.model.User;
+import com.course.platform.user.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

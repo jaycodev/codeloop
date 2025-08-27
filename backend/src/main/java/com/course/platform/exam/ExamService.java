@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.course.platform.course.model.Course;
 import com.course.platform.course.repository.CourseRepository;
-import com.course.platform.enrollment.Enrollment;
 import com.course.platform.exam.dto.ExamCreateDTO;
 import com.course.platform.exam.dto.ExamUpdateDTO;
 

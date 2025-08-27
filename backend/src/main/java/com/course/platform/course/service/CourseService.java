@@ -14,8 +14,8 @@ import com.course.platform.course.dto.CourseSummaryDto;
 import com.course.platform.course.model.Course;
 import com.course.platform.course.repository.CourseRepository;
 import com.course.platform.lesson.repository.LessonRepository;
-import com.course.platform.user.UserRepository;
-import com.course.platform.user.UserService;
+import com.course.platform.user.repository.UserRepository;
+import com.course.platform.user.service.UserService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -56,7 +56,7 @@ public class CourseService {
                 .teacher(userService.toSummaryDto(course.getTeacher()))
                 .price(course.getPrice())
                 .imageUrl(course.getImageUrl())
-                .level(course.getLevel())
+                .level(course.getLevel().name())
                 .durationHours(course.getDurationHours())
                 .lessonCount((int) lessonCount)
                 .build();
