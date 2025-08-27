@@ -11,6 +11,14 @@ import { CommonModule } from '@angular/common';
 import { CourseStats } from '@/domains/course/dtos/course-stats.dto';
 import { PaymentService } from '@/domains/payment/services/payment.service';
 import { PaymentStatsResponse } from '@/domains/payment/models/dto/payment-stats.dto';
+
+export interface UserResumen {
+  alumnos: number;
+  profesores: number;
+  nuevosAlumnos: number;
+  nuevosProfesores: number;
+}
+
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -23,15 +31,14 @@ import { PaymentStatsResponse } from '@/domains/payment/models/dto/payment-stats
   ],
   template: `
     <div class="grid grid-cols-12 gap-8">
-      <app-stats-widget [totalCourses]="coursesStats().totalCourses" [lastCourses]="coursesStats().coursesLastMonth"
-                        [totalStudents]="1" class="contents"></app-stats-widget>
+      <app-stats-widget [totalCourses]="coursesStats().totalCourses" [resumenUsers]="resumen" class="contents"></app-stats-widget>
       <div class="col-span-12 xl:col-span-6">
         <app-recent-courses-widget [lastCourses]="coursesStats().lastCourses"/>
-        <app-best-selling-widget />
+        <!-- <app-best-selling-widget /> -->
       </div>
       <div class="col-span-12 xl:col-span-6">
         <app-revenue-stream-widget [stats]="paymentsStats()"/>
-        <app-notifications-widget />
+        <!-- <app-notifications-widget /> -->
       </div>
     </div>
   `,
@@ -41,6 +48,13 @@ export class Dashboard implements OnInit {
   users = signal<User[]>([]);
   coursesStats = signal<CourseStats>({ lastCourses: [], coursesLastMonth: 0, totalCourses: 0, topCourses: [] });
   paymentsStats = signal<PaymentStatsResponse | null>(null);
+
+  resumen: UserResumen = {
+    alumnos: 0,
+    profesores: 0,
+    nuevosAlumnos: 0,
+    nuevosProfesores: 0
+  };
 
   constructor(
     private userService: UserService,
@@ -54,24 +68,45 @@ export class Dashboard implements OnInit {
   }
 
   private loadUsers(): void {
-    this.userService.listar().subscribe({
-      next: (data) => {
-        this.users.set(data);
+  this.userService.listar().subscribe({
+    next: (data: User[]) => {
+      this.users.set(data);
 
-        const { alumnos, profesores } = this.users().reduce(
-          (acc, u) => {
-            if (u.role === 'ESTUDIANTE') acc.alumnos++;
-            if (u.role === 'PROFESOR') acc.profesores++;
-            return acc;
-          },
-          { alumnos: 0, profesores: 0 }
-        );
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
-  }
+      const ahora = new Date();
+      const mesAnterior = new Date();
+      mesAnterior.setMonth(ahora.getMonth() - 1);
+
+      this.resumen = data.reduce(
+        (acc, u) => {
+          // Contar total de alumnos y profesores
+          if (u.role === 'ESTUDIANTE') acc.alumnos++;
+          if (u.role === 'PROFESOR') acc.profesores++;
+
+          // Contar nuevos alumnos y profesores del último mes
+          if (u.createdAt) {
+            const creado = new Date(u.createdAt);
+            if (creado >= mesAnterior && creado < ahora) {
+              if (u.role === 'ESTUDIANTE') acc.nuevosAlumnos++;
+              if (u.role === 'PROFESOR') acc.nuevosProfesores++;
+            }
+          }
+
+          return acc;
+        },
+        { alumnos: 0, profesores: 0, nuevosAlumnos: 0, nuevosProfesores: 0 }
+      );
+
+      console.log('Resumen de usuarios:', this.resumen);
+      // resumen.alumnos -> total alumnos
+      // resumen.profesores -> total profesores
+      // resumen.nuevosAlumnos -> nuevos alumnos último mes
+      // resumen.nuevosProfesores -> nuevos profesores último mes
+    },
+    error: (err) => {
+      console.error(err);
+    },
+  });
+}
 
    loadCoursesStats(): void {
     this.courseService.obtenerEstadisticas().subscribe({

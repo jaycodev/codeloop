@@ -10,7 +10,7 @@ import { PaymentStatsResponse } from '@/domains/payment/models/dto/payment-stats
   imports: [ChartModule],
   template: `
     <div class="card mb-8!">
-      <div class="font-semibold text-xl mb-4">Ingresos por los últimos 6 meses. Acumulado ({{ stats?.totalPayments ?? 0 }} $)</div>
+      <div class="font-semibold text-xl mb-4">Ingresos por los últimos 6 meses. Acumulado ({{ stats?.totalRevenue }} $)</div>
       <p-chart type="bar" [data]="chartData" [options]="chartOptions" class="h-100" />
     </div>
   `
