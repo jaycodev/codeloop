@@ -1,4 +1,4 @@
-package com.course.platform.question;
+package com.course.platform.question.controller;
 
 import java.util.List;
 
@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.course.platform.question.model.Question;
+import com.course.platform.question.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
 

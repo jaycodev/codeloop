@@ -1,8 +1,6 @@
-SET search_path TO public;
+USE course_platform;
 
-BEGIN;
-
-INSERT INTO "user" (name, email, password_hash, role, status) VALUES
+INSERT INTO `user` (name, email, password_hash, role, status) VALUES
 ('Ana María García', 'ana.garcia@email.com', '$2b$12$hash1', 'ESTUDIANTE', 'ACTIVO'),
 ('Carlos Eduardo López', 'carlos.lopez@email.com', '$2b$12$hash2', 'ESTUDIANTE', 'ACTIVO'),
 ('María José Rodríguez', 'maria.rodriguez@email.com', '$2b$12$hash3', 'ESTUDIANTE', 'ACTIVO'),
@@ -301,5 +299,3 @@ INSERT INTO payment (student_id, course_id, amount, status, payment_method) VALU
 (6, 18, 70.00, 'COMPLETADO', 'YAPE'),
 (7, 19, 220.00, 'PENDIENTE', 'TARJETA_CREDITO'),
 (8, 20, 130.00, 'COMPLETADO', 'YAPE');
-
-COMMIT;

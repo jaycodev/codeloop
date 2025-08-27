@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.course.platform.user.dto.UserDTO;
-import com.course.platform.user.dto.UserStatsDto;
 import com.course.platform.user.model.User;
 import com.course.platform.user.service.UserService;
 
@@ -31,11 +30,6 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/stats")
-    public List<UserStatsDto> getStats() {
-        return userService.getUserStats();
-    }
-    
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id) {
         User user = userService.search(id); // lanza EntityNotFoundException si no existe
@@ -59,5 +53,4 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.noContent().build(); // 204 vacío
     }
-    
 }

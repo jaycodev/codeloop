@@ -65,7 +65,7 @@ public class CourseService {
                 .teacher(userService.toSummaryDto(course.getTeacher()))
                 .price(course.getPrice())
                 .imageUrl(course.getImageUrl())
-                .level(course.getLevel())
+                .level(course.getLevel().name())
                 .durationHours(course.getDurationHours())
                 .lessonCount((int) lessonCount)
                 .build();

@@ -1,7 +1,7 @@
 package com.course.platform.payment.dto;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import com.course.platform.course.dto.CourseSummaryDto;
 import com.course.platform.user.dto.UserSummaryDto;
@@ -18,6 +18,6 @@ public class PaymentDetailDto {
     private CourseSummaryDto course;
     private BigDecimal amount;
     private String status;
-    private OffsetDateTime paymentDate;
+    private LocalDateTime paymentDate;
     private String paymentMethod;
 }

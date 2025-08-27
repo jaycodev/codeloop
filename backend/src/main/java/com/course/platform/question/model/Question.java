@@ -1,7 +1,11 @@
-package com.course.platform.question;
+package com.course.platform.question.model;
+
+import com.course.platform.shared.model.AnswerOption;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,29 +23,29 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Question {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionId;
-	
+
     @Column(name = "exam_id", nullable = false)
     private Integer examId;
-    
+
     @Column(nullable = false)
     private String statement;
-    
+
     @Column(name = "option_a")
-	private String optionA;
-    
+    private String optionA;
+
     @Column(name = "option_b")
-	private String optionB;
-    
+    private String optionB;
+
     @Column(name = "option_c")
-	private String optionC;
-    
+    private String optionC;
+
     @Column(name = "option_d")
-	private String optionD;
-	
-    @Column(name = "correct_answer", length = 1)
-    private String correctAnswer;
-	
+    private String optionD;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('A', 'B', 'C', 'D')")
+    private AnswerOption correctAnswer;
 }
