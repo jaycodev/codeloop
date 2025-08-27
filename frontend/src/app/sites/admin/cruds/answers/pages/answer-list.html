@@ -7,12 +7,12 @@
           type="number"
           min="0"
           [(ngModel)]="searchQuestionId"
-          placeholder="Find by Question ID"
+          placeholder="Buscar por pregunta ID"
           style="width: 180px;"
         />
         <button
           pButton
-          label="Find"
+          label="Buscar"
           icon="pi pi-search"
           class="p-button-secondary"
           (click)="goToQuestionAnswers()"
@@ -32,7 +32,7 @@
     <ng-template pTemplate="caption">
       <div class="flex items-center justify-between">
         <h5 class="m-0">All Answers</h5>
-        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
