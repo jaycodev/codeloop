@@ -122,7 +122,7 @@ export class UserCrudComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
-              detail: 'Error al eliminar el usuario',
+              detail: 'Error al eliminar el usuario '+err.message,
               life: 3000,
             });
           },
@@ -131,28 +131,47 @@ export class UserCrudComponent implements OnInit {
     });
   }
 
-  deleteSelectedUsers() {
-    this.confirmationService.confirm({
-      message: '¿Estás seguro de que quieres eliminar los usuarios seleccionados?',
-      header: 'Confirmar Eliminación',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.selectedUsers?.forEach((user) => {
-          this.userService.eliminar(user.userId!).subscribe({
-            next: () => this.cargarUsuarios(),
-            error: (err) => console.error(`Error al eliminar usuario ${user.userId!}:`, err),
-          });
+deleteSelectedUsers() {
+  this.confirmationService.confirm({
+    message: '¿Estás seguro de que quieres eliminar los usuarios seleccionados?',
+    header: 'Confirmar Eliminación',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+      if (!this.selectedUsers || this.selectedUsers.length === 0) return;
+
+      let deletedCount = 0;
+      const total = this.selectedUsers.length;
+
+      this.selectedUsers.forEach((user) => {
+        this.userService.eliminar(user.userId!).subscribe({
+          next: () => {
+            deletedCount++;
+            if (deletedCount === total) {
+              this.cargarUsuarios();
+              this.selectedUsers = null;
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Éxito',
+                detail: 'Usuarios eliminados con éxito',
+                life: 3000,
+              });
+            }
+          },
+          error: (err) => {
+            console.error(`Error al eliminar usuario ${user.userId!}:`, err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `No se pudo eliminar el usuario ${user.userId!}`,
+              life: 3000,
+            });
+          },
         });
-        this.selectedUsers = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: 'Usuarios eliminados con éxito',
-          life: 3000,
-        });
-      },
-    });
-  }
+      });
+    },
+  });
+}
+
 
   hideDialog() {
     this.userDialog = false;

@@ -1,31 +1,33 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
 <ng-template #caption>
   <div class="flex items-center justify-between">
     <h5 class="m-0">Manage Exam</h5>
     <p-iconfield>
       <p-inputicon styleClass="pi pi-search" />
       <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)"
-        placeholder="Search..." />
+        placeholder="Buscar..." />
     </p-iconfield>
   </div>
 </ng-template>
 <p-toolbar styleClass="mb-6">
   <ng-template #start>
-    <p-button label="New Exam" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
-    <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedExams()"
+    <p-button label="Nuevo Examen" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
+    <p-button severity="secondary" label="Eliminar" icon="pi pi-trash" outlined (onClick)="deleteSelectedExams()"
       [disabled]="!selectedExams || !selectedExams.length" />
   </ng-template>
 </p-toolbar>
 
 <p-table #dt [value]="exams()" [rows]="10" [columns]="cols" [paginator]="true"
   [globalFilterFields]="['course.title', 'title']" [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="selectedExams"
-  [rowHover]="true" dataKey="examId" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} exams"
+  [rowHover]="true" dataKey="examId" currentPageReportTemplate="Mostrando {first} de {last} a {totalRecords} examenes"
   [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 30]">
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <h5 class="m-0">Manage Exam</h5>
+      <h5 class="m-0">Gestion de Examenes</h5>
       <p-iconfield>
         <p-inputicon styleClass="pi pi-search" />
-        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
       </p-iconfield>
     </div>
   </ng-template>
@@ -86,4 +88,3 @@
   </ng-template>
 </p-dialog>
 
-<p-confirmdialog [style]="{ width: '450px' }" />

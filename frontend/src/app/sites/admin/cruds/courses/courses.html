@@ -2,24 +2,10 @@
 <p-confirmDialog></p-confirmDialog>
 
 <p-toolbar styleClass="mb-4">
-  <ng-template pTemplate="left">
-    <button
-      pButton
-      pRipple
-      label="Nuevo curso"
-      icon="pi pi-plus"
-      class="p-button-success mr-2"
-      (click)="openNew()"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="Eliminar"
-      icon="pi pi-trash"
-      class="p-button-danger"
-      [disabled]="!selectedCourses || selectedCourses.length === 0"
-      (click)="deleteSelectedCourses()"
-    ></button>
+  <ng-template #start>
+    <p-button label="Nuevo Curso" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
+    <p-button severity="secondary" label="Eliminar" icon="pi pi-trash" outlined (onClick)="deleteSelectedCourses()"
+      [disabled]="!selectedCourses || !selectedCourses.length" />
   </ng-template>
   <ng-template pTemplate="right">
     <p-iconField iconPosition="left">

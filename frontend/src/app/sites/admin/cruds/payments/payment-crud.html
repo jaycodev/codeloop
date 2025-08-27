@@ -1,0 +1,75 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
+<p-table #dt [value]="payments()" [rows]="10" [columns]="cols" [paginator]="true"
+  [globalFilterFields]="['studentName','courseTitle']" [(selection)]="selectedPayments"
+  [rowHover]="true" dataKey="id" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} pagos"
+  [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,30]">
+
+
+<ng-template #caption>
+  <div class="flex items-center justify-between">
+    <h5 class="m-0">Gestion de Pagos</h5>
+    <p-iconfield>
+      <p-inputicon styleClass="pi pi-search" />
+      <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)"
+        placeholder="Buscar..." />
+    </p-iconfield>
+  </div>
+</ng-template>
+  <ng-template #header>
+    <tr>
+      <th *ngFor="let col of cols" pSortableColumn="{{col.field}}">
+        {{col.header}} <p-sortIcon field="{{col.field}}"/>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-payment>
+    <tr>
+      <td>{{payment.studentName}}</td>
+      <td>{{payment.courseTitle}}</td>
+      <td>{{payment.amount}}</td>
+      <td>{{payment.status}}</td>
+      <td>{{payment.paymentDate | date:'short'}}</td>
+      <td>{{payment.paymentMethod}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Dialog -->
+<p-dialog [(visible)]="paymentDialog" [style]="{ width: '500px' }" header="Payment Details" [modal]="true">
+  <ng-template #content>
+    <div class="flex flex-col gap-4">
+      <div>
+        <label class="font-bold mb-1">Student ID</label>
+        <input type="number" pInputText [(ngModel)]="payment.studentId" required />
+      </div>
+      <div>
+        <label class="font-bold mb-1">Course ID</label>
+        <input type="number" pInputText [(ngModel)]="payment.courseId" required />
+      </div>
+      <div>
+        <label class="font-bold mb-1">Amount</label>
+        <input type="number" pInputNumber [(ngModel)]="payment.amount" required />
+      </div>
+      <div>
+        <label class="font-bold mb-1">Status</label>
+        <p-select [(ngModel)]="payment.status" [options]="['PENDIENTE','COMPLETADO','RECHAZADO']" placeholder="Select Status"></p-select>
+      </div>
+      <div>
+        <label class="font-bold mb-1">Payment Method</label>
+        <p-select [(ngModel)]="payment.paymentMethod" [options]="['YAPE','TARJETA_CREDITO']" placeholder="Select Method"></p-select>
+      </div>
+      <div>
+        <label class="font-bold mb-1">Payment Date</label>
+        <input type="date" pInputText [(ngModel)]="payment.paymentDate" />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></p-button>
+  </ng-template>
+</p-dialog>
