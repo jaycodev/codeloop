@@ -29,6 +29,7 @@ export const appRoutes: Routes = [
         path: '',
         component: AdminLayout,
         children: [
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // 👈 redirección
           { path: 'dashboard', component: Dashboard },
           { path: 'cruds', loadChildren: () => import('@admin/pages.routes') },
         ],
