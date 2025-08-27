@@ -1,6 +1,6 @@
 export interface PaymentStatsResponse {
   monthlyPayments: MonthlyPayment[];
-  totalPayments: number;
+  totalRevenue: number;
 }
 
 export interface MonthlyPayment {

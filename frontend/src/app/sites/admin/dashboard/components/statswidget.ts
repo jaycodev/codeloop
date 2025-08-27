@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
                         <i class="pi pi-book text-cyan-500 text-xl!"></i>
                     </div>
                 </div>
-                <span class="text-primary font-medium">{{lastCourses}} nuevos </span>
+                <span class="text-primary font-medium">{{lastCourses}} </span>
                 <span class="text-muted-color">en el ultimo mes</span>
             </div>
         </div>
@@ -25,14 +25,14 @@ import { CommonModule } from '@angular/common';
                 <div class="flex justify-between mb-4">
                     <div>
                         <span class="block text-muted-color font-medium mb-4">Profesores</span>
-                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{ totalTeachers }}</div>
+                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{ resumenUsers?.profesores }}</div>
                     </div>
                     <div class="flex items-center justify-center bg-orange-100 dark:bg-orange-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-user-edit text-orange-500 text-xl!"></i>
                     </div>
                 </div>
-                <span class="text-primary font-medium">%52+ </span>
-                <span class="text-muted-color">since last week</span>
+                <span class="text-primary font-medium">{{ resumenUsers?.nuevosProfesores }} </span>
+                <span class="text-muted-color">nuevos profesores en el ultimo mes</span>
             </div>
         </div>
 
@@ -41,14 +41,14 @@ import { CommonModule } from '@angular/common';
                 <div class="flex justify-between mb-4">
                     <div>
                         <span class="block text-muted-color font-medium mb-4">Alumnos</span>
-                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{ totalStudents }}</div>
+                        <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">{{ resumenUsers?.alumnos }}</div>
                     </div>
                     <div class="flex items-center justify-center bg-cyan-100 dark:bg-cyan-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
                         <i class="pi pi-users text-cyan-500 text-xl!"></i>
                     </div>
                 </div>
-                <span class="text-primary font-medium">520 </span>
-                <span class="text-muted-color">newly registered</span>
+                <span class="text-primary font-medium">{{ resumenUsers?.nuevosAlumnos }} </span>
+                <span class="text-muted-color">nuevos alumnos en el ultimo mes</span>
             </div>
         </div>`
 })
@@ -57,4 +57,5 @@ export class StatsWidget {
   @Input() lastCourses: number = 0;
   @Input() totalTeachers: number = 0;
   @Input() totalStudents: number = 0;
+  @Input() resumenUsers: { alumnos: number; profesores: number; nuevosAlumnos: number; nuevosProfesores: number } | null = null;
 }
