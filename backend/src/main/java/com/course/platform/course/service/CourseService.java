@@ -30,8 +30,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CourseService {
-	
-	@PersistenceContext
+
+    @PersistenceContext
     private EntityManager em;
 
     private final CourseRepository courseRepository;
@@ -152,35 +152,27 @@ public class CourseService {
                 course.getTeacher().getName(),
                 course.getImageUrl());
     }
-    
-    
+
     @Transactional
     public Map<String, Object> getCourseStats() {
-        StoredProcedureQuery query = em.createStoredProcedureQuery("get_course_stats");
+        StoredProcedureQuery statsQuery = em.createStoredProcedureQuery("get_course_stats");
+        statsQuery.registerStoredProcedureParameter("total_courses", Integer.class, ParameterMode.OUT);
+        statsQuery.registerStoredProcedureParameter("courses_last_month", Integer.class, ParameterMode.OUT);
+        statsQuery.execute();
 
-        // Registrar parámetros OUT e INOUT
-        query.registerStoredProcedureParameter("total_courses", Integer.class, ParameterMode.OUT);
-        query.registerStoredProcedureParameter("courses_last_month", Integer.class, ParameterMode.OUT);
-        query.registerStoredProcedureParameter("last_courses", void.class, ParameterMode.REF_CURSOR);
-        query.registerStoredProcedureParameter("top_courses", void.class, ParameterMode.REF_CURSOR);
+        Integer totalCourses = (Integer) statsQuery.getOutputParameterValue("total_courses");
+        Integer coursesLastMonth = (Integer) statsQuery.getOutputParameterValue("courses_last_month");
 
-        // Ejecutar el procedimiento
-        query.execute();
-
-        // Recuperar los parámetros OUT
-        Integer totalCourses = (Integer) query.getOutputParameterValue("total_courses");
-        Integer coursesLastMonth = (Integer) query.getOutputParameterValue("courses_last_month");
-
-        // Primer cursor → últimos cursos
+        StoredProcedureQuery lastCoursesQuery = em.createStoredProcedureQuery("get_last_courses");
+        lastCoursesQuery.execute();
         @SuppressWarnings("unchecked")
-        List<Object[]> lastCourses = query.getResultList();
+        List<Object[]> lastCourses = lastCoursesQuery.getResultList();
 
-        // Segundo cursor → top cursos más comprados
-        query.hasMoreResults(); // avanzar al siguiente cursor
+        StoredProcedureQuery topCoursesQuery = em.createStoredProcedureQuery("get_top_courses");
+        topCoursesQuery.execute();
         @SuppressWarnings("unchecked")
-        List<Object[]> topCourses = query.getResultList();
+        List<Object[]> topCourses = topCoursesQuery.getResultList();
 
-        // Armar respuesta
         Map<String, Object> result = new HashMap<>();
         result.put("totalCourses", totalCourses);
         result.put("coursesLastMonth", coursesLastMonth);
