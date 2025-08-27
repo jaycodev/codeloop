@@ -24,11 +24,11 @@ export class AnswerList implements OnInit {
   answers: Answer[] = [];
   cols: Column[] = [
     { field: 'answerId', header: 'ID' },
-    { field: 'questionId', header: 'Question ID' },
-    { field: 'studentId', header: 'Student ID' },
-    { field: 'studentName', header: 'Student Name' },
-    { field: 'answer', header: 'Answer' },
-    { field: 'isCorrect', header: 'Correct?' },
+    { field: 'questionId', header: 'Pregunta ID' },
+    { field: 'studentId', header: 'Estudiante ID' },
+    { field: 'studentName', header: 'Nombre Estudiante' },
+    { field: 'answer', header: 'Respuesta' },
+    { field: 'isCorrect', header: 'Es Correcta' },
   ];
   searchQuestionId?: number;
 
