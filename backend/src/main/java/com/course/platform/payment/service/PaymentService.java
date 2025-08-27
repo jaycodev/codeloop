@@ -1,5 +1,6 @@
 package com.course.platform.payment.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,8 @@ import com.course.platform.payment.dto.CreatePaymentDto;
 import com.course.platform.payment.dto.PaymentDetailDto;
 import com.course.platform.payment.dto.PaymentListDto;
 import com.course.platform.payment.dto.PaymentSummaryDto;
+import com.course.platform.payment.dto.StatsDto.MonthlyPaymentDto;
+import com.course.platform.payment.dto.StatsDto.PaymentStatsResponse;
 import com.course.platform.payment.dto.UpdatePaymentDto;
 import com.course.platform.payment.model.Payment;
 import com.course.platform.payment.repository.PaymentRepository;
@@ -19,13 +22,19 @@ import com.course.platform.user.model.User;
 import com.course.platform.user.repository.UserRepository;
 import com.course.platform.user.service.UserService;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
+	
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
@@ -120,4 +129,36 @@ public class PaymentService {
                 payment.getPaymentDate(),
                 payment.getPaymentMethod());
     }
+    
+    
+
+    @Transactional
+    public PaymentStatsResponse getPaymentStats() {
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("get_payments_stats");
+
+        // Registrar parámetros OUT
+        query.registerStoredProcedureParameter("monthly_payments", void.class, jakarta.persistence.ParameterMode.REF_CURSOR);
+        query.registerStoredProcedureParameter("total_revenue", BigDecimal.class, jakarta.persistence.ParameterMode.OUT);
+
+        // Ejecutar
+        query.execute();
+
+        // Obtener el cursor como lista de Object[]
+        List<Object[]> monthlyPayments = query.getResultList();
+
+        // Mapear cursor (cada fila es un Object[] con [month, total_amount])
+        List<MonthlyPaymentDto> monthlyDtos = monthlyPayments.stream()
+                .map(row -> new MonthlyPaymentDto(
+                        (String) row[0],
+                        ((Number) row[1]).doubleValue()
+                ))
+                .toList();
+
+        // Obtener el valor total_revenue
+        BigDecimal totalRevenue = (BigDecimal) query.getOutputParameterValue("total_revenue");
+
+        return new PaymentStatsResponse(monthlyDtos, totalRevenue);
+    }
+
 }

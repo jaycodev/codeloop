@@ -2,6 +2,7 @@ package com.course.platform.user.model;
 
 import java.time.LocalDateTime;
 
+import com.course.platform.user.util.EnumRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

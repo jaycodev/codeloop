@@ -36,6 +36,6 @@ public class Answer {
 	@Enumerated(EnumType.STRING)
 	@Column(columnDefinition = "ENUM('A', 'B', 'C', 'D')")
 	private AnswerOption answer;
-
+  
 	private Boolean isCorrect;
 }

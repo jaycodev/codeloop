@@ -1,6 +1,7 @@
 package com.course.platform.course.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,5 +71,10 @@ public class CourseController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         courseService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    
+    @GetMapping("/stats")
+    public Map<String, Object> getCourseStats() {
+        return courseService.getCourseStats();
     }
 }
