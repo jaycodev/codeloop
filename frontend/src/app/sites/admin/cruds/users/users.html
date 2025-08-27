@@ -1,21 +1,23 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
 <p-toolbar styleClass="mb-6">
   <ng-template #start>
-    <p-button label="New User" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
-    <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedUsers()"
+    <p-button label="Nuevo Usuario" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
+    <p-button severity="secondary" label="Eliminar" icon="pi pi-trash" outlined (onClick)="deleteSelectedUsers()"
       [disabled]="!selectedUsers || !selectedUsers.length" />
   </ng-template>
 </p-toolbar>
 
 <p-table #dt [value]="users()" [rows]="10" [columns]="cols" [paginator]="true"
   [globalFilterFields]="['name', 'email', 'role']" [tableStyle]="{ 'min-width': '75rem' }" [(selection)]="selectedUsers"
-  [rowHover]="true" dataKey="userId" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+  [rowHover]="true" dataKey="userId" currentPageReportTemplate="Mostrando {first} de {last} a {totalRecords} usuarios"
   [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 30]">
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <h5 class="m-0">Gestion Usuarios</h5>
+      <h5 class="m-0">Gestion de Usuarios</h5>
       <p-iconfield>
         <p-inputicon styleClass="pi pi-search" />
-        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
       </p-iconfield>
     </div>
   </ng-template>
@@ -133,6 +135,3 @@
     ></p-button>
   </ng-template>
 </p-dialog>
-
-
-<p-confirmdialog [style]="{ width: '450px' }" />

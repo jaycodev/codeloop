@@ -61,8 +61,8 @@ export class ExamCrud implements OnInit {
   selectedExams!: Exam[] | null;
   submitted: boolean = false;
 
-  course!:CourseSummaryDto;
-  coursesComboBox:CourseSummaryDto[]=[];
+  course!: CourseSummaryDto;
+  coursesComboBox: CourseSummaryDto[] = [];
 
   @ViewChild('dt') dt!: Table;
 
@@ -84,9 +84,10 @@ export class ExamCrud implements OnInit {
   }
 
   loadCourses() {
-   this.courseService.listarResumen().subscribe({
-      next: (data) =>{ this.coursesComboBox=[...data];
-        this.course=this.coursesComboBox[0];
+    this.courseService.listarResumen().subscribe({
+      next: (data) => {
+        this.coursesComboBox = [...data];
+        this.course = this.coursesComboBox[0];
         console.log(this.course);
       },
       error: () => {
@@ -104,7 +105,7 @@ export class ExamCrud implements OnInit {
     });
 
     this.cols = [
-      { field: 'title', header: 'Title'},
+      { field: 'title', header: 'Title' },
       { field: 'course', header: 'Course' },
       { field: 'createdAt', header: 'Created' },
     ];
@@ -122,7 +123,7 @@ export class ExamCrud implements OnInit {
     this.submitted = false;
     this.examDialog = true;
     this.isUpdateMode = false;
-    this.course = {id:0, title:'', description:''};
+    this.course = { id: 0, title: '', description: '' };
   }
 
   editExam(exam: Exam) {
@@ -138,19 +139,44 @@ export class ExamCrud implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.selectedExams?.forEach(e => {
-          if (e.examId) this.examService.eliminar(e.examId).subscribe(() => this.loadExams());
+        if (!this.selectedExams || this.selectedExams.length === 0) return;
+
+        let deletedCount = 0;
+        const total = this.selectedExams.length;
+
+        this.selectedExams.forEach((e) => {
+          if (e.examId) {
+            this.examService.eliminar(e.examId).subscribe({
+              next: () => {
+                deletedCount++;
+                if (deletedCount === total) {
+                  // Todas las eliminaciones completadas
+                  this.loadExams();
+                  this.selectedExams = null;
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: 'Exams deleted successfully',
+                    life: 3000,
+                  });
+                }
+              },
+              error: (err) => {
+                console.error(`Error deleting exam ${e.examId}:`, err);
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Error',
+                  detail: `Could not delete exam ${e.examId}`,
+                  life: 3000,
+                });
+              },
+            });
+          }
         });
-        this.selectedExams = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Exams Deleted',
-          life: 3000
-        });
-      }
+      },
     });
   }
+
 
   hideDialog() {
     this.examDialog = false;
@@ -163,16 +189,29 @@ export class ExamCrud implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (exam.examId) {
-          this.examService.eliminar(exam.examId).subscribe(() => this.loadExams());
-        }
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Exam Deleted',
-          life: 3000
+        if (!exam.examId) return;
+
+        this.examService.eliminar(exam.examId).subscribe({
+          next: () => {
+            this.loadExams();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: `Exam "${exam.title}" deleted successfully`,
+              life: 3000,
+            });
+          },
+          error: (err) => {
+            console.error(`Error deleting exam ${exam.examId}:`, err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Could not delete exam "${exam.title}"`,
+              life: 3000,
+            });
+          },
         });
-      }
+      },
     });
   }
 
@@ -182,28 +221,57 @@ export class ExamCrud implements OnInit {
 
     if (this.exam.examId) {
       // 🟢 Map a ExamUpdateDTO
-      const dto: ExamUpdateDTO = {
-        title: this.exam.title
-      };
+      const dto: ExamUpdateDTO = { title: this.exam.title };
 
-      this.examService.actualizar(this.exam.examId, dto).subscribe(() => {
-        this.loadExams();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Exam Updated', life: 3000 });
+      this.examService.actualizar(this.exam.examId, dto).subscribe({
+        next: () => {
+          this.loadExams();
+          this.examDialog = false;
+          this.exam = {} as Exam;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Exam updated successfully',
+            life: 3000,
+          });
+        },
+        error: (err) => {
+          console.error('Error updating exam:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Could not update exam',
+            life: 3000,
+          });
+        },
       });
     } else {
       // 🟢 Map a ExamCreateDTO
-      const dto: ExamCreateDTO = {
-        title: this.exam.title,
-        course_id: this.course?.id ?? 0
-      };
+      const dto: ExamCreateDTO = { title: this.exam.title, course_id: this.course?.id ?? 0 };
 
-      this.examService.crear(dto).subscribe(() => {
-        this.loadExams();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Exam Created', life: 3000 });
+      this.examService.crear(dto).subscribe({
+        next: () => {
+          this.loadExams();
+          this.examDialog = false;
+          this.exam = {} as Exam;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Exam created successfully',
+            life: 3000,
+          });
+        },
+        error: (err) => {
+          console.error('Error creating exam:', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Could not create exam',
+            life: 3000,
+          });
+        },
       });
     }
-
-    this.examDialog = false;
-    this.exam = {} as Exam;
   }
+
 }

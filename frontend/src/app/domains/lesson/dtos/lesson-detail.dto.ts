@@ -1,4 +1,4 @@
-import { CourseSummaryDto } from '../../../course/dtos/course-summary.dto';
+import { CourseSummaryDto } from "@/domains/course/dtos/course-summary.dto";
 
 export interface LessonDetailDto {
   id: number;

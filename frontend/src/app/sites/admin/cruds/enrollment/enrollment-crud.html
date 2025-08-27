@@ -9,16 +9,16 @@
             [(selection)]="selectedEnrollments"
             [rowHover]="true"
             dataKey="enrollmentId"
-            currentPageReportTemplate="Se visualiza {first} a {last} de {totalRecords} inscripciones"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} inscripciones"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 20, 30]"
         >
             <ng-template #caption>
                 <div class="flex items-center justify-between">
-                    <h5 class="m-0">Manage Enrollment</h5>
+                    <h5 class="m-0">Gestion de Inscripciones</h5>
                     <p-iconfield>
                         <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+                        <input pInputText type="texLa mascota, la mascota. Dice. Te amo. A t" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
                     </p-iconfield>
                 </div>
             </ng-template>

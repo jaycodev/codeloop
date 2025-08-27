@@ -4,65 +4,29 @@
 <div class="container-fluid mt-4">
   <p-toolbar styleClass="mb-6">
     <ng-template pTemplate="left">
-      <button
-        pButton
-        pRipple
-        label="New Question"
-        icon="pi pi-plus"
-        class="p-button-secondary mr-2"
-        (click)="openNew()"
-      ></button>
-      <button
-        pButton
-        pRipple
-        label="Delete"
-        icon="pi pi-trash"
-        class="p-button-secondary"
-        outlined
-        [disabled]="!selectedQuestions || selectedQuestions.length === 0"
-        (click)="deleteSelectedQuestions()"
-      ></button>
+      <button pButton pRipple label="Nueva Pregunta" icon="pi pi-plus" class="p-button-secondary mr-2"
+        (click)="openNew()"></button>
+      <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-secondary" outlined
+        [disabled]="!selectedQuestions || selectedQuestions.length === 0" (click)="deleteSelectedQuestions()"></button>
     </ng-template>
     <ng-template pTemplate="right">
       <div class="flex align-items-center gap-2">
-        <input
-          pInputText
-          type="number"
-          min="0"
-          [(ngModel)]="searchExamId"
-          placeholder="Find by Exam ID"
-          style="width: 160px;"
-        />
-        <button
-          pButton
-          label="Find"
-          icon="pi pi-search"
-          class="p-button-secondary"
-          (click)="findByExamId()"
-        ></button>
+        <input pInputText type="number" min="0" [(ngModel)]="searchExamId" placeholder="Find by Exam ID"
+          style="width: 160px;" />
+        <button pButton label="Find" icon="pi pi-search" class="p-button-secondary" (click)="findByExamId()"></button>
       </div>
     </ng-template>
   </p-toolbar>
 
-  <p-table
-    #dt
-    [value]="questions()"
-    [columns]="cols"
-    [rows]="10"
-    [paginator]="true"
-    [globalFilterFields]="['statement', 'optionA', 'optionB', 'optionC', 'optionD', 'correctAnswer']"
-    [rowHover]="true"
-    dataKey="questionId"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} questions"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 20, 30]"
-    [(selection)]="selectedQuestions"
-    [tableStyle]="{ 'min-width': '75rem' }"
-  >
+  <p-table #dt [value]="questions()" [columns]="cols" [rows]="10" [paginator]="true"
+    [globalFilterFields]="['statement', 'optionA', 'optionB', 'optionC', 'optionD', 'correctAnswer']" [rowHover]="true"
+    dataKey="questionId" currentPageReportTemplate="Mostrando {first} de {last} a {totalRecords} preguntas"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 30]" [(selection)]="selectedQuestions"
+    [tableStyle]="{ 'min-width': '75rem' }">
     <ng-template pTemplate="caption">
       <div class="flex items-center justify-between">
         <h5 class="m-0">Questions Management</h5>
-        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -91,22 +55,10 @@
         <td>{{ question.optionD }}</td>
         <td><b>{{ question.correctAnswer }}</b></td>
         <td>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-pencil"
-            class="p-button-rounded mr-2"
-            outlined
-            (click)="editQuestion(question)"
-          ></button>
-          <button
-            pButton
-            pRipple
-            icon="pi pi-trash"
-            class="p-button-rounded p-button-danger"
-            outlined
-            (click)="deleteQuestion(question.questionId)"
-          ></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded mr-2" outlined
+            (click)="editQuestion(question)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" outlined
+            (click)="deleteQuestion(question.questionId)"></button>
         </td>
       </tr>
     </ng-template>
@@ -117,72 +69,57 @@
     </ng-template>
   </p-table>
 
-  <p-dialog
-    [(visible)]="questionDialog"
-    [style]="{ width: '450px' }"
-    header="{{ tipoEdicion ? 'Edit Question' : 'New Question' }}"
-    [modal]="true"
-  >
+  <p-dialog [(visible)]="questionDialog" [style]="{ width: '450px' }"
+    header="{{ tipoEdicion ? 'Edit Question' : 'New Question' }}" [modal]="true">
     <ng-template pTemplate="content">
       <div class="flex flex-col gap-4">
-        <div>
-          <label for="examId" class="block font-bold mb-2">Exam ID</label>
-          <input type="number" pInputText id="examId" [(ngModel)]="questionCreate.examId" required />
+
+        <div class="flex flex-col">
+          <label for="statement" class="font-bold mb-1">Statement</label>
+          <textarea id="statement" pInputTextarea [(ngModel)]="questionCreate.statement" rows="3"
+            class="w-full border border-gray-300 rounded p-2" required></textarea>
         </div>
-        <div>
-          <label for="statement" class="block font-bold mb-2">Statement</label>
-          <textarea
-            id="statement"
-            pInputText
-            [(ngModel)]="questionCreate.statement"
-            required
-            rows="2"
-          ></textarea>
+
+        <!-- Option A -->
+        <div class="flex flex-col">
+          <label for="optionA" class="font-bold mb-1">Option A</label>
+          <input type="text" pInputText id="optionA" [(ngModel)]="questionCreate.optionA" class="w-full" />
         </div>
-        <div>
-          <label for="optionA" class="block font-bold mb-2">Option A</label>
-          <input type="text" pInputText id="optionA" [(ngModel)]="questionCreate.optionA" />
+
+        <!-- Option B -->
+        <div class="flex flex-col">
+          <label for="optionB" class="font-bold mb-1">Option B</label>
+          <input type="text" pInputText id="optionB" [(ngModel)]="questionCreate.optionB" class="w-full" />
         </div>
-        <div>
-          <label for="optionB" class="block font-bold mb-2">Option B</label>
-          <input type="text" pInputText id="optionB" [(ngModel)]="questionCreate.optionB" />
+
+        <!-- Option C -->
+        <div class="flex flex-col">
+          <label for="optionC" class="font-bold mb-1">Option C</label>
+          <input type="text" pInputText id="optionC" [(ngModel)]="questionCreate.optionC" class="w-full" />
         </div>
-        <div>
-          <label for="optionC" class="block font-bold mb-2">Option C</label>
-          <input type="text" pInputText id="optionC" [(ngModel)]="questionCreate.optionC" />
+
+        <!-- Option D -->
+        <div class="flex flex-col">
+          <label for="optionD" class="font-bold mb-1">Option D</label>
+          <input type="text" pInputText id="optionD" [(ngModel)]="questionCreate.optionD" class="w-full" />
         </div>
-        <div>
-          <label for="optionD" class="block font-bold mb-2">Option D</label>
-          <input type="text" pInputText id="optionD" [(ngModel)]="questionCreate.optionD" />
-        </div>
-        <div>
-          <label for="correctAnswer" class="block font-bold mb-2">Correct Answer</label>
-          <select id="correctAnswer" [(ngModel)]="questionCreate.correctAnswer" class="form-select" required>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-          </select>
-        </div>
+
+        <!-- Correct Answer -->
+          <div class="flex flex-col">
+            <label for="correctAnswer" class="font-bold mb-1">Correct Answer</label>
+            <p-select [style]="{ width: '300px' }" [options]="answerOptions" [(ngModel)]="questionCreate.correctAnswer"
+              optionLabel="label" optionValue="value" placeholder="Select Correct Answer" class="w-full md:w-56"
+              appendTo="body"></p-select>
+          </div>
+
       </div>
     </ng-template>
 
+
     <ng-template pTemplate="footer">
-      <button
-        pButton
-        pRipple
-        label="Cancel"
-        icon="pi pi-times"
-        text
-        (click)="hideDialog()"
-      ></button>
-      <button
-        pButton
-        pRipple
-        label="{{ tipoEdicion ? 'Update' : 'Save' }}"
-        icon="pi pi-check"
-        (click)="saveQuestion()"
-      ></button>
+      <button pButton pRipple label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></button>
+      <button pButton pRipple label="{{ tipoEdicion ? 'Update' : 'Save' }}" icon="pi pi-check"
+        (click)="saveQuestion()"></button>
     </ng-template>
   </p-dialog>
 </div>

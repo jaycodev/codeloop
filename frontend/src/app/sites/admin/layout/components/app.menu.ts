@@ -30,42 +30,42 @@ export class AppMenu {
         routerLink: ['/cruds'],
         items: [
           {
-            label: 'Answer',
+            label: 'Respuesta',
             icon: 'pi pi-fw pi-comment', // representando respuestas/comentarios
             routerLink: ['/admin/cruds/answer']
           },
           {
-            label: 'Course',
+            label: 'Curso',
             icon: 'pi pi-fw pi-book', // representando cursos/libros
             routerLink: ['/admin/cruds/course']
           },
           {
-            label: 'Enrollment',
+            label: 'Inscripcion',
             icon: 'pi pi-fw pi-user-plus', // representando inscripciones/usuarios
             routerLink: ['/admin/cruds/enrollment']
           },
           {
-            label: 'Exam',
+            label: 'Examen',
             icon: 'pi pi-fw pi-pencil', // representando exámenes/editar
             routerLink: ['/admin/cruds/exam']
           },
           {
-            label: 'Lesson',
+            label: 'Leccion',
             icon: 'pi pi-fw pi-clone', // representando lecciones o secciones
             routerLink: ['/admin/cruds/lesson']
           },
           {
-            label: 'Payment',
+            label: 'Pago',
             icon: 'pi pi-fw pi-credit-card', // representando pagos
             routerLink: ['/admin/cruds/payment']
           },
           {
-            label: 'Question',
+            label: 'Pregunta',
             icon: 'pi pi-fw pi-question-circle', // representando preguntas
             routerLink: ['/admin/cruds/question']
           },
           {
-            label: 'User',
+            label: 'Usuario',
             icon: 'pi pi-fw pi-users', // representando usuarios
             routerLink: ['/admin/cruds/user']
           }

@@ -13,6 +13,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { QuestionDTO } from '@domains/question/dtos/question.dto';
 import { QuestionCreateDTO } from '@domains/question/dtos/question-create.dto';
 import { QuestionService } from '@domains/question/services/question.service';
+import { SelectModule } from 'primeng/select';
 
 interface Column {
   field: string;
@@ -33,6 +34,7 @@ interface Column {
     InputTextModule,
     DialogModule,
     ConfirmDialogModule,
+    SelectModule
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: '../pages/question-crud.html',
@@ -56,13 +58,20 @@ export class QuestionCrud implements OnInit {
   editId?: number;
   searchExamId?: number;
 
+  answerOptions = [
+    { label: 'A', value: 'A' },
+    { label: 'B', value: 'B' },
+    { label: 'C', value: 'C' },
+    { label: 'D', value: 'D' },
+  ];
+
   @ViewChild('dt') dt!: Table;
 
   constructor(
     private questionService: QuestionService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadQuestions();
@@ -152,27 +161,46 @@ export class QuestionCrud implements OnInit {
   }
 
   deleteSelectedQuestions() {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected questions?',
-      header: 'Confirm Deletion',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.selectedQuestions?.forEach((question) => {
-          this.questionService.eliminar(question.questionId).subscribe({
-            next: () => this.loadQuestions(),
-            error: (err) => console.error(`Error deleting question ${question.questionId}:`, err),
-          });
+  this.confirmationService.confirm({
+    message: 'Are you sure you want to delete the selected questions?',
+    header: 'Confirm Deletion',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+      if (!this.selectedQuestions || this.selectedQuestions.length === 0) return;
+
+      let deletedCount = 0;
+      const total = this.selectedQuestions.length;
+
+      this.selectedQuestions.forEach((question) => {
+        this.questionService.eliminar(question.questionId).subscribe({
+          next: () => {
+            deletedCount++;
+            if (deletedCount === total) {
+              this.loadQuestions();
+              this.selectedQuestions = null;
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Questions deleted successfully',
+                life: 3000,
+              });
+            }
+          },
+          error: (err) => {
+            console.error(`Error deleting question ${question.questionId}:`, err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: `Could not delete question ${question.questionId}`,
+              life: 3000,
+            });
+          },
         });
-        this.selectedQuestions = null;
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Questions deleted successfully',
-          life: 3000,
-        });
-      },
-    });
-  }
+      });
+    },
+  });
+}
+
 
   findByExamId() {
     if (!this.searchExamId || this.searchExamId === 0) {
