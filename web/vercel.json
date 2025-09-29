@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "dist/web/browser",
   "routes": [
     { "src": "/(.*)", "dest": "/index.html" }
   ]
