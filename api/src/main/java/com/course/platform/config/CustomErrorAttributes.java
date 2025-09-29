@@ -12,7 +12,6 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 
    @Override
    public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-       // forzar a excluir stacktrace y exception
        options = options.excluding(
            ErrorAttributeOptions.Include.EXCEPTION,
            ErrorAttributeOptions.Include.STACK_TRACE,
