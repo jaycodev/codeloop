@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Enrollment } from '../models/enrollment.model';
 import { EnrollmentCreateOrUpdateDto } from '../dtos/enrollment-create-update.dto';
-import { environment } from '@environments/environment.prod';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'

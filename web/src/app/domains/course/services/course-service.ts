@@ -7,39 +7,41 @@ import { CourseDetailDto } from '../dtos/course-detail.dto';
 import { UpdateCourseDto } from '../dtos/update-course-dto';
 import { CourseSummaryDto } from '../dtos/course-summary.dto';
 import { CourseStats } from '../dtos/course-stats.dto';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
-  private urlBase = 'http://localhost:8080/courses';
+  private baseUrl = `${environment.apiUrl}/courses`;
+
   private http = inject(HttpClient);
 
   listar(): Observable<CourseListDto[]> {
-    return this.http.get<CourseListDto[]>(`${this.urlBase}`);
+    return this.http.get<CourseListDto[]>(`${this.baseUrl}`);
   }
 
   buscarPorId(id: number): Observable<CourseDetailDto> {
-    return this.http.get<CourseDetailDto>(`${this.urlBase}/${id}`);
+    return this.http.get<CourseDetailDto>(`${this.baseUrl}/${id}`);
   }
 
   crear(course: CreateCourseDto): Observable<CourseListDto> {
-    return this.http.post<CourseListDto>(`${this.urlBase}`, course);
+    return this.http.post<CourseListDto>(`${this.baseUrl}`, course);
   }
 
   actualizar(id: number, course: UpdateCourseDto): Observable<CourseListDto> {
-    return this.http.put<CourseListDto>(`${this.urlBase}/${id}`, course);
+    return this.http.put<CourseListDto>(`${this.baseUrl}/${id}`, course);
   }
 
   eliminar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.urlBase}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   listarResumen(): Observable<CourseSummaryDto[]> {
-    return this.http.get<CourseSummaryDto[]>(`${this.urlBase}/summary`);
+    return this.http.get<CourseSummaryDto[]>(`${this.baseUrl}/summary`);
   }
 
    obtenerEstadisticas(): Observable<CourseStats> {
-    return this.http.get<CourseStats>(`${this.urlBase}/stats`);
+    return this.http.get<CourseStats>(`${this.baseUrl}/stats`);
   }
 }

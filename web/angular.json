@@ -22,12 +22,16 @@
                 "input": "public"
               }
             ],
-            "styles": [
-                "src/assets/styles.scss"
-            ]
+            "styles": ["src/assets/styles.scss"]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
@@ -64,9 +68,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-                "src/assets/styles.scss"
-            ]
+            "styles": ["src/assets/styles.scss"]
           }
         }
       }
